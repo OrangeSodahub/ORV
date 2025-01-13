@@ -1,7 +1,7 @@
 [submodule "thirdparty/monst3r"]
 	path = thirdparty/monst3r
 	url = https://github.com/Junyi42/monst3r.git
-[submodule "DepthAnyVideo"]
+[submodule "thirdparty/DepthAnyVideo"]
 	path = thirdparty/DepthAnyVideo
 	url = https://github.com/Nightmare-n/DepthAnyVideo.git
 [submodule "thirdparty/dust3r"]
