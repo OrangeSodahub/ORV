@@ -1,0 +1,12 @@
+data/
+dev6_2/opensource_robotdata
+*debug*
+
+*__pycache__*
+*.pyc
+*.git
+*.vscode
+*.log
+pretrained_models/stabilityai
+results
+wandb

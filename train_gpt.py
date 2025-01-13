@@ -42,7 +42,7 @@ from transformers.utils.versions import require_version
 from ivideogpt.vq_model import CompressiveVQModel
 from ivideogpt.transformer import HeadModelWithAction
 from ivideogpt.utils.video_metric import Evaluator, FeatureStats
-from ivideogpt.data import *
+from ivideogpt.dataset import *
 from peft import LoraConfig, TaskType, get_peft_model
 
 # Will error if the minimal version of Transformers is not installed. Remove at your own risks.

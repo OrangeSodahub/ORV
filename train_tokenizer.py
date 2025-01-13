@@ -26,7 +26,7 @@ from diffusers.training_utils import EMAModel
 from diffusers.utils import check_min_version, is_wandb_available
 
 from ivideogpt.vq_model import CompressiveVQModel, Discriminator, LPIPS
-from ivideogpt.data import *
+from ivideogpt.dataset import *
 
 
 if is_wandb_available():
