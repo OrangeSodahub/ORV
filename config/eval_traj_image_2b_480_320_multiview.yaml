@@ -1,0 +1,32 @@
+runtime: &runtime
+  seed: 42
+
+  num_observation: 1  # number of input reference images
+  multiview: True
+
+dataset:
+  <<: *runtime
+
+  load_actions: True
+  load_tensors: True  # load pre-encoded latents instead of raw data
+  load_video: False
+  load_condGT: False
+
+  slice_frame: True  # if False, will use the entire video
+  use_3dvae: True
+  num_samples: -1
+  no_normalize: False
+
+transformer:
+  <<: *runtime
+  pretrained_model_name_or_path: THUDM/CogVideoX-2b
+  transformer_model_name_or_path: ./outputs_old2/cirasim_bridge2_traj-image_480-320_multiview_20k/cirasim_bridge2_traj-image_480-320_multiview_20k/checkpoint  # bridge2 2.4b multiview model
+  # transformer_model_name_or_path: ./outputs/cirasim_droid_traj-image_384-256_multiview_30k/checkpoint  # droid 2.4b multiview model
+
+  modulate_encoder_hidden_states: True
+
+evaluation:
+  <<: *runtime
+  output_dir: NULL  # will use the name of checkpoint
+
+  batch_size: 4

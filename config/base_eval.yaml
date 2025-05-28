@@ -1,0 +1,126 @@
+runtime: &runtime
+  seed: 42
+
+  use_cond: False  # load additional condition images
+  filter_by_cond: False  # filter data according to condition images
+  no_traj: False  # do not load actions data
+  empty_prompt: True  # use empty prompt as input
+  multiview: False  # train multivew transformer
+  num_observation: 1  # number of input reference images
+  visual_guidance: False  # use additional visual conditions
+  control_keys: ['depth', 'label']
+
+dataset:
+  <<: *runtime
+
+  split: val
+  renderings_folder: renderings
+  embeddings_folder: embeddings_full
+
+  video_column: video
+  latent_column: latent
+  depth_column: depth
+  semantic_column: semantic
+
+  load_actions: True
+  load_tensors: True  # load pre-encoded latents instead of raw data
+  load_video: False
+  load_condGT: False  # will load conditions from reconstructions
+
+  slice_frame: True  # if False, will use the entire video
+  use_3dvae: True
+
+  bridgev2:
+    data_root: ./data/bridge
+    num_samples: -1
+    camera_ids: [0]
+    max_n_view: 1
+    action_dim: 7
+    sequence_interval: 1
+    sequence_length: 16
+    sample_frames: 17  # number of frames in video
+    start_frame_interval: 16
+    video_size: [320, 480]
+    ori_size: [256, 320]
+    sample_size: [40, 60]  # `video_size` // vae_scale_factor
+
+    caption_column: texts
+
+  bridgev2_2:
+    data_root: ./data/bridgev2
+    num_samples: -1
+    camera_ids: [0, 1, 2]
+    max_n_view: 3
+    action_dim: 7
+    sequence_interval: 1
+    sequence_length: 16
+    sample_frames: 17  # number of frames in video
+    start_frame_interval: 16
+    video_size: [320, 480]
+    ori_size: [256, 320]
+    sample_size: [40, 60]  # `video_size` // vae_scale_factor
+
+    caption_column: texts
+
+  droid:
+    data_root: ./data/droid
+    num_samples: 120000
+    camera_ids: [0, 1]
+    max_n_view: 2
+    action_dim: 7
+    sequence_interval: 3
+    sequence_length: 28
+    sample_frames: 29  # number of frames in video
+    start_frame_interval: 72
+    video_size: [256, 384]
+    ori_size: [176, 320]
+    sample_size: [32, 48]
+
+    caption_column: language_instruction
+
+  rt1:
+    data_root: ./data/rt1
+    num_samples: 12e4
+    camera_ids: [0]
+    max_n_view: 1
+    action_dim: 7
+    sequence_interval: 2
+    sequence_length: 16
+    sample_frames: 17  # number of frames in video
+    start_frame_interval: 16
+    video_size: [320, 480]
+    ori_size: [256, 320]
+    sample_size: [40, 60]
+
+    caption_column: texts
+
+transformer:
+  <<: *runtime
+  pretrained_model_name_or_path: THUDM/CogVideoX-2b  # CogVideoX-2b, CogVideoX-5b-I2V, CogVideoX1.5-5b-I2V
+  revision: NULL
+  variant: NULL
+  cache_dir: NULL
+  transformer_config_path: NULL  # only used for from-scratch-training
+  transformer_model_name_or_path: NULL  # only used for from-scratch-training
+
+  dtype: bfloat16  # choose from 'float16' or 'bfloat16'
+
+  enable_slicing: True
+  enable_tiling: True
+
+evaluation:
+  <<: *runtime
+
+  output_path: outputs3
+  output_dir: NULL  # specified in experiment yamls
+
+  mode: traj-image  # choose from ['traj-image', 'traj-image-depth']
+
+  batch_size: 16
+  num_workers: 8
+  pin_memory: True
+
+  guidance_scale: 1.
+  num_inference_steps: 50
+  use_dynamic_cfg: False
+  enable_model_cpu_offload: False

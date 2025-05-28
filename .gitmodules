@@ -1,9 +1,19 @@
+[submodule "thirdparty/grounded_sam_2"]
+	path = thirdparty/grounded_sam_2
+	url = https://github.com/IDEA-Research/Grounded-SAM-2
+
 [submodule "thirdparty/monst3r"]
 	path = thirdparty/monst3r
-	url = https://github.com/Junyi42/monst3r.git
-[submodule "thirdparty/DepthAnyVideo"]
-	path = thirdparty/DepthAnyVideo
-	url = https://github.com/Nightmare-n/DepthAnyVideo.git
-[submodule "thirdparty/dust3r"]
-	path = thirdparty/dust3r
-	url = https://github.com/naver/dust3r.git
+	url = https://github.com/Junyi42/monst3r
+
+[submodule "thirdparty/vggt"]
+	path = thirdparty/vggt
+	url = https://github.com/facebookresearch/vggt
+
+[submodule "thirdparty/vila"]
+	path = thirdparty/vggt
+	url = https://github.com/NVlabs/VILA
+
+[submodule "thirdparty/x-flux"]
+	path = thirdparty/x-flux
+	url = https://github.com/XLabs-AI/x-flux

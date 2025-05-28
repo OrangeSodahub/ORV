@@ -1,0 +1,49 @@
+runtime: &runtime
+  seed: 42
+
+  use_cond: True
+  filter_by_cond: True
+  num_observation: 1  # number of input reference images
+  multiview: True
+
+  visual_guidance: True  # use additional visual conditions
+  control_keys: ['depth', 'label']
+
+dataset:
+  <<: *runtime
+
+transformer:
+  <<: *runtime
+  pretrained_model_name_or_path: THUDM/CogVideoX-2b
+  # transformer_model_name_or_path: ./outputs/cirasim_droid_traj-image_384-256_finetune_2b_30k/checkpoint  # droid base model
+  # transformer_model_name_or_path: ./outputs2/cirasim_bridge2_traj-image_320-480_finetune_2b_30k/checkpoint  # bridgev2 base model
+  transformer_model_name_or_path: ./outputs2/cirasim_bridge2_traj-image_480-320_multiview_20k/checkpoint  # bridgev2 mv no cond model
+
+  modulate_encoder_hidden_states: True
+
+train:
+  <<: *runtime
+  # output_dir: cirasim_droid_traj-image_384-256_multiview_30k
+  output_dir: cirasim_bridge2_traj-image_480-320_multiview_condfull_20k
+
+  from_scratch: True  # train from scratch
+  from_pretrained: False  # finetune from pretrained cogvideox
+
+  learning_rate: 1.e-4
+  lr_scheduler: cosine_with_restarts
+  lr_num_cycles: 1
+  lr_warmup_steps: 1000
+
+  max_train_steps: 20000
+  gradient_checkpointing: True
+
+  # for 8 × A800 (80GB); droid data;
+  # train_batch_size: 1
+  # gradient_accumulation_steps: 4
+
+  train_batch_size: 3
+  gradient_accumulation_steps: 1
+
+  find_unused_parameters: True  # we do not train all parameters!
+
+  resume_from_checkpoint: latest

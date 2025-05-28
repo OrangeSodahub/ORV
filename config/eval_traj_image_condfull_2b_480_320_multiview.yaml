@@ -1,0 +1,38 @@
+runtime: &runtime
+  seed: 42
+
+  use_cond: True
+  filter_by_cond: True
+
+  num_observation: 1  # number of input reference images
+  multiview: True
+  visual_guidance: True
+  control_keys: ['depth', 'label']
+
+dataset:
+  <<: *runtime
+
+  load_actions: True
+  load_tensors: True  # load pre-encoded latents instead of raw data
+  load_video: False
+  load_condGT: False
+
+  slice_frame: True  # if False, will use the entire video
+  use_3dvae: True
+  num_samples: -1
+  no_normalize: False
+
+transformer:
+  <<: *runtime
+  pretrained_model_name_or_path: THUDM/CogVideoX-2b
+  transformer_model_name_or_path: ./outputs3/cirasim_bridge2_traj-image_480-320_multiview_condfull_20k/checkpoint-20000
+
+  modulate_encoder_hidden_states: True
+
+evaluation:
+  <<: *runtime
+  output_dir: NULL  # will use the name of checkpoint
+
+  mode: traj-image-depth-label
+
+  batch_size: 4

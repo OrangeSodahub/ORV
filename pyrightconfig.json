@@ -1,0 +1,41 @@
+{
+    "include": [
+      "models/",
+      "testing/",
+      "training/",
+    ],
+  
+    "exclude": [
+      "outputs/",
+      "**/__pycache__",
+      "data/",
+      "config/",
+      "scripts/",
+      "debug_mv_train_input",
+    ],
+  
+    "defineConstant": {
+      "DEBUG": true
+    },
+  
+    "reportMissingImports": "error",
+    "reportMissingTypeStubs": false,
+    "reportUnusedImport": "warning",     // "none" | "information" | "warning" | "error"
+    "reportGeneralTypeIssues": "error",
+    "reportOptionalMemberAccess": "none",
+    "reportPrivateUsage": "warning",
+    "reportArgumentType": "none",
+    "reportIncompatibleMethodOverride": "none",
+    "reportAssignmentType": "none",
+    "reportCallIssue": "none",
+    "reportAttributeAccessIssue": "none",
+    "wnPylancereportAttributeAccessIssue": "warning",
+    "reportUndefinedVariable": "error",
+    "reportUnusedVariable": "warning",
+    "reportUnknownMemberType": "none",
+    "reportUnknownArgumentType": "none",
+    "reportUnknownVariableType": "none",
+  
+    "pythonVersion": "3.10",
+    "pythonPlatform": "Linux",
+  }

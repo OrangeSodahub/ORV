@@ -1,0 +1,38 @@
+runtime: &runtime
+  seed: 42
+
+  filter_by_cond: False
+  num_observation: 1  # number of input reference images
+
+dataset:
+  <<: *runtime
+
+  height: 320
+  width: 480
+
+transformer:
+  <<: *runtime
+  pretrained_model_name_or_path: THUDM/CogVideoX1.5-5b-I2V
+
+  modulate_encoder_hidden_states: True
+
+train:
+  <<: *runtime
+  output_dir: cirasim_bridge_traj-image_480-320_finetune_norm_20k
+
+  from_scratch: False  # train from scratch
+  from_pretrained: True  # finetune from pretrained cogvideox
+
+  learning_rate: 5.e-5
+  lr_scheduler: cosine_with_restarts
+  lr_num_cycles: 1
+  lr_warmup_steps: 1000
+
+  max_train_steps: 20000
+  gradient_checkpointing: False
+
+  train_batch_size: 1
+  gradient_accumulation_steps: 4
+
+  # resume_from_checkpoint: ./outputs/cirasim_bridge_traj-image_480-320_finetune_full_20k/checkpoint-15000
+  resume_from_checkpoint: NULL

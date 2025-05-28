@@ -1,8 +1,0 @@
-*__pycache__*
-*.pyc
-*.git
-*.vscode
-*.log
-pretrained_models/stabilityai
-results
-wandb

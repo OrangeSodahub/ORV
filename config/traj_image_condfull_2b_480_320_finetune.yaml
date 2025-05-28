@@ -1,0 +1,45 @@
+runtime: &runtime
+  seed: 42
+
+  use_cond: True
+  filter_by_cond: True
+
+  num_observation: 1  # number of input reference images
+  visual_guidance: True  # use additional visual conditions
+  control_keys: ['depth', 'label']
+  
+dataset:
+  <<: *runtime
+
+  load_condGT: False  # will load conditions from reconstructions
+
+transformer:
+  <<: *runtime
+  pretrained_model_name_or_path: THUDM/CogVideoX-2b
+  # transformer_model_name_or_path: ./outputs/cirasim_bridge_traj-image_480-320_finetune_2b_30k/checkpoint
+  transformer_model_name_or_path: ./outputs3/cirasim_rt1_traj-image_320-480_finetune_2b_30k/checkpoint
+
+  modulate_encoder_hidden_states: True
+
+train:
+  <<: *runtime
+  # output_dir: cirasim_bridge_traj-image-condfull_480-320_finetune_2b_20k
+  output_dir: cirasim_rt1_traj-image-condfull_480-320_finetune_2b_20k
+  from_scratch: True  # train from scratch
+  from_pretrained: False  # finetune from pretrained cogvideox
+
+  learning_rate: 1.e-4
+  lr_scheduler: cosine_with_restarts
+  lr_num_cycles: 1
+  # lr_warmup_steps: 1000
+  lr_warmup_steps: 500
+
+  # max_train_steps: 20000
+  max_train_steps: 10000
+  gradient_checkpointing: False
+
+  # for 8 × A800 (80GB)
+  train_batch_size: 4
+  gradient_accumulation_steps: 2
+
+  resume_from_checkpoint: latest

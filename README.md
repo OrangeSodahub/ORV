@@ -1,179 +1,322 @@
-# 🌏 iVideoGPT: Interactive VideoGPTs are Scalable World Models (NeurIPS 2024)
+# Diffusion as Shader: 3D-aware Video Diffusion for Versatile Video Generation Control
 
-[[Project Page]](https://thuml.github.io/iVideoGPT/) [[Paper]](https://arxiv.org/abs/2405.15223) [[Models]](https://huggingface.co/collections/thuml/ivideogpt-674c59cae32231024d82d6c5) [[Poster]](https://manchery.github.io/assets/pub/nips2024_ivideogpt/poster.pdf) [[Slides]](https://manchery.github.io/assets/pub/nips2024_ivideogpt/slides.pdf) [[Blog (In Chinese)]](https://mp.weixin.qq.com/s/D94aamdqtO9WLekr4BSCUw)
+## [Project page](https://igl-hkust.github.io/das/) | [Paper](https://arxiv.org/abs/2501.03847)
 
-This repo provides official code and checkpoints for iVideoGPT, a generic and efficient world model architecture that has been pre-trained on millions of human and robotic manipulation trajectories. 
+![teaser](assets/teaser.gif)
 
-![architecture](assets/architecture.png)
+## Quickstart
 
-## 🔥 News
+### Create environment
+1. Clone the repository and create conda environment: 
 
-- 🚩 **2024.11.01**: NeurIPS 2024 camera-ready version is released on [arXiv](https://arxiv.org/abs/2405.15223v3).
-- 🚩 **2024.09.26**: iVideoGPT has been accepted by NeurIPS 2024, congrats!
-- 🚩 **2024.08.31**: Training code is released (Work in progress 🚧 and please stay tuned!)
-- 🚩 **2024.05.31**: Project website with video samples is released.
-- 🚩 **2024.05.30**: Model pre-trained on Open X-Embodiment and inference code are released.
-- 🚩 **2024.05.27**: Our paper is released on [arXiv](https://arxiv.org/abs/2405.15223v1).
+    ```
+    git clone git@github.com:IGL-HKUST/DiffusionAsShader.git
+    conda create -n das python=3.10
+    conda activate das
+    ```
 
-## 🛠️ Installation
+2. Install pytorch, we recommend `Pytorch 2.5.1` with `CUDA 11.8`:
+
+    ```
+    pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+    ```
+
+
+<!-- 3. Install `MoGe`:
+```
+pip install git+https://github.com/asomoza/image_gen_aux.git
+``` -->
+
+3. Make sure the submodule and requirements are installed:
+    ```
+    git submodule update --init --recursive
+    pip install -r requirements.txt
+    ```
+
+4. Manually download these checkpoints:
+   - SpatialTracker checkpoint: [Google Drive](https://drive.google.com/drive/folders/1UtzUJLPhJdUg2XvemXXz1oe6KUQKVjsZ) and move it to `checkpoints/`.
+   - Our *Diffusion as Shader* checkpoint: https://huggingface.co/EXCAI/Diffusion-As-Shader
+
+<!-- 5. Manually download the ZoeDepth checkpoints (dpt_beit_large_384.pt, ZoeD_M12_K.pt, ZoeD_M12_NK.pt) to `models/monoD/zoeDepth/ckpts/`. For more information, refer to [this issue](https://github.com/henry123-boy/SpaTracker/issues/20). -->
+
+<!-- Then download a dataset:
 
 ```bash
-conda create -n ivideogpt python==3.9
-conda activate ivideogpt
-pip install -r requirements.txt
-```
+# install `huggingface_hub`
+huggingface-cli download \
+  --repo-type dataset Wild-Heart/Disney-VideoGeneration-Dataset \
+  --local-dir video-dataset-disney
+``` -->
 
-To evaluate the FVD metric, download the [pretrained I3D model](https://www.dropbox.com/s/ge9e5ujwgetktms/i3d_torchscript.pt?dl=1) into `pretrained_models/i3d/i3d_torchscript.pt`.
+### Inference
 
-## 🤗 Models
+The inference code was tested on
 
-At the moment we provide the following pre-trained models:
+- Ubuntu 20.04
+- Python 3.10
+- PyTorch 2.5.1
+- 1 NVIDIA H800 with CUDA version 11.8. (32GB GPU memory is sufficient for generating videos with our code.)
 
-| Model | Resolution | Action-conditioned | Goal-conditioned | Tokenizer Size | Transformer Size |
-| ---- | ---- | ---- | ---- | ---- | ---- |
-| [ivideogpt-oxe-64-act-free](https://huggingface.co/thuml/ivideogpt-oxe-64-act-free) | 64x64 | No | No | 114M   |  138M    |
-| [ivideogpt-oxe-64-act-free-medium](https://huggingface.co/thuml/ivideogpt-oxe-64-act-free-medium) | 64x64 | No | No |  114M   |  436M    |
-| [ivideogpt-oxe-64-goal-cond](https://huggingface.co/thuml/ivideogpt-oxe-64-goal-cond) | 64x64 | No | Yes | 114M   |  138M    |
-| [ivideogpt-oxe-256-act-free](https://huggingface.co/thuml/ivideogpt-oxe-256-act-free) | 256x256 | No | No | 310M   |  138M    |
+We provide a inference script for our tasks. You can run the `demo.py` script directly as follows.
+**We also provide a validation dataset in [Google Drive](https://drive.google.com/file/d/1pVB_2AEoz1v4vXWe6-pdDAEQdmlGEIci/view?usp=sharing) for our 4 tasks. You can run the `scripts/evaluate_DaS.sh` to evaluate the performance of our model.**
 
-If no network connection to Hugging Face, you can manually download from [Tsinghua Cloud](https://cloud.tsinghua.edu.cn/d/ef7d94c798504587a95e/).
 
-**Notes**:
-
-- Due to the heterogeneity of action spaces, we currently do not have an action-conditioned prediction model on OXE.
-- Pre-trained models at 256x256 resolution may not perform best due to insufficient training, but can serve as a good starting point for downstream fine-tuning.
-
-<details>
-  <summary><b>More models on downstream tasks</b></summary>
-  <br>
-  
-| Model | Resolution | Action-conditioned | Goal-conditioned | Tokenizer Size | Transformer Size |
-| ---- | ---- | ---- | ---- | ---- | ---- |
-| [ivideogpt-bair-64-act-free](https://huggingface.co/thuml/ivideogpt-bair-64-act-free) | 64x64 | No | No |  114M   |  138M    |
-| [ivideogpt-bair-64-act-cond](https://huggingface.co/thuml/ivideogpt-bair-64-act-cond) | 64x64 | Yes | No | 114M   |  138M    |
-| [ivideogpt-robonet-64-act-cond](https://huggingface.co/thuml/ivideogpt-robonet-64-act-cond) | 64x64 | Yes | No |  114M   |  138M    |
-
-- We are sorry that the checkpoints for RoboNet at 256x256 resolution were deleted by mistake during a disk cleanup, we will retrain and release them as soon as possible! 
-</details>
-
-## 📦 Data Preparation
-
-**Open X-Embodiment**: Download datasets from [Open X-Embodiment](https://github.com/google-deepmind/open_x_embodiment) and extract single episodes as `.npz` files:
-
-```bash
-python datasets/oxe_data_converter.py --dataset_name {dataset name, e.g. bridge} --input_path {path to downloaded OXE} --output_path {path to stored npz}
-```
-
-To replicate our pre-training on OXE, you need to extract all datasets listed under `OXE_SELECT` in `ivideogpt/data/dataset_mixes.py`.
-
-See instructions at [`datasets`](/datasets) on preprocessing more datasets.
-
-## 🚀 Inference Examples
-
-For action-free video prediction on Open X-Embodiment, run:
-
-```bash
-python inference/predict.py --pretrained_model_name_or_path "thuml/ivideogpt-oxe-64-act-free" --input_path inference/samples/fractal_sample.npz --dataset_name fractal20220817_data
-```
-
-See more examples at [`inference`](/inference).
-
-## 🌟 Pre-training
-
-To pre-train iVideoGPT, adjust the arguments in the command below as needed and run:
-
-```bash
-bash ./scripts/pretrain/ivideogpt-oxe-64-act-free.sh
-```
-
-See more scripts for [pre-trained models](#-models) at [`scripts/pretrain`](/scripts/pretrain).
-
-## 🎇 Fine-tuning Video Prediction
-
-### Finetuning Tokenizer
-
-After preparing the [BAIR](/datasets#bair-robot-pushing) dataset, run the following:
-
-```bash
-accelerate launch train_tokenizer.py \
-    --exp_name bair_tokenizer_ft --output_dir log_vqgan --seed 0 --mixed_precision bf16 \
-    --model_type ctx_vqgan \
-    --train_batch_size 16 --gradient_accumulation_steps 1 --disc_start 1000005 \
-    --oxe_data_mixes_type bair --resolution 64 --dataloader_num_workers 16 \
-    --rand_select --video_stepsize 1 --segment_horizon 16 --segment_length 8 --context_length 1 \
-    --pretrained_model_name_or_path pretrained_models/ivideogpt-oxe-64-act-free/tokenizer
-```
-
-### Finetuning Transformer
-
-For action-conditioned video prediction, run the following:
-
-```bash
-accelerate launch train_gpt.py \
-    --exp_name bair_llama_ft --output_dir log_trm --seed 0 --mixed_precision bf16 \
-    --vqgan_type ctx_vqgan \
-    --pretrained_model_name_or_path {log directory of finetuned tokenizer}/unwrapped_model \
-    --config_name configs/llama/config.json --load_internal_llm --action_conditioned --action_dim 4 \
-    --pretrained_transformer_path pretrained_models/ivideogpt-oxe-64-act-free/transformer \
-    --per_device_train_batch_size 16 --gradient_accumulation_steps 1 \
-    --learning_rate 1e-4 --lr_scheduler_type cosine \
-    --oxe_data_mixes_type bair --resolution 64 --dataloader_num_workers 16 \
-    --video_stepsize 1 --segment_length 16 --context_length 1 \
-    --use_eval_dataset --use_fvd --use_frame_metrics \
-    --weight_decay 0.01 --llama_attn_drop 0.1 --embed_no_wd
-```
-
-For action-free video prediction, remove `--load_internal_llm --action_conditioned`.
-
-### Evaluation
-
-To evaluate the checkpoints only, run:
-
-```bash
-bash ./scripts/evaluation/bair-64-act-cond.sh
-```
-
-See more scripts for [released checkpoints](#-models) at [`scripts/evaluation`](/scripts/evaluation).
-
-## 🤖 Visual Model-based RL
-
-### Preparation
-
-Install the Metaworld version we used:
-
-```bash
-pip install git+https://github.com/Farama-Foundation/Metaworld.git@83ac03ca3207c0060112bfc101393ca794ebf1bd
-```
-
-Modify paths in `mbrl/cfgs/mbpo_config.yaml` to your own paths (currently only support absolute paths).
-
-### MBRL with iVideoGPT
-
-```bash
-python mbrl/train_metaworld_mbpo.py task=plate_slide num_train_frames=100002 demo=true
-```
-
-## 🎥 Showcases
-
-![showcase](assets/showcase.png)
-
-## 📜 Citation
-
-If you find this project useful, please cite our paper as:
+#### 1. Motion Transfer 
+```python
+python demo.py \
+    --prompt <"prompt text"> \ # prompt text
+    --checkpoint_path <model_path> \ # checkpoint path
+    --output_dir <output_dir> \ # output directory
+    --input_path <input_path> \ # the reference video path
+    --repaint < True/repaint_path > \ # the repaint first frame image path of input source video or use FLUX to repaint the first frame
+    --gpu <gpu_id> \ # the gpu id
 
 ```
-@inproceedings{wu2024ivideogpt,
-    title={iVideoGPT: Interactive VideoGPTs are Scalable World Models}, 
-    author={Jialong Wu and Shaofeng Yin and Ningya Feng and Xu He and Dong Li and Jianye Hao and Mingsheng Long},
-    booktitle={Advances in Neural Information Processing Systems},
-    year={2024},
+
+#### 2. Camera Control
+We provide several template camera motion types, you can choose one of them. In practice, we find that providing a description of the camera motion in prompt will get better results.
+```python
+python demo.py \
+    --prompt <"prompt text"> \ # prompt text
+    --checkpoint_path <model_path> \ # checkpoint path
+    --output_dir <output_dir> \ # output directory
+    --input_path <input_path> \ # the reference image or video path
+    --camera_motion <camera_motion> \ # the camera motion type, see examples below
+    --tracking_method <tracking_method> \ # the tracking method (moge, spatracker). For image input, 'moge' is necessary.
+    --gpu <gpu_id> \ # the gpu id
+```
+
+Here are some tips for camera motion:
+- trans: translation motion, the camera will move in the direction of the vector (dx, dy, dz) with range [-1, 1]
+  - e.g., 'trans 0.1 0.1 0.1' moving left, up and zoom out
+  - e.g., 'trans 0.1 0.0 0.0 5 45' moving left from frame 5 to 45
+- rot: rotation motion, the camera will rotate around the axis (x, y, z) by the angle
+  - e.g., 'rot y 25' rotating 25 degrees around y-axis
+  - e.g., 'rot x -30 10 40' rotating -30 degrees around x-axis from frame 10 to 40
+- spiral: spiral motion, the camera will move in a spiral path with the given radius
+  - e.g., 'spiral 2' spiral motion with radius 2
+  - e.g., 'spiral 2 15 35' spiral motion with radius 2 from frame 15 to 35
+
+Multiple transformations can be combined using semicolon (;) as separator:
+- e.g., "trans 0 0 0.5 0 30; rot x 25 0 30; trans 0.1 0 0 30 48"
+  This will:
+  1. Zoom out (z+0.5) from frame 0 to 30
+  2. Rotate 25 degrees around x-axis from frame 0 to 30
+  3. Move left (x+0.1) from frame 30 to 48
+
+Notes:
+- Frame range is 0-48 (49 frames in total)
+- If start_frame and end_frame are not specified, the motion will be applied to all frames (0-48)
+- Frames after end_frame will maintain the final transformation
+- For combined transformations, they are applied in sequence
+
+#### 3. Object Manipulation
+We provide several template object manipulation types, you can choose one of them. In practice, we find that providing a description of the object motion in prompt will get better results.
+```python
+python demo.py \
+    --prompt <"prompt text"> \ # prompt text
+    --checkpoint_path <model_path> \ # checkpoint path
+    --output_dir <output_dir> \ # output directory
+    --input_path <input_path> \ # the reference image path
+    --object_motion <object_motion> \ # the object motion type (up, down, left, right)
+    --object_mask <object_mask_path> \ # the object mask path
+    --tracking_method <tracking_method> \ # the tracking method (moge, spatracker). For image input, 'moge' is nesserary.
+    --gpu <gpu_id> \ # the gpu id
+
+```
+Or you can create your own object motion and camera motion as follows and replace related codes in `demo.py`:
+
+1. object motion
+    ```
+    dict: Motion dictionary containing:
+      - mask (torch.Tensor): Binary mask for selected object
+      - motions (torch.Tensor): Per-frame motion vectors [49, 4, 4] (49 frames, 4x4 homogenous objects motion matrix)
+    ``` 
+2. camera motion
+    ```
+    list: CameraMotion list containing:
+      - camera_motion (list): Per-frame camera poses matrix [49, 4, 4] (49 frames, 4x4 homogenous camera poses matrix)
+    ``` 
+It should be noted that depending on the tracker you choose, you may need to modify the scale of translation.
+
+#### 4. Animating meshes to video
+We only support using Blender (version > 4.0) to generate the tracking video now. Before running the following command, you need to install Blender and run the script `scripts/blender.py` in your blender project and generate the tracking video for your blender project. Then you need to provide the tracking video path to the `tracking_path` argument:
+
+```python
+python demo.py \
+    --prompt <"prompt text"> \ # prompt text
+    --checkpoint_path <model_path> \ # checkpoint path
+    --output_dir <output_dir> \ # output directory
+    --input_path <input_path> \ # the reference video path
+    --tracking_path <tracking_path> \ # the tracking video path (need to be generated by Blender)
+    --repaint < True/repaint_path > \ # the rendered first frame image path of input mesh video or use FLUX to repaint the first frame
+    --gpu <gpu_id> \ # the gpu id
+
+```
+
+## Finetune Diffusion as Shader
+
+### Prepare Dataset
+
+Before starting the training, please check whether the dataset has been prepared according to the [dataset specifications](assets/dataset.md). 
+
+In short, your dataset structure should look like this. Running the `tree` command, you should see:
+
+```
+dataset
+├── prompt.txt
+├── videos.txt
+├── trackings.txt
+
+├── tracking
+    ├── tracking/00000_tracking.mp4
+    ├── tracking/00001_tracking.mp4
+    ├── ...
+
+├── videos
+    ├── videos/00000.mp4
+    ├── videos/00001.mp4
+    ├── ...
+
+```
+
+### Training
+
+Training can be started using the `scripts/train_image_to_video_sft.sh` scripts.
+
+- Configure environment variables as per your choice:
+
+  ```bash
+  export TORCH_LOGS="+dynamo,recompiles,graph_breaks"
+  export TORCHDYNAMO_VERBOSE=1
+  export WANDB_MODE="offline"
+  export NCCL_P2P_DISABLE=1
+  export TORCH_NCCL_ENABLE_MONITORING=0
+  ```
+
+- Configure which GPUs to use for training: `GPU_IDS="0,1"`
+
+- Choose hyperparameters for training. Let's try to do a sweep on learning rate and optimizer type as an example:
+
+  ```bash
+  LEARNING_RATES=("1e-4" "1e-3")
+  LR_SCHEDULES=("cosine_with_restarts")
+  OPTIMIZERS=("adamw" "adam")
+  MAX_TRAIN_STEPS=("2000")
+  ```
+
+- Select which Accelerate configuration you would like to train with: `ACCELERATE_CONFIG_FILE="accelerate_configs/uncompiled_1.yaml"`. We provide some default configurations in the `accelerate_configs/` directory - single GPU uncompiled/compiled, 2x GPU DDP, DeepSpeed, etc. You can create your own config files with custom settings using `accelerate config --config_file my_config.yaml`.
+
+- Specify the absolute paths and columns/files for captions and videos.
+
+  ```bash
+  DATA_ROOT="../datasets/cogshader"
+  CAPTION_COLUMN="prompt.txt"
+  VIDEO_COLUMN="videos.txt"
+  TRACKING_COLUMN="trackings.txt"
+  ```
+
+- Launch experiments sweeping different hyperparameters:
+  ```
+  # training dataset parameters
+  DATA_ROOT="../datasets/cogshader"
+  MODEL_PATH="../ckpts/CogVideoX-5b-I2V"
+  CAPTION_COLUMN="prompt.txt"
+  VIDEO_COLUMN="videos.txt"
+  TRACKING_COLUMN="trackings.txt"
+
+  # validation parameters
+  TRACKING_MAP_PATH="../eval/3d/tracking/dance_tracking.mp4"
+  VALIDATION_PROMPT="text"
+  VALIDATION_IMAGES="../000000046_0.png"
+
+  for learning_rate in "${LEARNING_RATES[@]}"; do
+    for lr_schedule in "${LR_SCHEDULES[@]}"; do
+      for optimizer in "${OPTIMIZERS[@]}"; do
+        for steps in "${MAX_TRAIN_STEPS[@]}"; do
+          output_dir="/aifs4su/mmcode/lipeng/cogvideo/ckpts/cogshader_inv-avatar-physics_steps_${steps}__optimizer_${optimizer}__lr-schedule_${lr_schedule}__learning-rate_${learning_rate}/"
+
+          cmd="accelerate launch --config_file $ACCELERATE_CONFIG_FILE --gpu_ids $GPU_IDS --num_processes $NUM_PROCESSES --main_process_port $PORT training/cogvideox_image_to_video_sft.py \
+            --pretrained_model_name_or_path $MODEL_PATH \
+            --data_root $DATA_ROOT \
+            --caption_column $CAPTION_COLUMN \
+            --video_column $VIDEO_COLUMN \
+            --tracking_column $TRACKING_COLUMN \
+            --tracking_map_path $TRACKING_MAP_PATH \
+            --num_tracking_blocks 18 \
+            --height_buckets 480 \
+            --width_buckets 720 \
+            --frame_buckets 49 \
+            --dataloader_num_workers 8 \
+            --pin_memory \
+            --validation_prompt $VALIDATION_PROMPT \
+            --validation_images $VALIDATION_IMAGES \
+            --validation_prompt_separator ::: \
+            --num_validation_videos 1 \
+            --validation_epochs 1 \
+            --seed 42 \
+            --mixed_precision bf16 \
+            --output_dir $output_dir \
+            --max_num_frames 49 \
+            --train_batch_size $TRAIN_BATCH_SIZE \
+            --max_train_steps $steps \
+            --checkpointing_steps $CHECKPOINT_STEPS \
+            --gradient_accumulation_steps 4 \
+            --gradient_checkpointing \
+            --learning_rate $learning_rate \
+            --lr_scheduler $lr_schedule \
+            --lr_warmup_steps $WARMUP_STEPS \
+            --lr_num_cycles 1 \
+            --enable_slicing \
+            --enable_tiling \
+            --optimizer $optimizer \
+            --beta1 0.9 \
+            --beta2 0.95 \
+            --weight_decay 0.001 \
+            --noised_image_dropout 0.05 \
+            --max_grad_norm 1.0 \
+            --allow_tf32 \
+            --report_to wandb \
+            --resume_from_checkpoint \"latest\" \
+            --nccl_timeout 1800"
+          
+          echo "Running command: $cmd"
+          eval $cmd
+          echo -ne "-------------------- Finished executing script --------------------\n\n"
+        done
+      done
+    done
+  done
+  ```
+
+  To understand what the different parameters mean, you could either take a look at the [args](./training/args.py) file or run the training script with `--help`.
+
+## Acknowledgements
+
+This project builds upon several excellent open source projects:
+
+* [CogVideo](https://github.com/THUDM/CogVideo) - A large-scale video generation model developed by Tsinghua University that provides the foundational architecture for this project.
+
+* [finetrainers](https://github.com/a-r-r-o-w/finetrainers) - Offering efficient video model training scripts that helped optimize our training pipeline.
+
+* [SpaTracker](https://github.com/henry123-boy/SpaTracker) - Providing excellent 2D pixel to 3D space tracking capabilities that enable our motion control features.
+
+* [MoGe](https://github.com/microsoft/MoGe) - Microsoft's monocular geometry estimation model that helps achieve more accurate 3D reconstruction.
+
+We thank the authors and contributors of these projects for their valuable contributions to the open source community!
+
+## Citation
+
+If you find this work useful for your research, please consider citing:
+
+```bibtex
+@article{gu2025das,
+    title={Diffusion as Shader: 3D-aware Video Diffusion for Versatile Video Generation Control}, 
+    author={Zekai Gu and Rui Yan and Jiahao Lu and Peng Li and Zhiyang Dou and Chenyang Si and Zhen Dong and Qifeng Liu and Cheng Lin and Ziwei Liu and Wenping Wang and Yuan Liu},
+    year={2025},
+    journal={arXiv preprint arXiv:2501.03847}
 }
 ```
 
-## 🤝 Contact
 
-If you have any question, please contact wujialong0229@gmail.com.
 
-## 💡 Acknowledgement
-
-Our codebase is based on [huggingface/diffusers](https://github.com/huggingface/diffusers) and [facebookresearch/drqv2](https://github.com/facebookresearch/drqv2).
