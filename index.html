@@ -1,0 +1,2063 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="ORV: 4D Occupancy-centric Robot Video Generation">
+  <meta property="og:title" content="SOCIAL MEDIA TITLE TAG" />
+  <meta property="og:description" content="SOCIAL MEDIA DESCRIPTION TAG TAG" />
+  <meta property="og:url" content="URL OF THE WEBSITE" />
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/image/your_banner_image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+
+  <meta name="twitter:title" content="TWITTER BANNER TITLE META TAG">
+  <meta name="twitter:description" content="TWITTER BANNER DESCRIPTION META TAG">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MX3KXSWCZC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-MX3KXSWCZC');
+  </script>
+
+  <title>ORV: 4D Occupancy-centric Robot Video Generation</title>
+  <link rel="icon" type="image/x-icon" href="static/images/icon.png">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <!-- <link rel="stylesheet" href="static/css/index.css"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">ORV: 4D Occupancy-centric Robot Video Generation
+            </h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="" target="_blank">Xiuyu Yang</a><sup>*</sup>,</span>
+              <span class="author-block">
+                <a href="" target="_blank">Bohan Li</a><sup>*</sup>,</span>
+              <span class="author-block">
+                <a href="" target="_blank">Shaocong Xu</a>,</span>
+              <span class="author-block">
+                <a href="" target="_blank">Nan Wang</a>,</span>
+              <span class="author-block">
+                <a href="" target="_blank">Chongjie Ye</a>,</span>
+              <span class="author-block">
+                <a href="" target="_blank">Zhaoxi Chen</a>,</span>
+              <span class="author-block">
+                <a href="" target="_blank">Minghan Qin</a>,</span>
+              <span class="author-block">
+                <a href="" target="_blank">Yikang Ding</a>,</span>
+              <span class="author-block">
+                <a href="" target="_blank">Xin Jin</a>,</span>
+              <span class="author-block">
+                <a href="" target="_blank">Hang Zhao</a>,</span>
+              <span class="author-block">
+                <a href="" target="_blank">Hao Zhao</a>
+              </span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- <span class="link-block">
+                  <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="static/pdfs/supplementary_material.pdf" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Supplementary</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://github.com/YOUR REPO HERE" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span> -->
+
+                <div class="col-sm-12" style="text-align: center;">
+                  <h3>Table of Contents</h3>
+                  <ul style="list-style-type: none; padding: 0;">
+                    <li><a href="#banner">Introductory Teaser</a></li>
+                    <li><a href="#abstract">Abstract</a></li>
+                    <li><a href="#video_generation_gallery">Video Gallery</a></li>
+                    <li><a href="#text_supp">Textual Supplementary Material</a></li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teaser image -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <img src="assets/images/fig_teaser.png" alt="Teaser Image" style="max-width: 100%; height: auto;">
+        <h2 class="subtitle has-text-centered">
+          We propose <strong>ORV</strong>, an <strong>O</strong>ccupancy-centric <strong>R</strong>obot <strong>V</strong>ideo generation Model, which generates robot manipulation videos precisely following the motion instructions, under the guidance of the 3D occupancy (top). ORV also generates multiview videos to build a 4D embodied world (middle) and transfer simulated data to real-world videos (bottom). The red border denotes the first frame input.
+        </h2>
+      </div>
+    </div>
+  </section>
+  <!-- End teaser image -->
+
+  <!-- Teaser video-->
+  <!-- <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video poster="" id="banner" controls height="100%">
+          <source src="static/videos/banner_video.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle has-text-centered">
+          A short introduction to ORV.
+        </h2>
+      </div>
+    </div>
+  </section> -->
+  <!-- End teaser video -->
+
+  <!-- Paper abstract -->
+  <section class="section hero is-light" id="abstract">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Acquiring real-world robotic simulation data through teleoperation is notoriously time-consuming and labor-intensive.
+              Recently, action-driven generative models have gained widespread adoption in robot learning and simulation, as they 
+              eliminate safety concerns and reduce maintenance efforts. However, the action sequences used in these methods often 
+              result in limited control precision and poor generalization due to their globally coarse alignment. To address these 
+              limitations, we propose <strong>ORV</strong>, an <strong>O</strong>ccupancy-centric <strong>R</strong>obot <strong>V</strong>ideo generation framework, 
+              which utilizes 4D semantic occupancy sequences as a fine-grained representation to provide more accurate semantic and geometric 
+              guidance for video generation. By leveraging occupancy-based representations, ORV enables seamless translation of simulation 
+              data into photorealistic robot videos, while ensuring high temporal consistency and precise controllability. Furthermore, our 
+              framework supports the simultaneous generation of multi-view videos of robot gripping operations—an important capability for 
+              downstream robotic learning tasks. Extensive experimental results demonstrate that ORV consistently outperforms existing 
+              baseline methods across various datasets and sub-tasks. All generated data, code, and models are included in the supplementary material.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End paper abstract -->
+
+  <section clas="hero is-large" id="video_generation_gallery">
+    <div class="container" style="width: 100vw;">
+      <br>
+      <h2 class="title is-3 has-text-centered">4D Semantic Occupancy Samples</h2>
+      <p class="has-text-centered">All shown occupancy have resolution of 400&times;400&times;400.
+      </p>
+
+      <br>
+    </div>
+  </section>
+
+  <div class="video_generation_gallery" id="video_grid_occ" style="width: 100%">
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/occupancy/occ0.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge Episode #667<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/occupancy/occ1.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge Episode #1995<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/occupancy/occ2.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge Episode #504<br></div>
+        </div>
+    </div>
+  
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/occupancy/occ3.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge Episode #534<br></div>
+        </div>
+    </div>
+  
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/occupancy/occ4.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge Episode #792<br></div>
+        </div>
+    </div>
+
+  </div>
+
+  <section clas="hero is-large" id="video_generation_gallery">
+    <div class="container" style="width: 100vw;">
+      <br>
+      <h2 class="title is-3 has-text-centered">Video Generation Gallery (Single-view)</h2>
+      <p class="has-text-centered">All videos have resolution of 320&times;480.
+      </p>
+
+      <br>
+    </div>
+  </section>
+
+  <div class="video_generation_gallery" id="video_grid" style="width: 100%">
+
+    <!-------------------------------- bridge1 --------------------------------->
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge1/00002_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay1 left"><br>Bridge<br>Prediction</div>
+        <div class="overlay1 right"><br>Bridge<br>Ground-truth</div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1/00002_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Bridge<br>Prediction</div>
+            <div class="overlay1 right"><br>Bridge<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1/00004_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Bridge<br>Prediction</div>
+            <div class="overlay1 right"><br>Bridge<br>Ground-truth</div>
+        </div>
+    </div>
+  
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1/00004_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Bridge<br>Prediction</div>
+            <div class="overlay1 right"><br>Bridge<br>Ground-truth</div>
+        </div>
+    </div>
+  
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1/00037_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Bridge<br>Prediction</div>
+            <div class="overlay1 right"><br>Bridge<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1/00039_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Bridge<br>Prediction</div>
+            <div class="overlay1 right"><br>Bridge<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1/00089_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Bridge<br>Prediction</div>
+            <div class="overlay1 right"><br>Bridge<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1/00092_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Bridge<br>Prediction</div>
+            <div class="overlay1 right"><br>Bridge<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1/00108_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Bridge<br>Prediction</div>
+            <div class="overlay1 right"><br>Bridge<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1/00253_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Bridge<br>Prediction</div>
+            <div class="overlay1 right"><br>Bridge<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <!-------------------------------- droid --------------------------------->
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/00031_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/00039_648_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/00062_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/00128_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/00226_216_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/00261_1080_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/00267_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/00272_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid/00307_00_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay1 left"><br>Droid<br>Prediction</div>
+          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid/00309_00_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay1 left"><br>Droid<br>Prediction</div>
+          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/00330_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/00360_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/00426_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/00602_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/00611_1080_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/00611_1728_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/00641_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid/00721_216_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay1 left"><br>Droid<br>Prediction</div>
+          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid/00730_00_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay1 left"><br>Droid<br>Prediction</div>
+          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/01509_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/01615_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/02092_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid/02102_216_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay1 left"><br>Droid<br>Prediction</div>
+          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid/02256_432_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay1 left"><br>Droid<br>Prediction</div>
+          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid/02676_00_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay1 left"><br>Droid<br>Prediction</div>
+          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/03289_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/03435_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid/06004_216_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <!-------------------------------- rt1 --------------------------------->
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1/00025_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay1 left"><br>Droid<br>Prediction</div>
+          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/00422_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/00690_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/00818_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/00825_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/02218_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/02883_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/03515_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1/03557_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay1 left"><br>Droid<br>Prediction</div>
+          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1/03603_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay1 left"><br>Droid<br>Prediction</div>
+          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/03984_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/04189_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/05655_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/06003_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/06218_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/07494_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/08257_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1/10296_32_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay1 left"><br>Droid<br>Prediction</div>
+          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1/11087_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay1 left"><br>Droid<br>Prediction</div>
+          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/11950_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/12865_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/13890_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1/15637_32_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay1 left"><br>Droid<br>Prediction</div>
+          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1/17548_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay1 left"><br>Droid<br>Prediction</div>
+          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1/20816_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay1 left"><br>Droid<br>Prediction</div>
+          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/21690_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/23895_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1/67370_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay1 left"><br>Droid<br>Prediction</div>
+            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+        </div>
+    </div>
+
+  </div>
+
+  <!-------------------------------- bridge1 gallery ----------------------------------->
+
+  <div class="video_generation_gallery" id="video_grid_gallery" style="width: 100%">
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/00430_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/00457_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01544_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01544_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01731_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01844_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01979_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/02056_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/02224_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/02227_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/02231_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/02575_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/02702_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/02722_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/02756_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/03167_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/03416_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/bridge1_gallery/01372_16_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Bridge<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01171_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01181_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01195_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01213_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01219_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01248_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01262_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01277_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01287_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01300_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01300_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01347_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01363_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01370_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01377_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01393_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01398_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/bridge1_gallery/01425_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Bridge<br></div>
+      </div>
+    </div>
+
+    <!-- <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01446_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/01449_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/bridge1_gallery/02088_16_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Bridge<br></div>
+        </div>
+    </div> -->
+
+  </div>
+
+  <section clas="hero is-large" id="video_generation_gallery">
+    <div class="container" style="width: 100vw;">
+      <br>
+      <h2 class="title is-3 has-text-centered">Video Generation Gallery (Multi-view)</h2>
+      <p class="has-text-centered">All videos have resolution of 320&times;480.
+      </p>
+
+      <br>
+    </div>
+  </section>
+
+  <div class="video_generation_gallery" id="video_grid_3view" style="width: 100%">
+
+    <!-------------------------------- bridge1 multiview --------------------------------->
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00029_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00032_16_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00038_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00041_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00052_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00059_16_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00079_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00118_48_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00131_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00177_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00180_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00184_32_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00260_32_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00692_16_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00697_16_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00701_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00704_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00721_48_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00723_16_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00772_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00785_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00787_16_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00814_16_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00817_16_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00854_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00923_16_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 3-view<br></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="video_generation_gallery" id="video_grid_2view" style="width: 100%">
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00175_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00185_16_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00232_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00236_64_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00174_16_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00884_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00823_16_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00786_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00754_16_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00737_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00730_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00721_80_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00721_32_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/bridge2/00697_00_17.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/00001_00_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/00004_00_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/00020_00_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/00027_00_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/00031_00_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/00039_648_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/00085_432_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/00088_00_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/00112_00_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/00148_00_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/00507_00_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/00531_00_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/00752_00_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/01244_216_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/01329_216_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/03135_00_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/03180_00_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/03222_216_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/03269_00_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/03310_00_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/04175_432_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/04505_00_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/04925_216_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/06004_216_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/06722_216_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/droid2/16144_216_29.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Image carousel -->
+  <!-- <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item">
+            <img src="static/images/carousel1.jpg" alt="MY ALT TEXT" />
+            <h2 class="subtitle has-text-centered">
+              First image description.
+            </h2>
+          </div>
+          <div class="item">
+            <img src="static/images/carousel2.jpg" alt="MY ALT TEXT" />
+            <h2 class="subtitle has-text-centered">
+              Second image description.
+            </h2>
+          </div>
+          <div class="item">
+            <img src="static/images/carousel3.jpg" alt="MY ALT TEXT" />
+            <h2 class="subtitle has-text-centered">
+              Third image description.
+            </h2>
+          </div>
+          <div class="item">
+            <img src="static/images/carousel4.jpg" alt="MY ALT TEXT" />
+            <h2 class="subtitle has-text-centered">
+              Fourth image description.
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+  <!-- End image carousel -->
+
+
+
+
+  <!-- Youtube video -->
+  <!-- <section class="hero is-small is-light">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3">Video Presentation</h2>
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+
+            <div class="publication-video">
+              <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media"
+                allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+  <!-- End youtube video -->
+
+
+  <!-- Video carousel -->
+  <!-- <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3">Another Carousel</h2>
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item item-video1">
+            <video poster="" id="video1" autoplay controls muted loop height="100%">
+              <source src="static/videos/carousel1.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-video2">
+            <video poster="" id="video2" autoplay controls muted loop height="100%">
+              <source src="static/videos/carousel2.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-video3">
+            <video poster="" id="video3" autoplay controls muted loop height="100%">\
+              <source src="static/videos/carousel3.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+  <!-- End video carousel -->
+
+
+  <!-- Paper poster -->
+  <section class="hero is-small is-light" id="text_supp">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title has-text-centered">Textual Supplementary Material</h2>
+
+        <iframe src="supp.pdf" width="100%" height="550">
+        </iframe>
+
+      </div>
+    </div>
+  </section>
+  <!--End paper poster -->
+
+
+  <!--BibTex citation -->
+  <!-- <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>BibTex Code Here</code></pre>
+    </div>
+  </section> -->
+  <!--End BibTex citation -->
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                target="_blank">Academic Project Page Template</a> which was adopted from the <a
+                href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              You are free to borrow the source code of this website, we just ask that you link back to this page in the
+              footer. <br> This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Statcounter tracking code -->
+
+  <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+  <!-- End of Statcounter Code -->
+
+</body>
+
+</html>
