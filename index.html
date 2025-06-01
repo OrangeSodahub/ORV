@@ -87,7 +87,7 @@
               <span class="author-block">
                 <a href="https://scholar.google.com/citations?user=DmahiOYAAAAJ" target="_blank">Hang Zhao</a><sup>8</sup>,</span>
               <span class="author-block">
-                <a href="https://scholar.google.com/citations?hl=zh-CN&user=ygQznUQAAAAJ" target="_blank">Hao Zhao</a><sup>1,9</sup>
+                <a href="https://scholar.google.com/citations?hl=zh-CN&user=ygQznUQAAAAJ" target="_blank">Hao Zhao</a><sup>1,8</sup>
               </span>
             </div>
 
@@ -97,16 +97,15 @@
               <span class="author-block"><sup>3</sup> EIT</span>
               <span class="author-block"><sup>4</sup> CUHK(SZ)</span>
               <span class="author-block"><sup>5</sup> NUS</span>
-              <span class="author-block"><sup>6</sup> ByteDance</span><br>
+              <span class="author-block"><sup>6</sup> ByteDance</span>
               <span class="author-block"><sup>7</sup> Megvii Technology</span>
-              <span class="author-block"><sup>8</sup> IIIS, Tsinghua University</span>
-              <span class="author-block"><sup>9</sup> AIR, Tsinghua University</span>
+              <span class="author-block"><sup>8</sup> THU</span>
             </div>
 
             <div class="column has-text-centered">
               <div class="publication-links">
                 <span class="link-block">
-                  <a href="https://arxiv.org/pdf/TBD.pdf" target="_blank"
+                  <a href="" target="_blank"
                     class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="fas fa-file-pdf"></i>
@@ -116,7 +115,7 @@
                 </span>
 
                 <span class="link-block">
-                  <a href="https://arxiv.org/abs/TBD" target="_blank"
+                  <a href="" target="_blank"
                     class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="ai ai-arxiv"></i>
@@ -146,8 +145,9 @@
       <ul style="list-style-type: none; padding: 0;">
         <li><a href="#banner">Introductory Teaser</a></li>
         <li><a href="#abstract">Abstract</a></li>
-        <li><a href="#video_generation_gallery">Video Gallery 1</a></li>
-        <li><a href="#video_generation_gallery">Video Gallery 2</a></li>
+        <li><a href="#video_comparison_1_title">Video Comparison</a></li>
+        <li><a href="#video_gallery_1_title">Video Gallery 1</a></li>
+        <li><a href="#video_gallery_2_title">Video Gallery 2</a></li>
         <!-- <li><a href="#text_supp">Textual Full Paper</a></li> -->
       </ul>
     </div>
@@ -158,8 +158,11 @@
     <div class="container is-max-desktop">
       <div class="hero-body">
         <img src="assets/images/fig_teaser.png" alt="Teaser Image" style="max-width: 100%; height: auto;">
-        <h2 class="subtitle has-text-centered">
+        <!-- <h2 class="subtitle has-text-centered">
           We propose <strong>ORV</strong>, an <strong>O</strong>ccupancy-centric <strong>R</strong>obot <strong>V</strong>ideo generation Model, which generates robot manipulation videos precisely following the motion instructions, under the guidance of the 3D occupancy (top). ORV also generates multiview videos to build a 4D embodied world (middle) and transfer simulated data to real-world videos (bottom). The red border denotes the first frame input.
+        </h2> -->
+        <h2 class="subtitle has-text-centered">
+          TL;DR We propose ORV, a novel framework of robot video generation with the geometry guidance of 4D occupancy, which achieves higher control precision, shows strong generalizations, performs multi-view consistent videos generation and conducts simulation-to-real data transfer.
         </h2>
       </div>
     </div>
@@ -208,25 +211,25 @@
   </section>
   <!-- End paper abstract -->
 
-  <section clas="hero is-large" id="video_generation_gallery">
+  <section class="section hero" id="video_occ_title">
     <div class="container" style="width: 100vw;">
       <br>
-      <h2 class="title is-3 has-text-centered">4D Semantic Occupancy Samples</h2>
-      <p class="has-text-centered">All shown occupancy have resolution of 400&times;400&times;400.
+      <h2 class="title is-3 has-text-centered">4D Occupancy Samples</h2>
+      <p class="has-text-centered">All shown occupancy have resolution of 16&times;400&times;400&times;400.
       </p>
 
       <br>
     </div>
   </section>
 
-  <div class="video_generation_gallery" id="video_grid_occ" style="width: 100%">
+  <div class="video_occ" id="video_grid_occ" style="width: 100%">
 
     <div class="video_wrapper">
       <div class="video_container">
         <video autoplay="" muted="" playsinline="" loop="">
             <source src="assets/videos/occupancy/occ0.mp4" type="video/mp4">
         </video>
-        <div class="overlay"><br>Bridge Episode #667<br></div>
+        <div class="overlay"><br>Bridge Sample #667<br></div>
       </div>
     </div>
 
@@ -235,7 +238,7 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/occupancy/occ1.mp4" type="video/mp4">
             </video>
-            <div class="overlay"><br>Bridge Episode #1995<br></div>
+            <div class="overlay"><br>Bridge Sample #1995<br></div>
         </div>
     </div>
 
@@ -244,7 +247,7 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/occupancy/occ2.mp4" type="video/mp4">
             </video>
-            <div class="overlay"><br>Bridge Episode #504<br></div>
+            <div class="overlay"><br>Bridge Sample #504<br></div>
         </div>
     </div>
   
@@ -253,7 +256,7 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/occupancy/occ3.mp4" type="video/mp4">
             </video>
-            <div class="overlay"><br>Bridge Episode #534<br></div>
+            <div class="overlay"><br>Bridge Sample #534<br></div>
         </div>
     </div>
   
@@ -262,24 +265,25 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/occupancy/occ4.mp4" type="video/mp4">
             </video>
-            <div class="overlay"><br>Bridge Episode #792<br></div>
+            <div class="overlay"><br>Bridge Sample #792<br></div>
         </div>
     </div>
 
   </div>
 
-  <section clas="hero is-large" id="video_generation_gallery">
+  <section class="section hero is-light" id="video_comparison_1_title">
     <div class="container" style="width: 100vw;">
       <br>
-      <h2 class="title is-3 has-text-centered">Video Generation Gallery 1</h2>
-      <p class="has-text-centered">All videos have resolution of 320&times;480.
+      <h2 class="title is-3 has-text-centered">Video Comparison</h2>
+      <p></p>
+      <h4 class="subtitle has-text-centered">Examples of prediction-GT video pairs</h4>
+      <p class="has-text-centered">All videos are displayed at the resolution of 320&times;480, regardless of their original resolutions which may result in varying visual quality.
       </p>
-
       <br>
     </div>
   </section>
 
-  <div class="video_generation_gallery" id="video_grid" style="width: 100%">
+  <div class="video_comparison_1" id="video_grid" style="width: 100%">
 
     <!-------------------------------- bridge1 --------------------------------->
 
@@ -388,7 +392,7 @@
     <div class="video_wrapper">
         <div class="video_container">
             <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/00031_00_29_0.mp4" type="video/mp4">
+                <source src="assets/videos/droid1/00226_216_29_0.mp4" type="video/mp4">
             </video>
             <div class="overlay1 left"><br>Droid<br>Prediction</div>
             <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
@@ -398,7 +402,7 @@
     <div class="video_wrapper">
         <div class="video_container">
             <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/00039_648_29_0.mp4" type="video/mp4">
+                <source src="assets/videos/droid1/00261_1080_29_0.mp4" type="video/mp4">
             </video>
             <div class="overlay1 left"><br>Droid<br>Prediction</div>
             <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
@@ -408,57 +412,7 @@
     <div class="video_wrapper">
         <div class="video_container">
             <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/00062_00_29_0.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/00128_00_29_0.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/00226_216_29_0.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/00261_1080_29_0.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/00267_00_29_0.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/00272_00_29_0.mp4" type="video/mp4">
+                <source src="assets/videos/droid1/00272_00_29_0.mp4" type="video/mp4">
             </video>
             <div class="overlay1 left"><br>Droid<br>Prediction</div>
             <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
@@ -468,7 +422,7 @@
     <div class="video_wrapper">
       <div class="video_container">
           <video autoplay="" muted="" playsinline="" loop="">
-              <source src="assets/videos/droid/00307_00_29_0.mp4" type="video/mp4">
+              <source src="assets/videos/droid1/00307_00_29_0.mp4" type="video/mp4">
           </video>
           <div class="overlay1 left"><br>Droid<br>Prediction</div>
           <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
@@ -478,7 +432,7 @@
     <div class="video_wrapper">
       <div class="video_container">
           <video autoplay="" muted="" playsinline="" loop="">
-              <source src="assets/videos/droid/00309_00_29_0.mp4" type="video/mp4">
+              <source src="assets/videos/droid1/00309_00_29_0.mp4" type="video/mp4">
           </video>
           <div class="overlay1 left"><br>Droid<br>Prediction</div>
           <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
@@ -488,7 +442,7 @@
     <div class="video_wrapper">
         <div class="video_container">
             <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/00330_00_29_0.mp4" type="video/mp4">
+                <source src="assets/videos/droid1/00360_00_29_0.mp4" type="video/mp4">
             </video>
             <div class="overlay1 left"><br>Droid<br>Prediction</div>
             <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
@@ -498,7 +452,7 @@
     <div class="video_wrapper">
         <div class="video_container">
             <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/00360_00_29_0.mp4" type="video/mp4">
+                <source src="assets/videos/droid1/00611_1728_29_0.mp4" type="video/mp4">
             </video>
             <div class="overlay1 left"><br>Droid<br>Prediction</div>
             <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
@@ -508,47 +462,7 @@
     <div class="video_wrapper">
         <div class="video_container">
             <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/00426_00_29_0.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/00602_00_29_0.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/00611_1080_29_0.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/00611_1728_29_0.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/00641_00_29_0.mp4" type="video/mp4">
+                <source src="assets/videos/droid1/02092_00_29_0.mp4" type="video/mp4">
             </video>
             <div class="overlay1 left"><br>Droid<br>Prediction</div>
             <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
@@ -558,17 +472,7 @@
     <div class="video_wrapper">
       <div class="video_container">
           <video autoplay="" muted="" playsinline="" loop="">
-              <source src="assets/videos/droid/00721_216_29_0.mp4" type="video/mp4">
-          </video>
-          <div class="overlay1 left"><br>Droid<br>Prediction</div>
-          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-      </div>
-    </div>
-
-    <div class="video_wrapper">
-      <div class="video_container">
-          <video autoplay="" muted="" playsinline="" loop="">
-              <source src="assets/videos/droid/00730_00_29_0.mp4" type="video/mp4">
+              <source src="assets/videos/droid1/02256_432_29_0.mp4" type="video/mp4">
           </video>
           <div class="overlay1 left"><br>Droid<br>Prediction</div>
           <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
@@ -578,87 +482,7 @@
     <div class="video_wrapper">
         <div class="video_container">
             <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/01509_00_29_0.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/01615_00_29_0.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/02092_00_29_0.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-      <div class="video_container">
-          <video autoplay="" muted="" playsinline="" loop="">
-              <source src="assets/videos/droid/02102_216_29_0.mp4" type="video/mp4">
-          </video>
-          <div class="overlay1 left"><br>Droid<br>Prediction</div>
-          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-      </div>
-    </div>
-
-    <div class="video_wrapper">
-      <div class="video_container">
-          <video autoplay="" muted="" playsinline="" loop="">
-              <source src="assets/videos/droid/02256_432_29_0.mp4" type="video/mp4">
-          </video>
-          <div class="overlay1 left"><br>Droid<br>Prediction</div>
-          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-      </div>
-    </div>
-
-    <div class="video_wrapper">
-      <div class="video_container">
-          <video autoplay="" muted="" playsinline="" loop="">
-              <source src="assets/videos/droid/02676_00_29_0.mp4" type="video/mp4">
-          </video>
-          <div class="overlay1 left"><br>Droid<br>Prediction</div>
-          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-      </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/03289_00_29_0.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/03435_00_29_0.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/droid/06004_216_29_0.mp4" type="video/mp4">
+                <source src="assets/videos/droid1/06004_216_29_0.mp4" type="video/mp4">
             </video>
             <div class="overlay1 left"><br>Droid<br>Prediction</div>
             <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
@@ -672,8 +496,8 @@
           <video autoplay="" muted="" playsinline="" loop="">
               <source src="assets/videos/rt1/00025_00_17.mp4" type="video/mp4">
           </video>
-          <div class="overlay1 left"><br>Droid<br>Prediction</div>
-          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+          <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+          <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
       </div>
     </div>
 
@@ -682,8 +506,8 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/rt1/00422_00_17.mp4" type="video/mp4">
             </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+            <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+            <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
         </div>
     </div>
 
@@ -692,8 +516,8 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/rt1/00690_00_17.mp4" type="video/mp4">
             </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+            <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+            <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
         </div>
     </div>
 
@@ -702,8 +526,8 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/rt1/00818_00_17.mp4" type="video/mp4">
             </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+            <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+            <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
         </div>
     </div>
 
@@ -712,8 +536,8 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/rt1/00825_32_17.mp4" type="video/mp4">
             </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+            <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+            <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
         </div>
     </div>
 
@@ -722,8 +546,8 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/rt1/02218_00_17.mp4" type="video/mp4">
             </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+            <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+            <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
         </div>
     </div>
 
@@ -732,8 +556,8 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/rt1/02883_00_17.mp4" type="video/mp4">
             </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+            <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+            <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
         </div>
     </div>
 
@@ -742,8 +566,8 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/rt1/03515_00_17.mp4" type="video/mp4">
             </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+            <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+            <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
         </div>
     </div>
 
@@ -752,8 +576,8 @@
           <video autoplay="" muted="" playsinline="" loop="">
               <source src="assets/videos/rt1/03557_00_17.mp4" type="video/mp4">
           </video>
-          <div class="overlay1 left"><br>Droid<br>Prediction</div>
-          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+          <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+          <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
       </div>
     </div>
 
@@ -762,8 +586,8 @@
           <video autoplay="" muted="" playsinline="" loop="">
               <source src="assets/videos/rt1/03603_00_17.mp4" type="video/mp4">
           </video>
-          <div class="overlay1 left"><br>Droid<br>Prediction</div>
-          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+          <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+          <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
       </div>
     </div>
 
@@ -772,8 +596,8 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/rt1/03984_00_17.mp4" type="video/mp4">
             </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+            <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+            <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
         </div>
     </div>
 
@@ -782,8 +606,8 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/rt1/04189_32_17.mp4" type="video/mp4">
             </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+            <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+            <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
         </div>
     </div>
 
@@ -792,8 +616,8 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/rt1/05655_00_17.mp4" type="video/mp4">
             </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+            <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+            <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
         </div>
     </div>
 
@@ -802,8 +626,8 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/rt1/06003_00_17.mp4" type="video/mp4">
             </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+            <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+            <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
         </div>
     </div>
 
@@ -812,8 +636,8 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/rt1/06218_32_17.mp4" type="video/mp4">
             </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+            <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+            <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
         </div>
     </div>
 
@@ -822,8 +646,8 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/rt1/07494_00_17.mp4" type="video/mp4">
             </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+            <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+            <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
         </div>
     </div>
 
@@ -832,8 +656,8 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/rt1/08257_00_17.mp4" type="video/mp4">
             </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+            <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+            <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
         </div>
     </div>
 
@@ -842,8 +666,8 @@
           <video autoplay="" muted="" playsinline="" loop="">
               <source src="assets/videos/rt1/10296_32_17.mp4" type="video/mp4">
           </video>
-          <div class="overlay1 left"><br>Droid<br>Prediction</div>
-          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+          <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+          <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
       </div>
     </div>
 
@@ -852,8 +676,8 @@
           <video autoplay="" muted="" playsinline="" loop="">
               <source src="assets/videos/rt1/11087_00_17.mp4" type="video/mp4">
           </video>
-          <div class="overlay1 left"><br>Droid<br>Prediction</div>
-          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+          <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+          <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
       </div>
     </div>
 
@@ -862,96 +686,28 @@
             <video autoplay="" muted="" playsinline="" loop="">
                 <source src="assets/videos/rt1/11950_00_17.mp4" type="video/mp4">
             </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/rt1/12865_00_17.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/rt1/13890_00_17.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-      <div class="video_container">
-          <video autoplay="" muted="" playsinline="" loop="">
-              <source src="assets/videos/rt1/15637_32_17.mp4" type="video/mp4">
-          </video>
-          <div class="overlay1 left"><br>Droid<br>Prediction</div>
-          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-      </div>
-    </div>
-
-    <div class="video_wrapper">
-      <div class="video_container">
-          <video autoplay="" muted="" playsinline="" loop="">
-              <source src="assets/videos/rt1/17548_00_17.mp4" type="video/mp4">
-          </video>
-          <div class="overlay1 left"><br>Droid<br>Prediction</div>
-          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-      </div>
-    </div>
-
-    <div class="video_wrapper">
-      <div class="video_container">
-          <video autoplay="" muted="" playsinline="" loop="">
-              <source src="assets/videos/rt1/20816_00_17.mp4" type="video/mp4">
-          </video>
-          <div class="overlay1 left"><br>Droid<br>Prediction</div>
-          <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-      </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/rt1/21690_32_17.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/rt1/23895_00_17.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
-        </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/rt1/67370_00_17.mp4" type="video/mp4">
-            </video>
-            <div class="overlay1 left"><br>Droid<br>Prediction</div>
-            <div class="overlay1 right"><br>Droid<br>Ground-truth</div>
+            <div class="overlay1 left"><br>RT-1<br>Prediction</div>
+            <div class="overlay1 right"><br>RT-1<br>Ground-truth</div>
         </div>
     </div>
 
   </div>
 
-  <!-------------------------------- bridge1 gallery ----------------------------------->
+  <section class="section hero" id="video_gallery_1_title">
+    <div class="container" style="width: 100vw;">
+      <br>
+      <h2 class="title is-3 has-text-centered">Video Gallery 1</h2>
+      <p></p>
+      <h4 class="subtitle has-text-centered">Examples of single-view robot manipulation videos generation</h4>
+      <p class="has-text-centered">All videos are displayed at the resolution of 320&times;480, regardless of their original resolutions which may result in varying visual quality.
+      </p>
+      <br>
+    </div>
+  </section>
+  
+  <div class="video_gallery_1" id="video_grid_gallery" style="width: 100%">
 
-  <div class="video_generation_gallery" id="video_grid_gallery" style="width: 100%">
+  <!-------------------------------- bridge1 gallery ----------------------------------->
 
     <div class="video_wrapper">
         <div class="video_container">
@@ -1277,47 +1033,983 @@
       </div>
     </div>
 
-    <!-- <div class="video_wrapper">
+  <!-------------------------------- droid1 gallery ----------------------------------->
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/00031_00_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
         <div class="video_container">
             <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/bridge1_gallery/01446_16_17.mp4" type="video/mp4">
+                <source src="assets/videos/droid1_gallery/00039_648_29_0.mp4" type="video/mp4">
             </video>
-            <div class="overlay"><br>Bridge<br></div>
+            <div class="overlay"><br>Droid<br></div>
         </div>
     </div>
 
     <div class="video_wrapper">
         <div class="video_container">
             <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/bridge1_gallery/01449_16_17.mp4" type="video/mp4">
+                <source src="assets/videos/droid1_gallery/00062_00_29_0.mp4" type="video/mp4">
             </video>
-            <div class="overlay"><br>Bridge<br></div>
+            <div class="overlay"><br>Droid<br></div>
         </div>
     </div>
 
     <div class="video_wrapper">
         <div class="video_container">
             <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/bridge1_gallery/02088_16_17.mp4" type="video/mp4">
+                <source src="assets/videos/droid1_gallery/00128_00_29_0.mp4" type="video/mp4">
             </video>
-            <div class="overlay"><br>Bridge<br></div>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/00267_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/00330_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/00426_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/00602_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/00611_1080_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/00641_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/00721_216_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/00730_00_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/01509_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/01615_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/02102_216_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/02676_00_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/03289_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/03435_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/01414_00_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/01494_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/01651_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/01688_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/01703_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/01836_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/01986_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/02244_00_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/02357_216_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/02714_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/02941_432_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/03051_00_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/03140_00_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/03163_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/03222_216_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/03353_00_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/03360_216_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/03495_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/03516_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/03579_216_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/03591_216_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/03608_216_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/03610_216_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/03693_216_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/03999_216_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/04288_216_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/04300_00_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/04696_432_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/05181_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/05594_216_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/droid1_gallery/05781_00_29_0.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>Droid<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/droid1_gallery/06540_00_29_0.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>Droid<br></div>
+      </div>
+    </div>
+
+    <!-------------------------------- rt-1 gallery ----------------------------------->
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/12865_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/13890_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/15637_32_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/17548_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/20816_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/21690_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/23895_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/67370_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/07881_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/08090_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/08301_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/08489_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/08510_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/08812_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/09023_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/09208_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/09225_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/09567_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/09756_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/10206_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/10622_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/10789_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/11349_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/11492_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/12778_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/13074_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/13465_32_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/13874_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/14269_32_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/14724_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/14937_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/15116_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/15469_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/15469_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/15637_64_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/16126_64_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/16471_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/17390_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/18221_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/18664_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/19081_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/19085_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/20213_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/21186_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/21690_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/23384_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/28428_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/32917_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/32917_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/34586_32_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/37803_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/38601_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
+        </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/41441_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/53762_00_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+<!-- 
+    <div class="video_wrapper">
+      <div class="video_container">
+          <video autoplay="" muted="" playsinline="" loop="">
+              <source src="assets/videos/rt1_gallery/56498_32_17.mp4" type="video/mp4">
+          </video>
+          <div class="overlay"><br>RT-1<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+        <div class="video_container">
+            <video autoplay="" muted="" playsinline="" loop="">
+                <source src="assets/videos/rt1_gallery/76038_00_17.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"><br>RT-1<br></div>
         </div>
     </div> -->
 
   </div>
 
-  <section clas="hero is-large" id="video_generation_gallery">
+  <section class="section hero" id="video_gallery_2_title">
     <div class="container" style="width: 100vw;">
       <br>
-      <h2 class="title is-3 has-text-centered">Video Generation Gallery 2</h2>
-      <p class="has-text-centered">All videos have resolution of 320&times;480.
+      <h2 class="title is-3 has-text-centered">Video Gallery 2</h2>
+      <p></p>
+      <h4 class="subtitle has-text-centered">Examples of multi-view robot manipulation videos generation</h4>
+      <p class="has-text-centered">All videos are displayed at the resolution of 320&times;480, regardless of their original resolutions which may result in varying visual quality.
       </p>
 
       <br>
     </div>
   </section>
 
-  <div class="video_generation_gallery" id="video_grid_3view" style="width: 100%">
+  <div class="video_gallery_2" id="video_grid_3view" style="width: 100%">
 
     <!-------------------------------- bridge1 multiview --------------------------------->
 
@@ -1557,7 +2249,7 @@
 
   </div>
 
-  <div class="video_generation_gallery" id="video_grid_2view" style="width: 100%">
+  <div class="video_gallery" id="video_grid_2view" style="width: 100%">
 
     <div class="video_wrapper">
       <div class="video_container">
