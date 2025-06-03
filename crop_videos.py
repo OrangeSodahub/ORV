@@ -7,8 +7,8 @@ from PIL import Image
 from torchvision import transforms
 
 
-video_path = "/Users/xiuyuyang/WorkSpace/Research/THU/NIPS'25/ORV/assets/videos/occupancy"
-save_path = "/Users/xiuyuyang/WorkSpace/Research/THU/NIPS'25/ORV/assets/videos/new_occupancy"
+video_path = "assets/videos/occupancy"
+save_path = "assets/videos/new_occupancy"
 os.makedirs(save_path, exist_ok=True)
 
 video_files = list(sorted(os.listdir(video_path)))
