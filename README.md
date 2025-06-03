@@ -4,7 +4,7 @@
 
 
 ## About
-TL;DR TL;DR We propose ORV, a novel framework of robot video generation with the geometry guidance of 4D occupancy, which achieves higher control precision, shows strong generalizations, performs multi-view consistent videos generation and conducts simulation-to-real data transfer.
+TL;DR We propose ORV, a novel framework of robot video generation with the geometry guidance of 4D occupancy, which achieves higher control precision, shows strong generalizations, performs multi-view consistent videos generation and conducts simulation-to-real data transfer.
 
 <img src="assets/teaser.png" width="100%"/>
 <details>
