@@ -5,7 +5,7 @@ TL;DR ORV generates robot videos with the geometry guidance of 4D occupancy, ach
 <img src="assets/teaser.png" width="100%"/>
 
 > [**ORV: 4D Occupancy-centric Robot Video Generation**](https://orangesodahub.github.io/ORV/)                
-> Xiuyu Yang*, Bohan Li*, Shaocong Xu, Nan Wang, Chongjie Ye, Zhaoxi Chen, Minghan Qin, Yikang Ding, Xin Jin, Hang Zhao, Hao Zhao
+> Xiuyu Yang*, Bohan Li*, Shaocong Xu, Nan Wang, Chongjie Ye, Zhaoxi Chen, Minghan Qin, Yikang Ding, Xin Jin, Hang Zhao, Hao Zhao                                     
 > *Preprint ([arXiv 2506.03079](http://arxiv.org/abs/2506.03079))*
 
 ## BibTeX
