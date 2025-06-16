@@ -92,28 +92,6 @@ decord.bridge.set_bridge("torch")
 from decord import VideoReader, cpu
 
 
-# def read_mp4(path: str) -> npt.NDArray:
-
-#     assert path.endswith('.mp4'), f'Invalid path which should be in *.mp4 format, got {path}.'
-
-#     cap = cv2.VideoCapture(path)
-#     if not cap.isOpened():
-#         raise ValueError(f"Cannot process trajectory: {path}")
-
-#     frames = []
-#     while True:
-#         ret, frame = cap.read()
-#         if not ret:
-#             break
-#         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-#         frames.append(frame)
-
-#     cap.release()
-#     numpy_images = np.array(frames)  # -> [h, w, c]
-
-#     return numpy_images
-
-
 def read_mp4(path: str) -> npt.NDArray:
     assert path.endswith('.mp4'), f'Invalid path which should be in *.mp4 format, got {path}.'
     vr = VideoReader(path, ctx=cpu(0))
@@ -710,19 +688,6 @@ def get_cameras(
             depth_conf = depth_conf[0].float().cpu()  # -> [n_view, H, W]
             point_map = point_map[0].float().cpu()  # -> [n_view, H, W, 3]
             point_conf = point_conf[0].float().cpu()  # -> [n_view, H, W, 3]
-
-            # rescale the intrinsic back
-            # ori_size = (320, 480)
-            # new_size = (350, 518)
-            # ori_h, ori_w = ori_size
-            # new_h, new_w = new_size
-            # scale_x = ori_w / new_w
-            # scale_y = ori_h / new_h
-            # intrinsic[..., 0, 0] *= scale_x
-            # intrinsic[..., 0, 2] *= scale_x
-            # intrinsic[..., 1, 1] *= scale_y
-            # intrinsic[..., 1, 2] *= scale_y
-            # breakpoint()
 
             # get rgbs for points
             images = images[0].permute(0, 2, 3, 1).cpu()  # -> [n_view, H, W, 3]

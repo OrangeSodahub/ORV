@@ -46,8 +46,8 @@ def _load_episode_droid(episode: dict):
             episode_dict.update(
                 language_instruction=[
                     bytearray(step["language_instruction"].numpy()).decode(),
-                    # bytearray(step["language_instruction_2"].numpy()).decode(),
-                    # bytearray(step["language_instruction_3"].numpy()).decode(),
+                    bytearray(step["language_instruction_2"].numpy()).decode(),
+                    bytearray(step["language_instruction_3"].numpy()).decode(),
                 ],
             )
 
@@ -246,6 +246,8 @@ def _load_episode_bridgev2(episode: dict):
         ).permute(0, 2, 3, 1).numpy()
 
     try:
+
+        video_path_0 = video_path_1 = video_path_2 = video_path_3 = 'none'
 
         # save videos
         video_params = dict(
@@ -463,19 +465,19 @@ def process_bridge():
         episode_loader_processes.append(p)
 
     # process train split
-    # for index, episode in enumerate(tqdm(train_ds, total=train_episodes_limit)):
-    #     # if already processed, just skip.
-    #     if (
-    #         os.path.exists(os.path.join(save_path, 'videos', 'train', str(index))) and
-    #         os.path.exists(os.path.join(save_path, 'annotation', 'train', f'{str(index)}.json'))
-    #     ):
-    #         continue
-    #     if index >= train_episodes_limit:
-    #         break
-    #     tqdm.write(f'Processing episode {index=} for train split ...')
-    #     preprocessed_episode = _preprocess_episode(episode, index, 'train', save_path=save_path)
-    #     queue.put(preprocessed_episode, block=True, timeout=None)
-    #     gc.collect()
+    for index, episode in enumerate(tqdm(train_ds, total=train_episodes_limit)):
+        # if already processed, just skip.
+        if (
+            os.path.exists(os.path.join(save_path, 'videos', 'train', str(index))) and
+            os.path.exists(os.path.join(save_path, 'annotation', 'train', f'{str(index)}.json'))
+        ):
+            continue
+        if index >= train_episodes_limit:
+            break
+        tqdm.write(f'Processing episode {index=} for train split ...')
+        preprocessed_episode = _preprocess_episode(episode, index, 'train', save_path=save_path)
+        queue.put(preprocessed_episode, block=True, timeout=None)
+        gc.collect()
 
     # process val split
     for index, episode in enumerate(tqdm(val_ds, total=val_episodes_limit)):

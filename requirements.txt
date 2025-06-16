@@ -1,13 +1,16 @@
-# spatrack
+# pytorch
+torch==2.5.1+cu118
+torchaudio==2.5.1+cu118
+torchvision==0.20.1+cu118
+
+# commons
+beautifulsoup4==4.13.4
 easydict==1.13
-opencv-python==4.9.0.80
-moviepy==1.0.3
-flow-vis==0.1
-matplotlib==3.8.3
-einops==0.7.0
-timm==0.6.7
-scikit-image==0.22.0
-scikit-learn==1.4.1.post1
+omegaconf==2.3.0
+pillow==11.0.0
+rich==14.0.0
+tqdm
+wandb
 cupy-cuda11x
 accelerate
 yt-dlp
@@ -20,13 +23,20 @@ transformers>=4.45.2
 hf_transfer>=0.1.8
 peft>=0.12.0
 decord>=0.6.0
-wandb
 torchao>=0.5.0
 sentencepiece>=0.2.0
 imageio-ffmpeg>=0.5.1
 numpy>=1.26.4
-# git+https://github.com/asomoza/image_gen_aux.git
-# deepspeed
 
-# submodules
-# -r submodules/MoGe/requirements.txt
+# ml libraries
+accelerate==1.6.0
+huggingface-hub==0.31.1
+matplotlib==3.8.3
+ninja==1.11.1.4
+scikit-image==0.22.0
+scikit-learn==1.4.1.post1
+scipy==1.15.2
+timm==0.6.7
+einops==0.7.0
+opencv-python==4.9.0.80
+triton==3.1.0

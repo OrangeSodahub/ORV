@@ -9,8 +9,6 @@ from diffusers.models.modeling_outputs import Transformer2DModelOutput
 from diffusers.video_processor import VideoProcessor as _VideoProcessor
 from diffusers.image_processor import PipelineImageInput
 
-from training.utils import CONSOLE
-
 
 @dataclass
 class Transformer3DModelTrajOutput(Transformer2DModelOutput):

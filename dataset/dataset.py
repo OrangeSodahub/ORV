@@ -199,6 +199,7 @@ class RobotDataset(Dataset, ConfigMixin):
         # others
         slice_frame: bool = True,
         use_3dvae: bool = True,
+        vae_has_first_single_frame: bool = True,
         test_mode: bool = False,
         drop_last: bool = True,
         no_normalize: bool = False,
@@ -488,7 +489,7 @@ class RobotDataset(Dataset, ConfigMixin):
         # If slice frames, we will extract samples with fixed length and at an preset interval
         if self.config.slice_frame:
 
-            start_frame = 0 if not self.config.use_3dvae else self.config.sequence_interval
+            start_frame = 0 if not self.config.vae_has_first_single_frame else self.config.sequence_interval
             for frame_i in range(
                 start_frame,
                 n_frames,
@@ -516,7 +517,7 @@ class RobotDataset(Dataset, ConfigMixin):
                 if len(frame_ids) == self.config.sequence_length:
 
                     # to satify the (8n+1) frames
-                    if self.config.use_3dvae:
+                    if self.config.vae_has_first_single_frame:
                         frame_ids.insert(0, frame_i - self.config.sequence_interval)
 
                     sample['frame_ids'] = frame_ids
@@ -941,24 +942,27 @@ class RobotDataset(Dataset, ConfigMixin):
         arm_states = all_states[frame_ids, :6]
         cont_gripper_states = all_cont_gripper_states[frame_ids]
 
+        if self.config.vae_has_first_single_frame:
+            assert self.config.use_3dvae, 'Only when using 3d vae, vae has first single frame!'
+
         # sannity check
         assert (
             ((
                 arm_states.shape[0] == self.config.sequence_length
-                and not self.config.use_3dvae) or
+                and not self.config.vae_has_first_single_frame) or
              (
                  arm_states.shape[0] - 1 == self.config.sequence_length
-                 and self.config.use_3dvae)
+                 and self.config.vae_has_first_single_frame)
         ) and self.config.slice_frame) or not self.config.slice_frame, \
             f'{arm_states.shape=} v.s. {self.config.sequence_length=} with {frame_ids=}!'
 
         assert (
             ((
                 cont_gripper_states.shape[0] == self.config.sequence_length
-                and not self.config.use_3dvae) or
+                and not self.config.vae_has_first_single_frame) or
              (
                  cont_gripper_states.shape[0] - 1 == self.config.sequence_length
-                 and self.config.use_3dvae)
+                 and self.config.vae_has_first_single_frame)
         ) and self.config.slice_frame) or not self.config.slice_frame, \
             f'{cont_gripper_states.shape=} v.s. {self.config.sequence_length=} with {frame_ids=}!'
 
@@ -1099,7 +1103,8 @@ class RobotDataset(Dataset, ConfigMixin):
             if not self.config.slice_frame:  # num_frame != 17:
                 if self.config.load_tensor:
                     CONSOLE.log(f"[on red]Warning: you're tring to load latents with non-fixed frames!")
-                legacy_sample_name = f'{episode_id:05d}_{start_frame_idx:02d}_{17:02d}'
+                # legacy_sample_name = f'{episode_id:05d}_{start_frame_idx:02d}_{17:02d}'
+                legacy_sample_name = f'{episode_id:05d}_{start_frame_idx:02d}_{16:02d}'
                 image_path = os.path.join(
                     self.config.embeddings_folder, self.config.split, f'images{ref_num}', f"{legacy_sample_name}.png")
                 latent_ref_path = os.path.join(

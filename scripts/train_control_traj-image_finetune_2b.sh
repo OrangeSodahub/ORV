@@ -43,7 +43,7 @@ accelerate launch \
           --gpu_ids $GPU_IDS \
           --num_processes $NUM_PROCESSES \
           --main_process_port $PORT \
-          training/cogvideox_control_to_video.py \
+          training/cogvideox_control_to_video_sft.py \
           --base_config $BASE_CONFIG_PATH \
           --config $EXP_CONFIG_PATH ${@:1}
 
@@ -66,7 +66,7 @@ accelerate launch \
 #           --config_file $ACCELERATE_CONFIG_FILE \
 #           --num_processes $NUM_PROCESSES \
 #           --main_process_port $PORT \
-#           training/cogvideox_control_to_video.py \
+#           training/cogvideox_control_to_video_sft.py \
 #           --base_config $BASE_CONFIG_PATH \
 #           --config $EXP_CONFIG_PATH \
 #           --debug ${@:1}

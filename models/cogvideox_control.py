@@ -1,7 +1,4 @@
-from token import OP
 import traceback
-from click import Option
-from pyparsing import Opt
 import torch, os, math
 import torch.nn.functional as F
 import fnmatch
@@ -10,28 +7,31 @@ from PIL import Image
 from einops import rearrange, repeat
 from typing import Any, Dict, Optional, Sequence, Tuple, Union, List, Callable
 
-from transformers import T5EncoderModel, T5Tokenizer
-from diffusers.utils import USE_PEFT_BACKEND, is_torch_version, logging, scale_lora_layers, unscale_lora_layers
+from transformers.models.t5 import T5EncoderModel, T5Tokenizer
+from diffusers.utils.constants import USE_PEFT_BACKEND
+from diffusers.utils.import_utils import is_torch_version, logging
+from diffusers.utils.peft_utils import scale_lora_layers, unscale_lora_layers
+from diffusers.utils.torch_utils import randn_tensor
+from diffusers.configuration_utils import register_to_config
 from diffusers.models.transformers.cogvideox_transformer_3d import CogVideoXBlock as _CogVideoXBlock
 from diffusers.models.embeddings import CogVideoXPatchEmbed, get_3d_sincos_pos_embed
 from diffusers.models.modeling_utils import ModelMixin
 from diffusers.models.autoencoders.vae import DiagonalGaussianDistribution
-from diffusers.models.attention import Attention
-from diffusers.models.attention_processor import CogVideoXAttnProcessor2_0 as _CogVideoXAttnProcessor2_0
-from diffusers.models import AutoencoderKLCogVideoX, CogVideoXTransformer3DModel
-from diffusers.pipelines.cogvideo.pipeline_cogvideox import CogVideoXPipelineOutput
-from diffusers.pipelines.cogvideo.pipeline_cogvideox_image2video import CogVideoXImageToVideoPipeline
+from diffusers.models.attention_processor import Attention, CogVideoXAttnProcessor2_0 as _CogVideoXAttnProcessor2_0
+from diffusers.models.autoencoders.autoencoder_kl_cogvideox import AutoencoderKLCogVideoX
+from diffusers.models.transformers.cogvideox_transformer_3d import CogVideoXTransformer3DModel
+from diffusers.pipelines.cogvideo.pipeline_output import CogVideoXPipelineOutput
 from diffusers.models.normalization import (
     AdaLayerNorm as _AdaLayerNorm,
     CogVideoXLayerNormZero as _CogVideoXLayerNormZero,
 )
+from diffusers.pipelines.cogvideo.pipeline_cogvideox_image2video import CogVideoXImageToVideoPipeline
 from diffusers.pipelines.cogvideo.pipeline_cogvideox import retrieve_timesteps
-from diffusers.pipelines import DiffusionPipeline
-from diffusers.schedulers import CogVideoXDDIMScheduler, CogVideoXDPMScheduler
-from diffusers.configuration_utils import register_to_config
-from diffusers.utils.torch_utils import randn_tensor
+from diffusers.pipelines.pipeline_utils import DiffusionPipeline
+from diffusers.schedulers.scheduling_ddim_cogvideox import CogVideoXDDIMScheduler
+from diffusers.schedulers.scheduling_dpm_cogvideox import CogVideoXDPMScheduler
 
-from training.utils import CONSOLE
+from pipelines.utils import CONSOLE
 from models.components import Transformer3DModelTrajOutput, ActionEmbed, ActionRecon, VideoProcessor
 
 
@@ -65,6 +65,8 @@ class CogVideoXLayerNormZero(_CogVideoXLayerNormZero):
         action_emb: Optional[torch.Tensor] = None,
     ) -> Sequence[torch.Tensor | None]:
 
+        gate = enc_gate = None
+
         if not self.modulate_encoder_hidden_states:
 
             if action_emb is None:
@@ -75,7 +77,6 @@ class CogVideoXLayerNormZero(_CogVideoXLayerNormZero):
                 encoder_hidden_states = self.norm(encoder_hidden_states)
 
                 gate = gate[:, None, :]
-                enc_gate = None
 
             # Given action embedding's shape [N, F, D] with frame-level modulations,
             # we discard the modulations on `encoder_hidden_states`.
@@ -96,8 +97,6 @@ class CogVideoXLayerNormZero(_CogVideoXLayerNormZero):
                 gate = gate.repeat_interleave(repeats=num_patches, dim=1)
 
                 encoder_hidden_states = self.norm(encoder_hidden_states)
-
-                enc_gate = None
 
         elif self.modulate_encoder_hidden_states:
 
@@ -165,7 +164,7 @@ class AdaLayerNorm(_AdaLayerNorm):
             temb = self.emb(timestep)
 
         # Add action embeddings to temb: [N, D] -> [N, F, D]
-        if action_emb is not None:
+        if action_emb is not None and temb is not None:
             temb = temb[:, None, :] + action_emb
 
         temb = self.linear(self.silu(temb))
@@ -207,7 +206,14 @@ class CogVideoXAttnProcessor2_0(_CogVideoXAttnProcessor2_0):
         encoder_hidden_states: Optional[torch.Tensor] = None,
         attention_mask: Optional[torch.Tensor] = None,
         image_rotary_emb: Optional[torch.Tensor] = None,
-    ) -> Tuple[torch.Tensor, torch.Tensor]:
+    ) -> Tuple[torch.Tensor, Optional[torch.Tensor]]:
+
+        if attn.to_k is None:
+            raise RuntimeError('attn.to_k cannot be None!')
+        if attn.to_v is None:
+            raise RuntimeError('attn.to_v cannot be None!')
+        if attn.to_out is None:
+            raise RuntimeError('attn.to_out cannot be None!')
 
         text_seq_length = 0
         if encoder_hidden_states is not None:
@@ -318,11 +324,6 @@ class MVBlock(nn.Module):
             hidden_states, encoder_hidden_states, temb,
         )
 
-        # # add pose embedding
-        # pose = rearrange(pose, 'b v d -> (b v) 1 d')
-        # pose_embedding = self.cam_encoder(pose)  # (b v) 1 d --> (b v) 1 d
-        # norm_hidden_states = norm_hidden_states + pose_embedding
-
         # view attention
         norm_hidden_states = rearrange(norm_hidden_states, '(b v) (f s) d -> (b f) (v s) d', f=n_frame, v=n_view)
         if self.modulate_encoder_hidden_states:
@@ -390,8 +391,6 @@ class CogVideoXBlock(_CogVideoXBlock):
         )
         self.modulate_encoder_hidden_states = modulate_encoder_hidden_states
 
-        # self.fuser = Fuser(action_in_channel=time_embed_dim, out_channels=dim)
-
     def forward(
         self,
         hidden_states: torch.Tensor,
@@ -405,15 +404,6 @@ class CogVideoXBlock(_CogVideoXBlock):
         norm_hidden_states, norm_encoder_hidden_states, gate_msa, enc_gate_msa = self.norm1(
             hidden_states, encoder_hidden_states, temb, action_emb=action_emb,
         )
-
-        # action_hidden_states: [batch, num_frames, temb_dim]
-        # if action_hidden_states is not None:
-        #     F = action_hidden_states.size(1)
-        #     P = norm_hidden_states.size(1) // F
-        #     action_hidden_states = action_hidden_states[:, :, None, ...].repeat(1, 1, P, 1)
-        #     h = rearrange(norm_hidden_states, 'b (f p) c -> b f p c', f=F)
-        #     h = self.fuser(h, action_hidden_states)
-        #     norm_hidden_states = rearrange(h, 'b f p c ->  b (f p) c', f=F)
 
         # attention
         attn_hidden_states, attn_encoder_hidden_states = self.attn1(
@@ -601,20 +591,10 @@ class CogVideoXTransformer3DModelTraj(CogVideoXTransformer3DModel, ModelMixin):
             if num_control_blocks > num_layers:
                 raise ValueError("num_tracking_blocks must be less than or equal to num_layers")
 
-            # self.cond_embedding = ConditioningEmbedding(
-            #     conditioning_embedding_channels=16,
-            #     conditioning_channels=16,
-            # )
-
             self.num_control_keys = num_control_keys
 
             # For initial combination of hidden states and tracking maps
             self.initial_combine_linear = nn.Linear(inner_dim * self.num_control_keys, inner_dim)
-
-            # Create linear layers for combining hidden states and controls
-            # self.combine_linears = nn.ModuleList(
-            #     [nn.Linear(inner_dim, inner_dim) for _ in range(num_control_blocks)]
-            # )
 
         # Multiview module
         if multiview:
@@ -776,7 +756,7 @@ class CogVideoXTransformer3DModelTraj(CogVideoXTransformer3DModel, ModelMixin):
         if num_views > 1:
             hidden_states = rearrange(hidden_states, 'b (v f) c h w -> (b v) f c h w', v=num_views)
             encoder_hidden_states = encoder_hidden_states.repeat_interleave(repeats=num_views, dim=0)
-        batch_size, num_frames, channels, height, width = hidden_states.shape
+        batch_size, num_frames, _, height, width = hidden_states.shape
 
         # 1. Time embedding
         timesteps = timestep
@@ -788,7 +768,7 @@ class CogVideoXTransformer3DModelTraj(CogVideoXTransformer3DModel, ModelMixin):
         t_emb = t_emb.to(dtype=hidden_states.dtype)
         temb = self.time_embedding(t_emb, timestep_cond)
 
-        if self.ofs_embedding is not None:
+        if self.ofs_embedding is not None and self.ofs_proj is not None:
             ofs_emb = self.ofs_proj(ofs)
             ofs_emb = ofs_emb.to(dtype=hidden_states.dtype)
             ofs_emb = self.ofs_embedding(ofs_emb)
@@ -821,6 +801,7 @@ class CogVideoXTransformer3DModelTraj(CogVideoXTransformer3DModel, ModelMixin):
 
         # Process action controls
         action_hidden_states = is_action_mask = action_emb = actions_recon = None
+        pad_frames = 0
         if controls_or_guidances.get('actions', None) is not None:
             actions = controls_or_guidances['actions']
             res_frames = (actions.size(1) + 1) % 4
@@ -838,7 +819,7 @@ class CogVideoXTransformer3DModelTraj(CogVideoXTransformer3DModel, ModelMixin):
             """>>> temb = temb[:, None, ...] + action_hidden_states"""
             action_emb = action_hidden_states  # [n_batch, n_frame, embed_dim]
 
-            if self.training and self.config.recon_action:
+            if self.training and self.config.recon_action and self.action_recon is not None:
                 actions_recon = self.action_recon(action_hidden_states)  # [n_batch, n_frame, state_dim]
                 if pad_frames > 0:
                     actions_recon = actions_recon[:, pad_frames:]
@@ -924,14 +905,6 @@ class CogVideoXTransformer3DModelTraj(CogVideoXTransformer3DModel, ModelMixin):
                     image_rotary_emb=image_rotary_emb,
                     action_emb=action_emb,
                 )
-
-            # Additional control blocks
-            # FIXME: 2nd way to add guidance
-            # if i < self.num_control_blocks:
-            #     depths_hidden_states = self.control_blocks[i]()
-            #     # Combine hidden_states and depths
-            #     depths_hidden_states = self.combine_layers[i](depths_hidden_states)
-            #     hidden_states = hidden_states + depths_hidden_states
 
         if fnmatch.fnmatch(str(self.config.loaded_pretrained_model_name_or_path), '*CogVideoX*-5b*'):
             # CogVideoX-5B
@@ -1058,7 +1031,7 @@ class CogVideoXTransformer3DModelTraj(CogVideoXTransformer3DModel, ModelMixin):
             if model.config.multiview:
                 # if the pretrained model is a multiview model, we then do not
                 # copy mv parameters from the 3d attention!
-                if not ('multiview' in pretrained_model_name_or_path or base_model.config.multiview):
+                if isinstance(pretrained_model_name_or_path, str) and not ('multiview' in pretrained_model_name_or_path or base_model.config.multiview):
                     for i in range(len(model.mv_blocks)):
                         model.mv_blocks[i].load_state_dict(
                             model.transformer_blocks[i].state_dict(), strict=False
@@ -1191,9 +1164,12 @@ class CogVideoXImageToVideoPipelineTraj(CogVideoXImageToVideoPipeline, Diffusion
                 image_latents = latent_dist.sample(generator)
                 image_latents = image_latents.permute(0, 2, 1, 3, 4)  # -> [B, F, C, H, W]
             elif input_channel == num_channels_latents:
-                image_latents = image
+                image_latents = image.permute(0, 2, 1, 3, 4)  # -> [B, F, C, H, W]
             else:
+
                 raise RuntimeError(f'Invalid input channels {image.shape=} while {num_channels_latents=}!')
+        else:
+            raise RuntimeError(f'Invalid dimensions of image input: {image.shape=}')
 
         if not self.vae.config.invert_scale_latents:
             image_latents = self.vae_scaling_factor_image * image_latents
@@ -1311,11 +1287,11 @@ class CogVideoXImageToVideoPipelineTraj(CogVideoXImageToVideoPipeline, Diffusion
         )
         if do_classifier_free_guidance:
             prompt_embeds = torch.cat([negative_prompt_embeds, prompt_embeds], dim=0)
-            del negative_prompt_embeds
 
         # 4. Prepare timesteps
         timesteps, num_inference_steps = retrieve_timesteps(self.scheduler, num_inference_steps, device, timesteps)
         self._num_timesteps = len(timesteps)
+        assert timesteps is not None, f'Wrong! timesteps cannot be None!'
 
         # 5. Prepare latents
         latent_frames = (num_frames - 1) // self.vae_scale_factor_temporal + 1
@@ -1393,23 +1369,6 @@ class CogVideoXImageToVideoPipelineTraj(CogVideoXImageToVideoPipeline, Diffusion
             latents,
         )
         del image
-
-        # check image latents ------------------------------------------------------------------------ #
-        # from diffusers.image_processor import VaeImageProcessor
-        # save_folder = 'debug_mv_infer_input'
-        # os.makedirs(save_folder, exist_ok=True)
-        # image_processor = VaeImageProcessor(
-        #     vae_latent_channels=self.vae.config.latent_channels,
-        #     vae_scale_factor=self.vae_scale_factor_spatial,
-        # )
-        # decode_image_latents = rearrange(image_latents, 'b (v f) c h w -> (b v) f c h w', v=num_views)
-        # decode_image_latents = decode_image_latents.permute(0, 2, 1, 3, 4)  # [b, c, t, h, w]
-        # decode_image_latents = 1 / self.vae_scaling_factor_image * decode_image_latents
-        # decode_image = self.vae.decode(decode_image_latents).sample
-        # decode_image = image_processor.postprocess(decode_image[:, :, 0, ...], output_type='pil')
-        # for i, image in enumerate(decode_image):
-        #     image.save(os.path.join(save_folder, f'infer_{i}.png'))
-        # -------------------------------------------------------------------------------------------- #
 
         # 6. Prepare extra step kwargs. TODO: Logic should ideally just be moved out of the pipeline
         extra_step_kwargs = self.prepare_extra_step_kwargs(generator, eta)
@@ -1506,7 +1465,6 @@ class CogVideoXImageToVideoPipelineTraj(CogVideoXImageToVideoPipeline, Diffusion
         if not output_type == "latent":
             video = self.decode_latents(latents)
             video = self.video_processor.postprocess_video(video=video, output_type=output_type)
-            # video[0][0].save('test0.gif', save_all=True, append_images=video[0][1:], duration=100, loop=0)
         else:
             video = latents
 

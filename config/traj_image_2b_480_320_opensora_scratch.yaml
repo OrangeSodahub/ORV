@@ -1,0 +1,63 @@
+runtime: &runtime
+  seed: 42
+
+  filter_by_cond: False
+  num_observation: 1  # number of input reference images
+
+dataset:
+  <<: *runtime
+
+  vae_has_first_single_frame: False
+
+  bridgev2:
+    data_root: ./data_old/bridge
+    num_samples: -1
+    camera_ids: [0]
+    max_n_view: 1
+    action_dim: 7
+    sequence_interval: 1
+    sequence_length: 16
+    sample_frames: 16  # number of frames in video
+    start_frame_interval: {'train': 4, 'val': 16, 'test': 16}
+    video_size: [320, 448]
+    ori_size: [256, 320]
+    sample_size: [10, 14]  # `video_size` // vae_scale_factor
+
+    caption_column: texts
+
+vae:
+  dc_vae_path: /share/project/cwm/xiuyu.yang/F32T4C128_AE.safetensors
+  source: opensora
+
+transformer:
+  <<: *runtime
+  pretrained_model_name_or_path: THUDM/CogVideoX-2b
+  transformer_config_path: ./config/transformer/base_1.4b_480_320_opensora.json
+  transformer_model_name_or_path: NULL
+
+  modulate_encoder_hidden_states: False
+
+train:
+  <<: *runtime
+  output_dir: cirasim_bridge_traj-image_320-480_opensora_scratch_2b_30k
+  # output_dir: cirasim_bridge2_traj-image_320-480_finetune_2b_30k
+  # output_dir: cirasim_droid_traj-image_384-256_finetune_2b_30k
+  # output_dir: cirasim_rt1_traj-image_320-480_finetune_2b_30k
+
+  from_scratch: True  # train from scratch
+  from_pretrained: False  # finetune from pretrained cogvideox
+
+  learning_rate: 1.e-4
+  lr_scheduler: cosine_with_restarts
+  lr_num_cycles: 1
+  lr_warmup_steps: 1000
+
+  max_train_steps: 15000
+  validation_steps: 1000
+  gradient_checkpointing: False
+
+  # for 8 × A800 (80GB)
+  train_batch_size: 4
+  gradient_accumulation_steps: 2
+
+  resume_from_checkpoint: NULL

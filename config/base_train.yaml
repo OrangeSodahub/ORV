@@ -38,6 +38,7 @@ dataset:
 
   slice_frame: True
   use_3dvae: True
+  vae_has_first_single_frame: True
 
   bridgev2:
     data_root: ./data/bridge
@@ -102,6 +103,10 @@ dataset:
     sample_size: [40, 60]
 
     caption_column: texts
+
+vae:
+  pretrained_model_name_or_path: THUDM/CogVideoX-2b
+  source: cogvideox  # cogvideox, opensora
 
 transformer:
   <<: *runtime

@@ -11,7 +11,7 @@
       "data/",
       "config/",
       "scripts/",
-      "debug_mv_train_input",
+      "*debug*",
     ],
   
     "defineConstant": {
