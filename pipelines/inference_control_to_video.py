@@ -177,8 +177,8 @@ if __name__ == '__main__':
     parser.add_argument(
         '--model_path',
         type=str,
-        default='./outputs_old/cirasim_bridge_traj-image_480-320_finetune_2b_30k/checkpoint',
-        # default='./outputs/cirasim_bridge_traj-image_480-320_finetune_2b_30k/checkpoint',
+        default='./outputs_old/orv_bridge_traj-image_480-320_finetune_2b_30k/checkpoint',
+        # default='./outputs/orv_bridge_traj-image_480-320_finetune_2b_30k/checkpoint',
         help='The path of the pre-trained model to be used',
     )
     parser.add_argument(

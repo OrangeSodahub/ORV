@@ -111,7 +111,7 @@ transformer:
 evaluation:
   <<: *runtime
 
-  output_path: outputs3
+  output_path: outputs
   output_dir: NULL  # specified in experiment yamls
 
   mode: traj-image  # choose from ['traj-image', 'traj-image-depth']

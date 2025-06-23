@@ -132,7 +132,7 @@ inference:
 
 train:
   <<: *runtime
-  output_path: outputs3
+  output_path: outputs
   output_dir: NULL  # specified in experiment yamls
 
   from_scratch: False  # train from scratch

@@ -123,3 +123,5 @@ slurm-*.out
 # ./vis_results/** */
 
 # Final newline
+data
+data_old

@@ -19,7 +19,7 @@ dataset:
 transformer:
   <<: *runtime
   pretrained_model_name_or_path: THUDM/CogVideoX-2b
-  transformer_model_name_or_path: ./outputs/cirasim_bridge_traj-image_480-320_scratch_notext_full_30k/checkpoint
+  transformer_model_name_or_path: ./outputs/orv_bridge_traj-image_480-320_scratch_notext_full_30k/checkpoint
 
 evaluation:
   <<: *runtime

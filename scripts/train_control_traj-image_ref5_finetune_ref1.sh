@@ -30,7 +30,7 @@ NUM_PROCESSES=4
 PORT=29500
 
 # Single GPU uncompiled training
-ACCELERATE_CONFIG_FILE="accelerate_configs/L20_4.yaml"
+ACCELERATE_CONFIG_FILE="accelerate_configs/gpu4.yaml"
 
 # Experiment configurations
 BASE_CONFIG_PATH='/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/config/base_train.yaml'
@@ -51,7 +51,7 @@ accelerate launch \
 # PORT=29502
 
 # # Single GPU uncompiled training
-# ACCELERATE_CONFIG_FILE="accelerate_configs/L20_2.yaml"
+# ACCELERATE_CONFIG_FILE="accelerate_configs/gpu2.yaml"
 
 # # Experiment configurations
 # BASE_CONFIG_PATH='/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/config/base_train.yaml'

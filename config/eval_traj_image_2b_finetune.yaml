@@ -20,10 +20,10 @@ dataset:
 transformer:
   <<: *runtime
   pretrained_model_name_or_path: THUDM/CogVideoX-2b
-  # transformer_model_name_or_path: ./outputs/cirasim_bridge_traj-image_480-320_finetune_2b_30k/checkpoint  # bridge 1.7b base model
-  # transformer_model_name_or_path: ./outputs2/cirasim_bridge2_traj-image_320-480_finetune_2b_30k/checkpoint  # bridge2 1.7b base model
-  # transformer_model_name_or_path: ./outputs/cirasim_droid_traj-image_384-256_finetune_2b_30k/checkpoint  # droid 1.7b base model
-  transformer_model_name_or_path: ./outputs3/cirasim_rt1_traj-image_320-480_finetune_2b_30k/checkpoint  # rt1 1.7b base model
+  transformer_model_name_or_path: outputs/orv_bridge_traj-image_480-320_finetune_2b_30k/checkpoint  # bridge 1.7b base model
+  # transformer_model_name_or_path: outputs2/orv_bridge2_traj-image_320-480_finetune_2b_30k/checkpoint  # bridge2 1.7b base model
+  # transformer_model_name_or_path: outputs/orv_droid_traj-image_384-256_finetune_2b_30k/checkpoint  # droid 1.7b base model
+  # transformer_model_name_or_path: outputs3/orv_rt1_traj-image_320-480_finetune_2b_30k/checkpoint  # rt1 1.7b base model
 
 evaluation:
   <<: *runtime

@@ -34,22 +34,22 @@ GT_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/data/bridgev2/
 # GT_PATH=/share/project/cwm/shaocong.xu/exp/HMA/logs/bridge_gt/
 # GT_PATH=/share/project/cwm/shaocong.xu/exp/HMA/logs/fractal20220817_gt/
 # GT_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/data/bridgev2/embeddings_320_480_sliced_full/val/videos/
-# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs_old/eval_cirasim_bridge_traj-image_480-320_finetune_2b_30k/
-# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs_old/eval_cirasim_bridge_traj-image-cond_480-320_finetune_2b_20k/
-# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs_old/eval_cirasim_bridge_traj-image_480-320_scratch_notext_full_30k/
-# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs2/eval_cirasim_bridge_traj-image-label_480-320_finetune_2b_20k/
-# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs_old2/eval_cirasim_bridge_traj-image-condfull_480-320_finetune_2b_20k/
-# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs2/eval_cirasim_bridge_traj-image-labelGT_480-320_finetune_2b_20k/
-# PRED_PATH=//share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs_old2/eval_cirasim_bridge_traj-image-condfullGT_480-320_finetune_2b_20k/
-# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs3/eval_cirasim_rt1_traj-image_320-480_finetune_2b_30k/
-# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs/eval_cirasim_droid_traj-image_384-256_finetune_2b_30k/
-# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs2/eval_cirasim_bridge2_traj-image_320-480_finetune_2b_30k/
-# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs3/eval_cirasim_rt1_traj-image-condfull_480-320_finetune_2b_20k/
-PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs3/eval_cirasim_bridge2_traj-image_480-320_multiview_20k/
+# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs_old/eval_orv_bridge_traj-image_480-320_finetune_2b_30k/
+# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs_old/eval_orv_bridge_traj-image-cond_480-320_finetune_2b_20k/
+# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs_old/eval_orv_bridge_traj-image_480-320_scratch_notext_full_30k/
+# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs2/eval_orv_bridge_traj-image-label_480-320_finetune_2b_20k/
+# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs_old2/eval_orv_bridge_traj-image-condfull_480-320_finetune_2b_20k/
+# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs2/eval_orv_bridge_traj-image-labelGT_480-320_finetune_2b_20k/
+# PRED_PATH=//share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs_old2/eval_orv_bridge_traj-image-condfullGT_480-320_finetune_2b_20k/
+# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs3/eval_orv_rt1_traj-image_320-480_finetune_2b_30k/
+# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs/eval_orv_droid_traj-image_384-256_finetune_2b_30k/
+# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs2/eval_orv_bridge2_traj-image_320-480_finetune_2b_30k/
+# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs3/eval_orv_rt1_traj-image-condfull_480-320_finetune_2b_20k/
+PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs3/eval_orv_bridge2_traj-image_480-320_multiview_20k/
 # PRED_PATH=/share/project/cwm/shaocong.xu/exp/HMA/logs/folder_pred/
 # PRED_PATH=/share/project/cwm/shaocong.xu/exp/HMA/logs/bridge_pred/
 # PRED_PATH=/share/project/cwm/shaocong.xu/exp/HMA/logs/fractal20220817_pred/
-# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs3/eval_cirasim_bridge2_traj-image_480-320_multiview_condfull_20k/
+# PRED_PATH=/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/outputs3/eval_orv_bridge2_traj-image_480-320_multiview_condfull_20k/
 
 
 python testing/compute_metrics.py \

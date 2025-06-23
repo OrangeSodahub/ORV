@@ -21,10 +21,6 @@ export HF_HUB_DOWNLOAD_TIMEOUT=30
 export HF_ENDPOINT="https://hf-mirror.com"
 export PYTHONPATH='.'
 
-# cache folder
-sudo rm -rf /root/.cache
-sudo ln -s /share/project/cwm/xiuyu.yang/.cache /root/.cache
-
 cd /share/project/cwm/xiuyu.yang/work/dev6/
 
 SPLIT=$1

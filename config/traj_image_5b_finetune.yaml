@@ -18,7 +18,7 @@ transformer:
 
 train:
   <<: *runtime
-  output_dir: cirasim_bridge_traj-image_480-320_finetune_norm_20k
+  output_dir: orv_bridge_traj-image_480-320_finetune_norm_20k
 
   from_scratch: False  # train from scratch
   from_pretrained: True  # finetune from pretrained cogvideox
@@ -34,5 +34,5 @@ train:
   train_batch_size: 1
   gradient_accumulation_steps: 4
 
-  # resume_from_checkpoint: ./outputs/cirasim_bridge_traj-image_480-320_finetune_full_20k/checkpoint-15000
+  # resume_from_checkpoint: ./outputs/orv_bridge_traj-image_480-320_finetune_full_20k/checkpoint-15000
   resume_from_checkpoint: NULL

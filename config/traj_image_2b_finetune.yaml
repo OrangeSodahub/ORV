@@ -15,9 +15,9 @@ transformer:
 
 train:
   <<: *runtime
-  # output_dir: cirasim_bridge2_traj-image_320-480_finetune_2b_30k
-  # output_dir: cirasim_droid_traj-image_384-256_finetune_2b_30k
-  output_dir: cirasim_rt1_traj-image_320-480_finetune_2b_30k
+  # output_dir: orv_bridge2_traj-image_320-480_finetune_2b_30k
+  # output_dir: orv_droid_traj-image_384-256_finetune_2b_30k
+  output_dir: orv_rt1_traj-image_320-480_finetune_2b_30k
 
   from_scratch: False  # train from scratch
   from_pretrained: True  # finetune from pretrained cogvideox

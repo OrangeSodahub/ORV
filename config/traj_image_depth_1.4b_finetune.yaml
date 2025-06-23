@@ -18,13 +18,13 @@ transformer:
   <<: *runtime
   pretrained_model_name_or_path: THUDM/CogVideoX1.5-5b-I2V
   transformer_config_path: ./config/transformer/base_1.4b_480_320_rope.json
-  transformer_model_name_or_path: ./outputs/cirasim_bridge_traj-image_480-320_scratch_full_10k/checkpoint-52500
+  transformer_model_name_or_path: ./outputs/orv_bridge_traj-image_480-320_scratch_full_10k/checkpoint-52500
 
   modulate_encoder_hidden_states: False
 
 train:
   <<: *runtime
-  output_dir: cirasim_bridge_traj-image-cond_480-320_finetune
+  output_dir: orv_bridge_traj-image-cond_480-320_finetune
   from_scratch: True  # train from scratch
   from_pretrained: False  # finetune from pretrained cogvideox
 

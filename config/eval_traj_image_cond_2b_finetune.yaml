@@ -1,0 +1,43 @@
+runtime: &runtime
+  seed: 42
+
+  use_cond: True
+  filter_by_cond: True
+
+  num_observation: 1  # number of input reference images
+  visual_guidance: True  # use additional visual conditions
+  control_keys: ['depth', 'label']
+  
+dataset:
+  <<: *runtime
+
+  load_actions: True
+  load_tensors: True  # load pre-encoded latents instead of raw data
+  load_video: False
+  load_condGT: False  # will load conditions from reconstructions
+
+  slice_frame: True  # if False, will use the entire video
+  use_3dvae: True
+  num_samples: -1
+  no_normalize: False
+
+transformer:
+  <<: *runtime
+  pretrained_model_name_or_path: THUDM/CogVideoX-2b
+  # ----------------- bridge1 dataset ---------------
+  # transformer_model_name_or_path: ./outputs/orv_bridge_traj-image-condGT_480-320_finetune_2b_20k/checkpoint  # finetuned with recon depth
+  # transformer_model_name_or_path: ./outputs/orv_bridge_traj-image-cond_480-320_finetune_2b_20k/checkpoint  # finetuned with render depth
+  # transformer_model_name_or_path: ./outputs2/orv_bridge_traj-image-labelGT_480-320_finetune_2b_20k/checkpoint  # finetuned with recon label
+  # transformer_model_name_or_path: ./outputs2/orv_bridge_traj-image-label_480-320_finetune_2b_20k/checkpoint  # finetuned with render label
+  # transformer_model_name_or_path: ./outputs2/orv_bridge_traj-image-condfullGT_480-320_finetune_2b_20k/checkpoint  # finetuned with recon depth + label
+  # transformer_model_name_or_path: ./outputs2/orv_bridge_traj-image-condfull_480-320_finetune_2b_20k/checkpoint  # finetuned with render depth + label
+  # ----------------- RT-1 dataset ------------------
+  transformer_model_name_or_path: ./outputs3/orv_rt1_traj-image-condfull_480-320_finetune_2b_20k/checkpoint
+
+evaluation:
+  <<: *runtime
+  output_dir: NULL  # will use the name of checkpoint
+
+  mode: traj-image-depth-label    # choose from ['traj-image', 'traj-image-depth', 'traj-image-label', 'traj-image-depth-lable']
+
+  batch_size: 4

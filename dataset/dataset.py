@@ -9,10 +9,9 @@ import traceback
 import math
 import numpy as np
 import torch
-from functools import partial
 import colorsys
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 from omegaconf import DictConfig, OmegaConf, ListConfig
 from numpy import typing as npt
 from torch import Tensor
@@ -30,7 +29,7 @@ import decord  # isort:skip
 decord.bridge.set_bridge("torch")
 from decord import VideoReader, cpu
 
-from training.utils import CONSOLE
+from pipelines.utils import CONSOLE
 
 
 def alpha2rotm(a):
@@ -63,7 +62,6 @@ def gamma2rotm(c):
     return rotm
 
 
-# TODO: improve this function!!!
 def euler2rotm(euler_angles):
     """Euler angle (ZYX) to rotation matrix."""
     alpha = euler_angles[0]
@@ -172,7 +170,7 @@ class RobotDataset(Dataset, ConfigMixin):
         sample_mode: str = 'drop_last',
         use_cond: bool = True,
         filter_by_cond: bool = False,  # experiment argument!!!
-        camera_ids: List[str] = ['0'],
+        camera_ids: list[str] = ['0'],
         action_dim: int = 7,  # ee xyz (3) + ee euler (3) + gripper(1)
         sequence_interval: int = 1,
         sequence_length: int = 16,
@@ -189,13 +187,13 @@ class RobotDataset(Dataset, ConfigMixin):
         latent_column: str = 'latent',
         depth_column: str = 'depth',
         semantic_column: str = 'semantic',
-        ref_num: List[int] | int = [1],
+        ref_num: list[int] | int = [1],
         # loadings
         load_actions: bool = True,
         load_tensor: bool = True,
         load_video: bool = False,
         empty_prompt: bool = True,
-        load_condGT: bool = False,  # from reconstruction; not renderings
+        load_condGT: bool = False,  # from reconstruction not renderings
         # others
         slice_frame: bool = True,
         use_3dvae: bool = True,
@@ -236,7 +234,7 @@ class RobotDataset(Dataset, ConfigMixin):
 
         self.start_frame_interval = start_frame_interval
         if isinstance(start_frame_interval, (dict, DictConfig)):
-            self.start_frame_interval = start_frame_interval[split]
+            self.start_frame_interval: int = start_frame_interval[split]
         self.accumulate_action = False
 
         self.c_act_scaler = np.array(
@@ -392,7 +390,7 @@ class RobotDataset(Dataset, ConfigMixin):
 
             # ! need to filter the original data according to the condition data
             if 'rt1' in self.config.data_root:
-                # FIXME: this is a legacy issue caused by irasim!!!
+                # FIXME: this is a legacy issue caused by IRASim!!!
 
                 # self.ann_files = list(sorted(filter(
                 #     lambda ann_file: int(json.load(open(ann_file, 'r'))['episode_id']) in render_ids, self.ann_files
@@ -656,14 +654,14 @@ class RobotDataset(Dataset, ConfigMixin):
 
     def _get_frames(
         self,
-        frame_ids: List[int],
+        frame_ids: list[int],
         video_path: Optional[str] = None,
         latent_video_path: Optional[str] = None,
         latent_ref_path: Optional[str] = None,
         is_sliced: Optional[bool] = True,
         image_path: Optional[str] = None,
         sliced_video_path: Optional[str] = None,
-    ) -> Dict[str, Tensor]:
+    ) -> dict[str, Tensor]:
 
         returns = dict()
 
@@ -713,14 +711,17 @@ class RobotDataset(Dataset, ConfigMixin):
             returns['videos'] = frames
             returns['image'] = refs
 
-        # ! load ref frame for testing/evaluation
-        if self.config.test_mode:
+        # ! load reference frame for testing/evaluation
+        if self.config.test_mode and image_path is not None:
 
-            # ! load ref latents.
+            # ! load reference latents
             if self.config.load_tensor:
 
-                assert latent_ref_path is not None, f'Invalid {latent_ref_path=}.'
-                with open(os.path.join(self.config.data_root, latent_ref_path), 'rb') as f:
+                latent_ref_path = os.path.abspath(
+                    os.path.join(self.config.data_root, latent_ref_path)
+                )
+                assert os.path.exists(latent_ref_path), f'Invalid {latent_ref_path=}.'
+                with open(latent_ref_path, 'rb') as f:
                     latents_ref = torch.load(f, weights_only=True)
 
                     if self.config.use_3dvae:
@@ -730,7 +731,7 @@ class RobotDataset(Dataset, ConfigMixin):
 
             else:
 
-                # ! load ref pil images.
+                # ! load reference pil images.
                 CONSOLE.log(f'[on red]Will not load preprocessed tensors!')
                 try:
                     _pil_image = load_image(
@@ -771,18 +772,6 @@ class RobotDataset(Dataset, ConfigMixin):
                 # all views (namely multiview, if possible) will be handled by `MultiViewRobotDataset`.
                 returns['pil_image'] = [pil_image]  # n_view -> n_ref_frame (n_view=1)
 
-                # try:
-                #     pil_image = load_image(
-                #         os.path.join(self.config.data_root, image_path)
-                #     )
-                # except Exception as e:
-                #     CONSOLE.log(f'[red]Failed to load image from {image_path} due to {e}!')
-                #     raise
-
-                # if pil_image.size != (self.config.video_size[1], self.config.video_size[0]):
-                #     pil_image = self.image_transforms(pil_image)
-                # returns['pil_image'] = [[pil_image]]  # n_view -> n_frame (n_view=1, n_frame=1)
-
                 # if sliced_video_path is not None:
 
                 #     video_reader = decord.VideoReader(
@@ -795,7 +784,7 @@ class RobotDataset(Dataset, ConfigMixin):
 
     def _get_cond_frames(
         self,
-        frame_ids: List[int],
+        frame_ids: list[int],
         recon_file_path: Optional[str] = None,
         label_file_path: Optional[str] = None,
         render_file_path: Optional[str] = None,
@@ -1028,7 +1017,7 @@ class RobotDataset(Dataset, ConfigMixin):
         camera_index: Optional[int] = 0,
         return_video = False,
         raise_error: bool = False,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
 
         if not isinstance(index_or_res, int):
             index, ref_num = index_or_res
@@ -1171,7 +1160,7 @@ class RobotDataset(Dataset, ConfigMixin):
 
             return data
 
-        except Exception as e:
+        except:
             warnings.warn(f"Invalid data encountered: {self.samples[index]['ann_file']}. Skipped "
                           f"(by randomly sampling another sample in the same dataset).")
             warnings.warn("FULL TRACEBACK:")
@@ -1220,7 +1209,7 @@ class RobotDataset(Dataset, ConfigMixin):
         return json.dumps(config_dict, indent=2, sort_keys=True) + "\n"
 
     @staticmethod
-    def save_gif(frames: Tensor | npt.NDArray | List[Image.Image], path: os.PathLike) -> None:
+    def save_gif(frames: Tensor | npt.NDArray | list[Image.Image], path: os.PathLike) -> None:
 
         if isinstance(frames, Tensor):
             frames = frames.cpu().numpy()
@@ -1231,8 +1220,293 @@ class RobotDataset(Dataset, ConfigMixin):
         frames[0].save(path, save_all=True, append_images=frames[1:], duration=100, loop=0)
 
     @staticmethod
-    def save_mp4(frames: Tensor | npt.NDArray | List[Image.Image], path: os.PathLike) -> None:
+    def save_mp4(frames: Tensor | npt.NDArray | list[Image.Image], path: os.PathLike) -> None:
         pass
+
+
+class CascadedRobotDataset(RobotDataset):
+
+    # Compared to 'RobotDataset', we have following differences:
+    # 1. we force 'is_sliced' to be True here;
+    # 2. we did not discard the 'last' slices with lengths less than sequence length;
+    # 3. we label the 'last' slice of each long video;
+    # 4. we label the slice index and next start_frame_idx;
+    def _load_and_process_ann_file(self, i):
+
+        ann_file = self.ann_files[i]
+        recon_file = self.recon_files[i]
+        label_file = self.label_files[i]
+        render_file = self.render_files[i]
+
+        samples = []
+        try:
+            with open(ann_file, "r") as f:
+                ann = json.load(f)
+        except:
+            CONSOLE.log(f'Failed to load ann {ann_file}, will skip it!')
+            return samples
+
+        n_frames = len(ann['state'])  # `state` shape [n_frames, 7]
+        episode_id = ann['episode_id']
+        if self.config.use_cond or self.config.filter_by_cond:
+            if (episode_id.lstrip('0') or '0') not in self.render_ids:
+                raise RuntimeError(f'Episode id {episode_id} not found in render_ids!')
+
+        start_frame = 0 if not self.config.vae_has_first_single_frame else self.config.sequence_interval
+        sample_index = 0
+        start_frame_idx_list = []
+        for frame_i in range(
+            start_frame,
+            n_frames,
+            self.start_frame_interval * self.config.sequence_interval
+        ):
+
+            sample = dict(
+                episode_id=ann['episode_id'],
+                ann_file=ann_file,
+                recon_file=recon_file,
+                label_file=label_file,
+                render_file=render_file,
+                prompt=ann[self.config.caption_column][0],
+            )
+
+            frame_ids = []
+            curr_frame_i = frame_i
+            while True:
+                if curr_frame_i > (n_frames - 1) or len(frame_ids) == self.config.sequence_length:
+                    break
+                frame_ids.append(curr_frame_i)
+                curr_frame_i += self.config.sequence_interval
+
+            is_last = False
+            if frame_ids[-1] == (n_frames - 1):
+
+                is_last = True
+
+                # regenerate 'frame_ids' if the length is not satisfied.
+                if n_frames >= self.config.sequence_length and (self.config.sequence_length - len(frame_ids)) > 2:
+
+                    frame_ids = []
+                    curr_frame_i = n_frames - 1
+                    while True:
+                        if len(frame_ids) == self.config.sequence_length:
+                            break
+                        frame_ids.append(curr_frame_i)
+                        curr_frame_i -= self.config.sequence_interval
+                    frame_ids = frame_ids[::-1]
+
+            # make sure there are sequence_length number of frames
+            if len(frame_ids) == self.config.sequence_length:
+
+                # to satify the (8n+1) frames
+                if self.config.vae_has_first_single_frame:
+                    frame_ids.insert(0, frame_ids[0] - self.config.sequence_interval)
+
+                sample['frame_ids'] = frame_ids
+                sample['start_frame_idx'] = frame_ids[0]
+                sample['num_frame'] = len(frame_ids)
+                sample['sample_index'] = int(sample_index)
+                sample['is_last'] = is_last
+                sample['is_sliced'] = True
+
+                sample_index += 1
+                start_frame_idx_list.append(sample['start_frame_idx'])
+
+                # ! other attributes
+                if 'n_view' in self.config:  # specialized for 'MultiViewRobotDataset'
+                    for i_view in range(self.config.n_view):
+                        sample[f'has_image_{i_view}'] = ann.get(f'has_image_{i_view}', True)
+                        sample[f'use_image_{i_view}'] = sample[f'has_image_{i_view}']
+
+                # ! check if conditions exist
+                sample_ok = True
+                if (self.config.use_cond or self.config.filter_by_cond) and self.config.load_tensor:
+                    sample_n_view = sum([sample[f'has_image_{i_view}'] for i_view in range(self.config.n_view)])
+                    sample_name = f'{int(episode_id):05d}_{frame_ids[0]:02d}_{len(frame_ids):02d}'
+                    depth_ok = all([
+                        os.path.exists(
+                            os.path.join(
+                                self.config.data_root,
+                                self.config.embeddings_folder,
+                                self.config.split,
+                                'depth_latents',
+                                f'{sample_name}_{j}.pt'
+                            )
+                        )
+                        for j in range(sample_n_view)
+                    ])
+                    label_ok =  all([
+                        os.path.exists(
+                            os.path.join(
+                                self.config.data_root,
+                                self.config.embeddings_folder,
+                                self.config.split,
+                                'label_latents',
+                                f'{sample_name}_{j}.pt'
+                            )
+                        )
+                        for j in range(sample_n_view)
+                    ])
+                    data_ok = {'depth': depth_ok, 'label': label_ok}
+                    sample_ok = all([data_ok[key] for key in self.config.control_keys])
+
+                if sample_ok:
+                    samples.append(sample)
+
+        # add the 'next_start_frame_idx' for each slice
+        start_frame_idx_list.append(-1)
+        for sample_index in range(len(samples)):
+            samples[sample_index]['next_start_frame_idx'] = start_frame_idx_list[sample_index + 1]
+
+        return samples
+
+    # Compared to 'RobotDataset', we have differences:
+    # 1. we force 'is_sliced' to be True here;
+    # 2. we only load the reference image with 'start_frame_idx' = 0 from the local data!
+    def __getitem__(
+        self,
+        index_or_res: int | tuple,
+        camera_index: Optional[int] = 0,
+        return_video = False,
+        raise_error: bool = False,
+    ) -> dict[str, Any]:
+
+        if not isinstance(index_or_res, int):
+            index, ref_num = index_or_res
+        else:
+            index = index_or_res
+            ref_num = self.ref_num
+
+        data = dict()
+
+        sample = self.samples[index]
+        camera_id = self.config.camera_ids[camera_index]
+
+        ann_file = sample['ann_file']
+        prompt = sample['prompt']
+        frame_ids = sample['frame_ids']
+        start_frame_idx = int(sample['start_frame_idx'])
+        num_frame = int(sample['num_frame'])
+        episode_id = int(sample['episode_id'])
+
+        data['prompt'] = prompt if not self.config.empty_prompt else ''
+
+        try:
+
+            with open(ann_file, 'r') as f:
+                label = json.load(f)
+
+            is_first = start_frame_idx == 0
+            sample_name = f'{episode_id:05d}_{start_frame_idx:02d}_{num_frame:02d}'
+            # for those datasets with len(camera_ids) > 1, their sample_name includes the camera_id.
+            # if you setup the `RobotDataset`, it will only use the first camera;
+            # to use multiple cameras, you should setup the `MultiViewRobotDataset`.
+            if len(self.config.camera_ids) > 1:
+                sample_name = f'{sample_name}_0'  # default camera 0
+
+            # ! load prompt embeddings
+            if self.config.empty_prompt:
+                data['prompt_embeds'] = torch.load(
+                    os.path.join(self.config.data_root, self.config.embeddings_folder, 'empty_prompt.pt'), weights_only=True
+                )[0]  # [seq_len, embed_dim] do not have `batch_size` dimension
+            else:
+                prompt_embeds_path = os.path.join(
+                    self.config.data_root, self.config.embeddings_folder, self.config.split, 'prompt_embeds', f'{sample_name}.pt'
+                )
+                data['prompt_embeds'] = torch.load(prompt_embeds_path, weights_only=True)  # [seq_len, embed_dim]
+
+            # ! load states and actions
+            if self.config.load_actions:
+                arm_states, gripper_states = self._get_robot_states(label, frame_ids)
+                actions = self._get_actions(arm_states, gripper_states)
+                actions *= self.c_act_scaler
+
+                data['actions'] = actions.float()
+
+            # ! load frames
+            # TODO: fix this!!!
+            # image_path = (
+            #     os.path.join(
+            #         self.config.embeddings_folder, self.config.split, f'images{ref_num}', f"{sample_name}.png")
+            #     if is_first else None
+            # )
+
+            image_path = (
+                os.path.join(
+                    '/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/thirdparty/x-flux/version_0/', f"{sample_name}.png")
+                if is_first else None
+            )
+
+            data.update(
+                self._get_frames(
+                    frame_ids,
+                    image_path=image_path,
+                    is_sliced=True,
+                )
+            )
+
+            # ! load conditions
+            if self.config.use_cond:
+
+                # TODO: finish this sanity check
+                recon_file = sample['recon_file']
+                label_file = sample['label_file']
+                render_file = sample['render_file']
+                # assert not (recon_file is None and label_file is None and render_file is None), f'Please set `render_file` if use_cond!'
+
+                latent_depth_path = (
+                    os.path.join(
+                        self.config.embeddings_folder, self.config.split, 'depth_latents', f'{sample_name}.pt')
+                    if not self.config.load_condGT else
+                    os.path.join(
+                        self.config.embeddings_folder, self.config.split, 'depthGT_latents', f'{sample_name}.pt')
+                )
+                latent_label_path = (
+                    os.path.join(
+                        self.config.embeddings_folder, self.config.split, 'label_latents', f'{sample_name}.pt')
+                    if not self.config.load_condGT else
+                    os.path.join(
+                        self.config.embeddings_folder, self.config.split, 'labelGT_latents', f'{sample_name}.pt')
+                )
+
+                data.update(
+                    self._get_cond_frames(
+                        frame_ids=frame_ids,
+                        recon_file_path=recon_file,
+                        label_file_path=label_file,
+                        render_file_path=render_file,
+                        latent_depth_path=latent_depth_path,
+                        latent_label_path=latent_label_path,
+                    )
+                )
+
+            data['metainfo'] = {
+                'episode_id': label['episode_id'],
+                'camera_id': camera_id,
+                'frame_ids': frame_ids,
+                'ref_num': ref_num,
+                'start_frame_idx': start_frame_idx,
+                'num_frame': num_frame,
+                'num_view': 1,
+                'sample_name': sample_name,
+                'sample_index': int(sample['sample_index']),
+                'next_start_frame_idx': int(sample['next_start_frame_idx']),
+                'is_first': is_first,
+                'is_last': sample['is_last'],
+            }
+
+            return data
+
+        except:
+            warnings.warn(f"Invalid data encountered: {self.samples[index]['ann_file']}. Skipped "
+                          f"(by randomly sampling another sample in the same dataset).")
+            warnings.warn("FULL TRACEBACK:")
+            warnings.warn(traceback.format_exc())
+
+            if int(os.getenv('DEBUG', 0)) or raise_error:
+                raise
+
+            return self[(np.random.randint(len(self.samples)), ref_num)]
 
 
 class DemoRobotDataset(RobotDataset):
@@ -1425,7 +1699,7 @@ class DemoRobotDataset(RobotDataset):
 
             return data
 
-        except Exception as e:
+        except:
             warnings.warn(f"Invalid data encountered: {self.samples[index]['ann_file']}. Skipped "
                           f"(by randomly sampling another sample in the same dataset).")
             warnings.warn("FULL TRACEBACK:")
@@ -1443,7 +1717,7 @@ class MultiViewRobotDataset(RobotDataset):
     def __init__(
         self,
         n_view: int,
-        camera_ids: List[str | int],
+        camera_ids: list[str | int],
         **kwargs,
     ) -> None:
         assert n_view == len(camera_ids), f'Mismatched {n_view=} and {camera_ids=}!'
@@ -1525,7 +1799,7 @@ class MultiViewRobotDataset(RobotDataset):
 
         return returns
 
-    def __getitem__(self, index_or_res: int | tuple) -> Dict[str, Any]:
+    def __getitem__(self, index_or_res: int | tuple) -> dict[str, Any]:
 
         if not isinstance(index_or_res, int):
             index, _, use_n_view = index_or_res  # (index, ref_num, n_view)
@@ -1683,7 +1957,7 @@ class MultiViewRobotDataset(RobotDataset):
 
             return data
 
-        except Exception as e:
+        except:
             warnings.warn(f"Invalid data encountered: {self.samples[index]['ann_file']}. Skipped "
                           f"(by randomly sampling another sample in the same dataset).")
             warnings.warn("FULL TRACEBACK:")
@@ -1781,7 +2055,7 @@ class CollateFunctionControl:
         self.weight_dtype = weight_dtype
         self.load_tensors = load_tensors
 
-    def __call__(self, data: List[Dict[str, Any]]) -> Dict[str, torch.Tensor]:
+    def __call__(self, data: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
         """
             data keys: `action`, `latent`, `depths`, `semantics`, `metainfo`
             Returns:
@@ -1852,7 +2126,7 @@ class CollateFunctionControl:
             returns['controls']['latents_label'] = latents_label.permute(0, 2, 1, 3, 4)  # -> [B, C, F, H, W]
 
         # test mode
-        if "pil_image" in data[0]:
+        if "pil_image" in data_keys:
             pil_images = [x["pil_image"] for x in data]  # n_batch -> n_view -> n_frame
 
             # we flatten the batched list [n_batch, n_view, n_frame] here.

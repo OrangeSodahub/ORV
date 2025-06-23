@@ -4,8 +4,10 @@ import traceback
 import torch
 import os
 import queue
+import copy
 import pathlib
 import multiprocessing
+from functools import partial
 from PIL import Image
 from pathlib import Path
 from tqdm import tqdm
@@ -17,7 +19,7 @@ from diffusers.configuration_utils import FrozenDict
 from diffusers.utils.export_utils import export_to_video
 
 from models.cogvideox_control import CogVideoXImageToVideoPipelineTraj, CogVideoXTransformer3DModelTraj
-from dataset.dataset import RobotDataset, MultiViewRobotDataset, CollateFunctionControl, BucketSampler
+from dataset.dataset import RobotDataset, MultiViewRobotDataset, CascadedRobotDataset, CollateFunctionControl, BucketSampler
 from pipelines.utils import CONSOLE
 
 
@@ -30,6 +32,7 @@ def serialize_artifacts(
     num_views: int,
     image_size: tuple,
     videos: list[list[Image.Image]],
+    **kwargs,
 ):
 
     W, H = image_size
@@ -59,13 +62,47 @@ def serialize_artifacts(
         CONSOLE.log(f'Exported GIF to [bold yellow]{output_gif_path}[/]')
 
 
-def save_results(output_queue: queue.Queue) -> None:
+@torch.no_grad()
+def serialize_artifacts_for_cascaded_videos(
+    gifs_folder: Path,
+    mp4s_folder: Path,
+    data_infos: dict,
+    num_frames: int,
+    num_views: int,
+    image_size: tuple,
+    videos: list[list[Image.Image]],
+):
+
+    # remove the batch dimension
+    video = videos[0]
+    data_info = data_infos[0]
+
+    sample_name = data_info['sample_name']
+    episode_id, _, _ = sample_name.split('_')
+    CONSOLE.log(len(video))
+    CONSOLE.log(sample_name)
+
+    sample_name = f'{episode_id}_{len(video):03d}'
+
+    output_mp4_path = os.path.join(str(mp4s_folder), f'eval_{sample_name}.mp4')
+    export_to_video(video, output_mp4_path, fps=10)
+
+    output_gif_path = os.path.join(str(gifs_folder), f'eval_{sample_name}.gif')
+    video[0].save(output_gif_path, save_all=True, append_images=video[1:], duration=100, loop=0)
+    CONSOLE.log(f'Exported GIF to [bold yellow]{output_gif_path}[/]')
+
+
+def save_results(cascaded: bool, output_queue: queue.Queue) -> None:
     while True:
         try:
             item = output_queue.get(timeout=30)
             if item is None:
                 break
-            serialize_artifacts(**item)
+
+            if not cascaded:
+                serialize_artifacts(**item)
+            else:
+                serialize_artifacts_for_cascaded_videos(**item)
 
         except queue.Empty:
             continue
@@ -121,7 +158,8 @@ def main(config):
     # 0. create task queue for save results
     output_queue = queue.Queue()
     save_thread = ThreadPoolExecutor(max_workers=8)
-    save_future = save_thread.submit(save_results, output_queue)
+    save_func = partial(save_results, eval_config.cascaded)
+    save_future = save_thread.submit(save_func, output_queue)
 
     # 1. setup eval dataset
     CONSOLE.log(f'Setting up Eval Dataset of {dataset_config.split} split ...')
@@ -160,11 +198,13 @@ def main(config):
         train=False,
     )
 
-    if not dataset_config.multiview:
-        dataset = RobotDataset(**dataset_init_kwargs)
-    else:
+    if dataset_config.multiview:
         n_view = len(dataset_config.camera_ids)
         dataset = MultiViewRobotDataset(n_view=n_view, **dataset_init_kwargs)
+    elif eval_config.cascaded:
+        dataset = CascadedRobotDataset(**dataset_init_kwargs)
+    else:
+        dataset = RobotDataset(**dataset_init_kwargs)
 
     use_bucket_sampler = dataset.num_refs > 1 or dataset_config.multiview
 
@@ -246,6 +286,9 @@ def main(config):
     mode = eval_config.mode  # 'traj-image', 'traj-image-depth', 'traj-image-label'
     CONSOLE.log(f'Running mode : [bold yellow]{mode}[/] with control keys of dataset: [bold yellow]{dataset_config.control_keys}[/]')
 
+    next_start_frame = width = height = None
+    all_video_slices = []
+    episode_start_frame_ids = [0]
     for batch in tqdm(dataloader):
 
         torch.cuda.empty_cache()
@@ -264,10 +307,14 @@ def main(config):
                 fh, fw = images.shape[-2:]
                 height = int(fh * 8)
                 width = int(fw * 8)
-            else:
-                assert 'pil_images' in batch, 'Missing keys: `pil_images`!'
+            elif 'pil_images' in batch:
                 images = batch['pil_images']
                 width, height = images[0].size
+            else:
+                assert eval_config.cascaded
+                assert next_start_frame is not None
+                assert height is not None and width is not None
+                images = [next_start_frame]
 
             pipeline_args = {
                 'image': images,
@@ -301,18 +348,51 @@ def main(config):
             with torch.no_grad():
                 videos = pipe(**pipeline_args, generator=generator, output_type='pil').frames
 
+            # Handle cacaded videos generation
+            is_curr_last = False
+            if eval_config.cascaded:
+                metainfos = batch['metainfos'][0]
+                curr_frame_ids = metainfos['frame_ids']
+                next_start_frame_idx = metainfos['next_start_frame_idx']
+                is_curr_last = metainfos['is_last']
+                all_video_slices.append(videos[0])
+                if next_start_frame_idx != -1:
+                    assert not is_curr_last, f'Only the last frame has `next_start_frame_idx` = -1!!'
+                    index = curr_frame_ids.index(next_start_frame_idx)
+                    next_start_frame = videos[0][index]
+                    episode_start_frame_ids.append(next_start_frame_idx)
+                else:
+                    episode_video = []
+                    for slice_index in range(len(all_video_slices)):
+                        start_idx = 0
+                        end_idx = (
+                            episode_start_frame_ids[slice_index + 1] - episode_start_frame_ids[slice_index]
+                            if slice_index < len(all_video_slices) - 1
+                            else -1
+                        )
+                        episode_video.extend(
+                            all_video_slices[slice_index][start_idx : end_idx]
+                        )
+                    videos = copy.deepcopy(episode_video)  # to avoid
+                    videos = [videos]  # add batch dimension
+                    all_video_slices = []
+                    episode_start_frame_ids = [0]
+
             # 5. save results
-            output_queue.put(
-                {
-                    'gifs_folder': gifs_folder,
-                    'mp4s_folder': mp4s_folder,
-                    'data_infos': batch['metainfos'],
-                    'num_frames': batch['num_frames'],
-                    'num_views': batch['num_views'],
-                    'image_size': (width, height),
-                    'videos': videos,
-                }
-            )
+
+            if (eval_config.cascaded and is_curr_last) or not eval_config.cascaded:
+
+                output_queue.put(
+                    {
+                        'gifs_folder': gifs_folder,
+                        'mp4s_folder': mp4s_folder,
+                        'data_infos': batch['metainfos'],
+                        'num_frames': batch['num_frames'],
+                        'num_views': batch['num_views'],
+                        'image_size': (width, height),
+                        'videos': videos,
+                    }
+                )
 
         except Exception:
             CONSOLE.log('[bold red]-------------------------')

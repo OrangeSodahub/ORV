@@ -21,10 +21,7 @@ export PYTHONPATH='.'
 
 
 BASE_CONFIG_PATH=config/base_eval.yaml
-CONFIG_PATH=config/eval_traj_image_2b_finetune.yaml  # Eval base model
-# CONFIG_PATH=config/eval_traj_image_cond_2b_finetune.yaml  # Eval visual guided model
-# CONFIG_PATH=config/eval_traj_image_2b_multiview.yaml  # Eval multiview model
-# CONFIG_PATH=config/eval_traj_image_condfull_2b_multiview.yaml  # Eval visual guided multiview model
+CONFIG_PATH=config/eval_traj_image_2b_finetune_cascaded.yaml  # Eval base model
 
 
 #------------------------------------------------------------

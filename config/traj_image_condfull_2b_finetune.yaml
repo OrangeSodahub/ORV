@@ -16,15 +16,15 @@ dataset:
 transformer:
   <<: *runtime
   pretrained_model_name_or_path: THUDM/CogVideoX-2b
-  # transformer_model_name_or_path: ./outputs/cirasim_bridge_traj-image_480-320_finetune_2b_30k/checkpoint
-  transformer_model_name_or_path: ./outputs3/cirasim_rt1_traj-image_320-480_finetune_2b_30k/checkpoint
+  # transformer_model_name_or_path: ./outputs/orv_bridge_traj-image_480-320_finetune_2b_30k/checkpoint
+  transformer_model_name_or_path: ./outputs3/orv_rt1_traj-image_320-480_finetune_2b_30k/checkpoint
 
   modulate_encoder_hidden_states: True
 
 train:
   <<: *runtime
-  # output_dir: cirasim_bridge_traj-image-condfull_480-320_finetune_2b_20k
-  output_dir: cirasim_rt1_traj-image-condfull_480-320_finetune_2b_20k
+  # output_dir: orv_bridge_traj-image-condfull_480-320_finetune_2b_20k
+  output_dir: orv_rt1_traj-image-condfull_480-320_finetune_2b_20k
   from_scratch: True  # train from scratch
   from_pretrained: False  # finetune from pretrained cogvideox
 

@@ -20,8 +20,8 @@ dataset:
 transformer:
   <<: *runtime
   pretrained_model_name_or_path: THUDM/CogVideoX-2b
-  transformer_model_name_or_path: ./outputs_old2/cirasim_bridge2_traj-image_480-320_multiview_20k/cirasim_bridge2_traj-image_480-320_multiview_20k/checkpoint  # bridge2 2.4b multiview model
-  # transformer_model_name_or_path: ./outputs/cirasim_droid_traj-image_384-256_multiview_30k/checkpoint  # droid 2.4b multiview model
+  transformer_model_name_or_path: ./outputs_old2/orv_bridge2_traj-image_480-320_multiview_20k/orv_bridge2_traj-image_480-320_multiview_20k/checkpoint  # bridge2 2.4b multiview model
+  # transformer_model_name_or_path: ./outputs/orv_droid_traj-image_384-256_multiview_30k/checkpoint  # droid 2.4b multiview model
 
   modulate_encoder_hidden_states: True
 
