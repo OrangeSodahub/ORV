@@ -1,4 +1,5 @@
 * {
+    box-sizing: border-box;
     margin: 0px;
     padding: 0px;
 }
@@ -20,7 +21,8 @@ body {
 }
 
 #video_grid_occ > .video_wrapper {
-    width: 50%;
+    flex: 0 0 50%;
+    box-sizing: border-box;
 }
 
 #video_grid_occ > .video_wrapper > .video_container {
