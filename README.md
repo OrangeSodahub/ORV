@@ -100,7 +100,7 @@ bash scripts/encode_dataset_dist.sh $GPU $SPLIT $BATCH
 
 ## Training
 
-### Stage1 Singleview Action-to-video Generation
+#### Stage1 Singleview Action-to-video Generation
 
 We first get the basic singleview action-to-video generation model starting from the pretrained CogVideox-2b (Text-to-video) model through SFT. Please check out and run the following script:
 
@@ -112,7 +112,7 @@ bash scripts/train_control_traj-image_finetune_2b.sh
 > 1. CUDA devices: please set correct value for the key `ACCELERATE_CONFIG_FILE` in these `.sh` scripts which are used for accelerate launching. Predfined `.yaml` files are at [config/accelerate](https://github.com/OrangeSodahub/ORV/tree/main/config/accelerate/);
 > 2. Experimental settings: Each configuration in [config/traj_image_*.yaml](https://github.com/OrangeSodahub/ORV/tree/main/config/) files corresponds to one training experimental settings and one model. Please set the correct value for the key `EXP_CONFIG_PATH` in scripts.
 
-### Stage2 Occupancy-conditioned Generation
+#### Stage2 Occupancy-conditioned Generation
 
 We incorporate occupancy-derived conditions to have more accurate controls. Please run the following script:
 
@@ -120,7 +120,7 @@ We incorporate occupancy-derived conditions to have more accurate controls. Plea
 bash scripts/train_control_traj-image-cond_finetune.sh
 ```
 
-### Stage3 Multiview Generation
+#### Stage3 Multiview Generation
 
 This step further extends the singleview generation model to multiview generation model. Please run the following script:
 

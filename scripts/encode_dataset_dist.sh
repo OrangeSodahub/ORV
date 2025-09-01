@@ -3,9 +3,9 @@ HOME="~"
 echo -e "HOME DIR: \e[31m$HOME\e[0m"
 
 # network
-# bash $HOME/clash-for-linux-backup/start.sh
-# source $HOME/clash.sh
-# proxy_on
+bash $HOME/clash-for-linux-backup/start.sh
+source $HOME/clash.sh
+proxy_on
 
 # env
 # source $HOME/anaconda3/etc/profile.d/conda.sh

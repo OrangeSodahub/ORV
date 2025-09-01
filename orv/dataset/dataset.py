@@ -1433,7 +1433,7 @@ class CascadedRobotDataset(RobotDataset):
 
             image_path = (
                 os.path.join(
-                    '~/work/dev6/DiffusionAsShader/thirdparty/x-flux/version_0/', f"{sample_name}.png")
+                    'thirdparty/x-flux/version_0/', f"{sample_name}.png")
                 if is_first else None
             )
 

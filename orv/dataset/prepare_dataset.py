@@ -615,7 +615,7 @@ def get_cameras(
     # model = VGGT.from_pretrained("facebook/VGGT-1B").to(device)
     model = VGGT()
     # _URL = 'https://huggingface.co/facebook/VGGT-1B/resolve/main/model.pt'
-    _URL = '~/work/dev6/DiffusionAsShader/thirdparty/vggt/vggt/checkpoints/model.pt'
+    _URL = 'thirdparty/vggt/vggt/checkpoints/model.pt'
     # model.load_state_dict(torch.hub.load_state_dict_from_url(_URL))
     model.load_state_dict(torch.load(_URL))
     model = model.to(device)
@@ -970,7 +970,7 @@ def get_occupancy(data_dir: str,
             if os.path.exists(intrin_file := os.path.join(points_dir, 'pred_intrinsics.txt')):
                 intrin_ = np.loadtxt(intrin_file)[0].reshape(3, 3)
             else:
-                intrin_ = np.loadtxt('~/work/dev6/outputs3/demos/rt1/train/00000/points/pred_intrinsics.txt')[0].reshape(3, 3)
+                intrin_ = np.loadtxt('outputs/demos/rt1/train/00000/points/pred_intrinsics.txt')[0].reshape(3, 3)
             intrin_ = torch.from_numpy(intrin_).float().to(device)
             intrin = torch.eye(4).float().to(device)
             intrin[:3, :3] = intrin_
@@ -1038,12 +1038,6 @@ def get_occupancy(data_dir: str,
             #     raise
             continue
 
-
-# docker run -it --rm --gpus='device=0' --userns=host \
-# -v /share/project:/share/project \
-# -w ~/work/dev6 \
-# baai-cwm-cr01-cn-beijing.cr.volces.com/baai-cwm-cr-namespace/dinosam:v2 \
-# bash
 
 # PYTHONPATH='.':$PYTHONPATH python ivideogpt/dataset/prepare_dataset.py --action labeling
 @torch.no_grad()
@@ -2137,7 +2131,7 @@ def get_render(data_dir,
                     intrin = np.loadtxt(intrin_file)[0].reshape(3, 3)
                 else:
                     raise FileNotFoundError
-                    intrin = np.loadtxt('~/work/dev6/outputs3/demos/rt1/train/00000/points/pred_intrinsics.txt')[0].reshape(3, 3)
+                    intrin = np.loadtxt('outputs/demos/rt1/train/00000/points/pred_intrinsics.txt')[0].reshape(3, 3)
                 intrin = torch.from_numpy(intrin).float().to(device)
 
                 # intrin[1, 2] = int(intrin[1, 2] + 5)  # FIXME: this is specialized for droid dataset!!!
