@@ -1,43 +1,48 @@
-#!/bin/bash
+# home path
+HOME="~"
+echo -e "HOME DIR: \e[31m$HOME\e[0m"
 
 # network
-# source /share/project/cwm/xiuyu.yang/clash.sh
-# bash /share/project/cwm/xiuyu.yang/clash-for-linux-backup/start.sh
+# bash $HOME/clash-for-linux-backup/start.sh
+# source $HOME/clash.sh
 # proxy_on
 
 # env
-# source /share/project/cwm/xiuyu.yang/anaconda3/etc/profile.d/conda.sh
-# conda config --append envs_dirs /share/project/cwm/xiuyu.yang/.conda/envs
-# conda activate deepspeed
-echo -e "\e[31m$CONDA_DEFAULT_ENV\e[0m"
+# source $HOME/anaconda3/etc/profile.d/conda.sh
+# conda config --append envs_dirs $HOME/.conda/envs
+conda activate orv
+echo -e "Current ENV: \e[31m$CONDA_DEFAULT_ENV\e[0m"
 
-export WANDB_API_KEY="e006d03e8d44f42a8f72f872b09ac373022aed96"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/" && pwd)"
+echo -e "Root DIR: \e[31m$ROOT\e[0m"
 
-export TORCH_LOGS="+dynamo,recompiles,graph_breaks"
+cd $ROOT
+
 export TORCHDYNAMO_VERBOSE=1
 export NCCL_P2P_DISABLE=1
 export TORCH_NCCL_ENABLE_MONITORING=0
 export TOKENIZERS_PARALLELISM=false
 export HF_HUB_DOWNLOAD_TIMEOUT=30
-export HF_ENDPOINT="https://hf-mirror.com"
-export HF_HOME="/share/project/cwm/xiuyu.yang/.cache/huggingface"
+# export HF_ENDPOINT="https://hf-mirror.com"
+export HF_HOME="$HOME/.cache/huggingface"
+export TORCH_HOME="~/.cache/torch"
 export PYTHONPATH='.'
 
-cd /share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader
+#--------------------------------------------------------------------------------------------------
+#                               Multi-GPU Training
+#--------------------------------------------------------------------------------------------------
 
 GPU_IDS="all"
-NUM_PROCESSES=8
+NUM_PROCESSES=8  # 4 or 8
 PORT=29500
 
-# Single GPU uncompiled training
-# ACCELERATE_CONFIG_FILE="accelerate_configs/gpu4.yaml"
-ACCELERATE_CONFIG_FILE="accelerate_configs/gpu8.yaml"
+ACCELERATE_CONFIG_FILE="config/accelerate/gpu8.yaml"  # ['gpu4', 'gpu8']
 
 # Experiment configurations
-BASE_CONFIG_PATH='/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/config/base_train.yaml'
-# EXP_CONFIG_PATH='/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/config/traj_image_depth_2b_480_320_finetune.yaml'  # only depth guidance
-# EXP_CONFIG_PATH='/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/config/traj_image_label_2b_480_320_finetune.yaml'  # only label guidance
-EXP_CONFIG_PATH='/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/config/traj_image_condfull_2b_480_320_finetune.yaml'  # both guidance
+BASE_CONFIG_PATH="config/base_train.yaml"
+EXP_CONFIG_PATH="config/traj_image_condfull_2b_480_320_finetune.yaml"  # full guidance
+# EXP_CONFIG_PATH="config/traj_image_depth_2b_480_320_finetune.yaml"
+# EXP_CONFIG_PATH="config/traj_image_label_2b_480_320_finetune.yaml"
 
 
 accelerate launch \
@@ -45,32 +50,33 @@ accelerate launch \
           --gpu_ids $GPU_IDS \
           --num_processes $NUM_PROCESSES \
           --main_process_port $PORT \
-          training/cogvideox_control_to_video_sft.py \
+          orv/train_cogvideox_control_to_video_sft.py \
           --base_config $BASE_CONFIG_PATH \
           --config $EXP_CONFIG_PATH ${@:1}
 
 
+#--------------------------------------------------------------------------------------------------
+#                               Single-GPU Training (debugging)
+#--------------------------------------------------------------------------------------------------
+
 # GPU_IDS="0"
 # NUM_PROCESSES=1
-# PORT=29503
+# PORT=29500
 
-# export DEBUG='1'
+# export DEBUG=1
 
-# # Single GPU uncompiled training
-# ACCELERATE_CONFIG_FILE="accelerate_configs/gpu2.yaml"
+# ACCELERATE_CONFIG_FILE="config/accelerate/gpu2.yaml"
 
-# # Experiment configurations
-# BASE_CONFIG_PATH='/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/config/base_train.yaml'
-# # EXP_CONFIG_PATH='/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/config/traj_image_depth_2b_480_320_finetune.yaml'  # only depth guidance
-# # EXP_CONFIG_PATH='/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/config/traj_image_label_2b_480_320_finetune.yaml'  # only label guidance
-# EXP_CONFIG_PATH='/share/project/cwm/xiuyu.yang/work/dev6/DiffusionAsShader/config/traj_image_condfull_2b_480_320_finetune.yaml'  # both guidance
+# Experiment configurations
+BASE_CONFIG_PATH="config/base_train.yaml"
+EXP_CONFIG_PATH="config/traj_image_condfull_2b_480_320_finetune.yaml"  # full guidance
 
 
 # accelerate launch \
 #           --config_file $ACCELERATE_CONFIG_FILE \
 #           --num_processes $NUM_PROCESSES \
 #           --main_process_port $PORT \
-#           training/cogvideox_control_to_video_sft.py \
+#           orv/train_cogvideox_control_to_video_sft.py \
 #           --base_config $BASE_CONFIG_PATH \
 #           --config $EXP_CONFIG_PATH \
 #           --debug ${@:1}

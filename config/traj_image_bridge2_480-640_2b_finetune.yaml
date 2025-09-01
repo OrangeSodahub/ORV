@@ -1,0 +1,53 @@
+runtime: &runtime
+  seed: 42
+
+  filter_by_cond: false
+  num_observation: 1  # number of input reference images
+
+dataset:
+  <<: *runtime
+
+# =================== Specialized ====================>
+  bridgev2:
+    data_root: ./data/bridge
+    num_samples: -1
+    camera_ids: [0]
+    max_n_view: 1
+    action_dim: 7
+    sequence_interval: 1
+    sequence_length: 16
+    sample_frames: 17  # number of frames in video
+    start_frame_interval: {'train': 4, 'val': 16, 'test': 16}
+    video_size: [480, 640]
+    ori_size: [480, 640]
+    sample_size: [60, 80]  # `video_size` // vae_scale_factor
+
+    caption_column: texts
+# ====================================================>
+
+transformer:
+  <<: *runtime
+  pretrained_model_name_or_path: THUDM/CogVideoX-2b
+
+  modulate_encoder_hidden_states: true
+
+train:
+  <<: *runtime
+  output_dir: orv_bridge2_traj-image_480-640_finetune_2b_30k
+
+  from_scratch: false  # train from scratch
+  from_pretrained: true  # finetune from pretrained cogvideox
+
+  learning_rate: 1.e-4
+  lr_scheduler: cosine_with_restarts
+  lr_num_cycles: 1
+  lr_warmup_steps: 1000
+
+  max_train_steps: 30000
+  gradient_checkpointing: false
+
+  # for 8 × A800 (80GB)
+  train_batch_size: 2
+  gradient_accumulation_steps: 4
+
+  resume_from_checkpoint: null

@@ -6,23 +6,23 @@ runtime: &runtime
 dataset:
   <<: *runtime
 
-  load_actions: True
-  load_tensors: True  # load pre-encoded latents instead of raw data
-  load_video: False
-  load_condGT: False
+  load_actions: true
+  load_tensors: true  # load pre-encoded latents instead of raw data
+  load_video: false
+  load_condGT: false
 
-  slice_frame: True  # if False, will use the entire video
-  use_3dvae: True
+  slice_frame: true  # if False, will use the entire video
+  use_3dvae: true
   num_samples: -1
-  no_normalize: False
+  no_normalize: false
 
 transformer:
   <<: *runtime
   pretrained_model_name_or_path: THUDM/CogVideoX-2b
-  transformer_model_name_or_path: ./outputs/orv_bridge_traj-image_480-320_scratch_notext_full_30k/checkpoint
+  transformer_model_name_or_path: outputs/orv_bridge_traj-image_480-320_scratch_notext_full_30k/checkpoint
 
 evaluation:
   <<: *runtime
-  output_dir: NULL  # will use the name of checkpoint
+  output_dir: null  # will use the name of checkpoint
 
   batch_size: 4

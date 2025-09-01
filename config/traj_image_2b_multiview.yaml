@@ -1,9 +1,9 @@
 runtime: &runtime
   seed: 42
 
-  filter_by_cond: False
+  filter_by_cond: false
   num_observation: 1  # number of input reference images
-  multiview: True
+  multiview: true
 
 dataset:
   <<: *runtime
@@ -11,18 +11,18 @@ dataset:
 transformer:
   <<: *runtime
   pretrained_model_name_or_path: THUDM/CogVideoX-2b
-  # transformer_model_name_or_path: ./outputs/orv_droid_traj-image_384-256_finetune_2b_30k/checkpoint  # droid base model
-  transformer_model_name_or_path: ./outputs2/orv_bridge2_traj-image_320-480_finetune_2b_30k/checkpoint  # bridgev2 base model
+  transformer_model_name_or_path: outputs/orv_bridge2_traj-image_320-480_finetune_2b_30k/checkpoint  # bridgev2 base model
+  # transformer_model_name_or_path: outputs/orv_droid_traj-image_384-256_finetune_2b_30k/checkpoint  # droid base model
 
-  modulate_encoder_hidden_states: True
+  modulate_encoder_hidden_states: true
 
 train:
   <<: *runtime
-  # output_dir: orv_droid_traj-image_384-256_multiview_30k
   output_dir: orv_bridge2_traj-image_480-320_multiview_20k
+  # output_dir: orv_droid_traj-image_384-256_multiview_30k
 
-  from_scratch: True  # train from scratch
-  from_pretrained: False  # finetune from pretrained cogvideox
+  from_scratch: true  # train from scratch
+  from_pretrained: false  # finetune from pretrained cogvideox
 
   learning_rate: 1.e-4
   lr_scheduler: cosine_with_restarts
@@ -30,7 +30,7 @@ train:
   lr_warmup_steps: 1000
 
   max_train_steps: 20000
-  gradient_checkpointing: True
+  gradient_checkpointing: true
 
   # for 8 × A800 (80GB); droid data;
   # train_batch_size: 1
@@ -39,6 +39,6 @@ train:
   train_batch_size: 3
   gradient_accumulation_steps: 1
 
-  find_unused_parameters: True  # we do not train all parameters!
+  find_unused_parameters: true  # we do not train all parameters!
 
   resume_from_checkpoint: latest

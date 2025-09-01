@@ -1,17 +1,17 @@
 {
     "include": [
-      "models/",
-      "testing/",
-      "training/",
+      "orv/",
     ],
   
     "exclude": [
-      "outputs/",
+      "**/node_modules",
+      "**/outputs/",
       "**/__pycache__",
-      "data/",
+      "**/data/",
+      "**/env",
       "config/",
       "scripts/",
-      "*debug*",
+      "**/*debug*",
     ],
   
     "defineConstant": {

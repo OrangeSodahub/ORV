@@ -1,7 +1,7 @@
 # pytorch
-torch==2.5.1+cu118
-torchaudio==2.5.1+cu118
-torchvision==0.20.1+cu118
+torch==2.5.1 --index-url https://download.pytorch.org/whl/cu118
+torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu118
+torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cu118
 
 # commons
 beautifulsoup4==4.13.4

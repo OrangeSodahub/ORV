@@ -1,7 +1,7 @@
 runtime: &runtime
   seed: 42
 
-  filter_by_cond: False
+  filter_by_cond: false
   num_observation: 1  # number of input reference images
 
 dataset:
@@ -14,14 +14,14 @@ transformer:
   <<: *runtime
   pretrained_model_name_or_path: THUDM/CogVideoX1.5-5b-I2V
 
-  modulate_encoder_hidden_states: True
+  modulate_encoder_hidden_states: true
 
 train:
   <<: *runtime
-  output_dir: orv_bridge_traj-image_480-320_finetune_norm_20k
+  output_dir: orv_bridge_traj-image_480-320_finetune_20k
 
-  from_scratch: False  # train from scratch
-  from_pretrained: True  # finetune from pretrained cogvideox
+  from_scratch: false  # train from scratch
+  from_pretrained: true  # finetune from pretrained cogvideox
 
   learning_rate: 5.e-5
   lr_scheduler: cosine_with_restarts
@@ -29,10 +29,9 @@ train:
   lr_warmup_steps: 1000
 
   max_train_steps: 20000
-  gradient_checkpointing: False
+  gradient_checkpointing: false
 
   train_batch_size: 1
   gradient_accumulation_steps: 4
 
-  # resume_from_checkpoint: ./outputs/orv_bridge_traj-image_480-320_finetune_full_20k/checkpoint-15000
-  resume_from_checkpoint: NULL
+  resume_from_checkpoint: null

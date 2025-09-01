@@ -1,15 +1,15 @@
 runtime: &runtime
   seed: 42
 
-  use_cond: True
-  filter_by_cond: True
+  use_cond: true
+  filter_by_cond: true
 
-  visual_guidance: True  # use additional visual conditions
+  visual_guidance: true  # use additional visual conditions
   
 dataset:
   <<: *runtime
 
-  load_condGT: True
+  load_condGT: true
 
   height: 320
   width: 480
@@ -17,16 +17,16 @@ dataset:
 transformer:
   <<: *runtime
   pretrained_model_name_or_path: THUDM/CogVideoX1.5-5b-I2V
-  transformer_config_path: ./config/transformer/base_1.4b_480_320_rope.json
-  transformer_model_name_or_path: ./outputs/orv_bridge_traj-image_480-320_scratch_full_10k/checkpoint-52500
+  transformer_config_path: config/transformer/base_1.4b_480_320_rope.json
+  transformer_model_name_or_path: outputs/orv_bridge_traj-image_480-320_scratch_full_10k/checkpoint
 
-  modulate_encoder_hidden_states: False
+  modulate_encoder_hidden_states: false
 
 train:
   <<: *runtime
   output_dir: orv_bridge_traj-image-cond_480-320_finetune
-  from_scratch: True  # train from scratch
-  from_pretrained: False  # finetune from pretrained cogvideox
+  from_scratch: true  # train from scratch
+  from_pretrained: false  # finetune from pretrained cogvideox
 
   learning_rate: 1.e-4
   lr_scheduler: cosine_with_restarts

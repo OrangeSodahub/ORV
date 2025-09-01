@@ -1,13 +1,13 @@
 runtime: &runtime
   seed: 42
 
-  use_cond: False  # load additional condition images
-  filter_by_cond: False  # filter data according to condition images
-  no_traj: False  # do not load actions data
-  empty_prompt: True  # use empty prompt as input
-  multiview: False  # train multivew transformer
+  use_cond: false  # load additional condition images
+  filter_by_cond: false  # filter data according to condition images
+  no_traj: false  # do not load actions data
+  empty_prompt: true  # use empty prompt as input
+  multiview: false  # train multivew transformer
   num_observation: 1  # number of input reference images
-  visual_guidance: False  # use additional visual conditions
+  visual_guidance: false  # use additional visual conditions
   control_keys: ['depth', 'label']
 
 dataset:
@@ -22,13 +22,13 @@ dataset:
   depth_column: depth
   semantic_column: semantic
 
-  load_actions: True
-  load_tensors: True  # load pre-encoded latents instead of raw data
-  load_video: False
-  load_condGT: False  # will load conditions from reconstructions
+  load_actions: true
+  load_tensors: true  # load pre-encoded latents instead of raw data
+  load_video: false
+  load_condGT: false  # will load conditions from reconstructions
 
-  slice_frame: True  # if False, will use the entire video
-  use_3dvae: True
+  slice_frame: true  # if False, will use the entire video
+  use_3dvae: true
 
   bridgev2:
     data_root: ./data/bridge
@@ -97,30 +97,30 @@ dataset:
 transformer:
   <<: *runtime
   pretrained_model_name_or_path: THUDM/CogVideoX-2b  # CogVideoX-2b, CogVideoX-5b-I2V, CogVideoX1.5-5b-I2V
-  revision: NULL
-  variant: NULL
-  cache_dir: NULL
-  transformer_config_path: NULL  # only used for from-scratch-training
-  transformer_model_name_or_path: NULL  # only used for from-scratch-training
+  revision: null
+  variant: null
+  cache_dir: null
+  transformer_config_path: null  # only used for from-scratch-training
+  transformer_model_name_or_path: null  # only used for from-scratch-training
 
   dtype: bfloat16  # choose from 'float16' or 'bfloat16'
 
-  enable_slicing: True
-  enable_tiling: True
+  enable_slicing: true
+  enable_tiling: true
 
 evaluation:
   <<: *runtime
 
   output_path: outputs
-  output_dir: NULL  # specified in experiment yamls
+  output_dir: null  # specified in experiment yamls
 
   mode: traj-image  # choose from ['traj-image', 'traj-image-depth']
 
   batch_size: 16
   num_workers: 8
-  pin_memory: True
+  pin_memory: true
 
   guidance_scale: 1.
   num_inference_steps: 50
-  use_dynamic_cfg: False
-  enable_model_cpu_offload: False
+  use_dynamic_cfg: false
+  enable_model_cpu_offload: false

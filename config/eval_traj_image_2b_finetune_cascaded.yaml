@@ -1,34 +1,33 @@
 runtime: &runtime
   seed: 42
 
-  multiview: False  # train multivew transformer
+  multiview: false  # train multivew transformer
   num_observation: 1  # number of input reference images
 
 dataset:
   <<: *runtime
 
-  load_actions: True
-  load_tensors: False  # load pre-encoded latents instead of raw data
-  load_video: False
-  load_condGT: False
+  load_actions: true
+  load_tensors: false  # load pre-encoded latents instead of raw data
+  load_video: false
+  load_condGT: false
 
-  slice_frame: True  # if False, will use the entire video
-  use_3dvae: True
+  slice_frame: true  # if False, will use the entire video
+  use_3dvae: true
   num_samples: -1
-  no_normalize: False
+  no_normalize: false
 
 transformer:
   <<: *runtime
   pretrained_model_name_or_path: THUDM/CogVideoX-2b
   transformer_model_name_or_path: outputs/orv_bridge_traj-image_480-320_finetune_2b_30k/checkpoint  # bridge 1.7b base model
-  # transformer_model_name_or_path: outputs2/orv_bridge2_traj-image_320-480_finetune_2b_30k/checkpoint  # bridge2 1.7b base model
+  # transformer_model_name_or_path: outputs/orv_bridge2_traj-image_320-480_finetune_2b_30k/checkpoint  # bridge2 1.7b base model
   # transformer_model_name_or_path: outputs/orv_droid_traj-image_384-256_finetune_2b_30k/checkpoint  # droid 1.7b base model
-  # transformer_model_name_or_path: outputs3/orv_rt1_traj-image_320-480_finetune_2b_30k/checkpoint  # rt1 1.7b base model
+  # transformer_model_name_or_path: outputs/orv_rt1_traj-image_320-480_finetune_2b_30k/checkpoint  # rt1 1.7b base model
 
 evaluation:
   <<: *runtime
-  output_dir: NULL  # will use the name of checkpoint
-  # output_dir: debug_eval
+  output_dir: null  # will use the name of checkpoint
 
   batch_size: 1
-  cascaded: True
+  cascaded: true

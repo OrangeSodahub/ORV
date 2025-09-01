@@ -1,24 +1,24 @@
 runtime: &runtime
   seed: 42
 
-  tracker_name: NULL  # wandb project name
+  tracker_name: null  # wandb project name
 
-  use_cond: False  # load additional condition images
-  filter_by_cond: False  # filter data according to condition images
-  no_traj: False  # do not load actions data
-  empty_prompt: True  # use empty prompt as input
+  use_cond: false  # load additional condition images
+  filter_by_cond: false  # filter data according to condition images
+  no_traj: false  # do not load actions data
+  empty_prompt: true  # use empty prompt as input
   recon_action: false  # supervise action reconstruction
-  multiview: False  # train multivew transformer
+  multiview: false  # train multivew transformer
   num_observation: 1  # number of input reference images
-  visual_guidance: False  # use additional visual conditions
+  visual_guidance: false  # use additional visual conditions
   control_keys: ['depth', 'label']
 
-  push_to_hub: False
-  hub_token: NULL
+  push_to_hub: false
+  hub_token: null
   logging_dir: logs
-  allow_tf32: True
+  allow_tf32: true
   nccl_timeout: 1800000000
-  report_to: NULL  # wandb
+  report_to: null  # wandb
 
 dataset:
   <<: *runtime
@@ -31,14 +31,14 @@ dataset:
   depth_column: depth
   semantic_column: semantic
 
-  load_actions: True
-  load_tensors: True  # load pre-encoded latents instead of raw data
-  load_video: False
-  load_condGT: False  # will load conditions from reconstructions
+  load_actions: true
+  load_tensors: true  # load pre-encoded latents instead of raw data
+  load_video: false
+  load_condGT: false  # will load conditions from reconstructions
 
-  slice_frame: True
-  use_3dvae: True
-  vae_has_first_single_frame: True
+  slice_frame: true
+  use_3dvae: true
+  vae_has_first_single_frame: true
 
   bridgev2:
     data_root: ./data/bridge
@@ -111,66 +111,66 @@ vae:
 transformer:
   <<: *runtime
   pretrained_model_name_or_path: THUDM/CogVideoX-2b  # CogVideoX-2b, CogVideoX-5b-I2V, CogVideoX1.5-5b-I2V
-  revision: NULL
-  variant: NULL
-  cache_dir: NULL
-  transformer_config_path: NULL  # only used for from-scratch-training
-  transformer_model_name_or_path: NULL  # only used for from-scratch-training
+  revision: null
+  variant: null
+  cache_dir: null
+  transformer_config_path: null  # only used for from-scratch-training
+  transformer_model_name_or_path: null  # only used for from-scratch-training
 
   guidance_scale: 1
 
   num_control_blocks: 12
-  modulate_encoder_hidden_states: True
+  modulate_encoder_hidden_states: true
 
-  enable_slicing: True
-  enable_tiling: True
+  enable_slicing: true
+  enable_tiling: true
 
 inference:
   guidance_scale: 1.
-  use_dynamic_cfg: False
-  enable_model_cpu_offload: False
+  use_dynamic_cfg: false
+  enable_model_cpu_offload: false
 
 train:
   <<: *runtime
   output_path: outputs
-  output_dir: NULL  # specified in experiment yamls
+  output_dir: null  # specified in experiment yamls
 
-  from_scratch: False  # train from scratch
-  from_pretrained: True  # finetune from pretrained cogvideox
-  overfit: False
+  from_scratch: false  # train from scratch
+  from_pretrained: true  # finetune from pretrained cogvideox
+  overfit: false
   noised_image_dropout: 0.05
 
   optimizer:
     type: adamw
-    use_8bit: False
-    use_4bit: False
-    use_torchao: False
+    use_8bit: false
+    use_4bit: false
+    use_torchao: false
     beta1: 0.9
     beta2: 0.95
-    beta3: NULL
-    prodigy_decouple: False
+    beta3: null
+    prodigy_decouple: false
     weight_decay: 0.001
     epsilon: 1.e-8
     max_grad_norm: 1.
-    prodigy_use_bias_correction: False
-    prodigy_safeguard_warmup: False
-    use_cpu_offload_optimizer: False
-    offload_gradients: False
+    prodigy_use_bias_correction: false
+    prodigy_safeguard_warmup: false
+    use_cpu_offload_optimizer: false
+    offload_gradients: false
 
   learning_rate: 2.e-4
   lr_scheduler: cosine_with_restarts
   lr_num_cycles: 1
   lr_warmup_steps: 1000
   lr_power: 1.
-  scale_lr: False  # scale the learning rate by the number of GPUs, gradient accumulation steps, and batch size
+  scale_lr: false  # scale the learning rate by the number of GPUs, gradient accumulation steps, and batch size
   max_train_steps: 20000
   num_train_epochs: 1
   mixed_precision: bf16
-  gradient_checkpointing: False
+  gradient_checkpointing: false
 
   train_batch_size: 4
   dataloader_num_workers: 8
-  pin_memory: True
+  pin_memory: true
   gradient_accumulation_steps: 4
   validation_steps: 2000
   num_validation_batch: 5  # number of episodes in validation
@@ -178,6 +178,6 @@ train:
   checkpointing_steps: 500
   checkpoints_total_limit: 2
 
-  find_unused_parameters: True
+  find_unused_parameters: true
 
   resume_from_checkpoint: latest

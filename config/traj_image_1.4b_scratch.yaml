@@ -1,7 +1,7 @@
 runtime: &runtime
   seed: 42
 
-  filter_by_cond: False
+  filter_by_cond: false
 
   num_observation: [1]  # number of input reference images
 
@@ -11,17 +11,17 @@ dataset:
 transformer:
   <<: *runtime
   pretrained_model_name_or_path: THUDM/CogVideoX1.5-5b-I2V
-  transformer_config_path: ./config/transformer/base_1.4b_480_320_rope.json
-  transformer_model_name_or_path: NULL
+  transformer_config_path: config/transformer/base_1.4b_480_320_rope.json
+  transformer_model_name_or_path: null
 
-  modulate_encoder_hidden_states: False
+  modulate_encoder_hidden_states: false
 
 train:
   <<: *runtime
-  output_dir: cirasim_bridge_traj-image_480-320_scratch_notext_full_30k
+  output_dir: orv_bridge_traj-image_480-320_scratch_notext_full_30k
 
-  from_scratch: True  # train from scratch
-  from_pretrained: False  # finetune from pretrained cogvideox
+  from_scratch: true  # train from scratch
+  from_pretrained: false  # finetune from pretrained cogvideox
 
   learning_rate: 2.e-4
   lr_scheduler: cosine_with_restarts

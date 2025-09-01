@@ -10,10 +10,6 @@
 	path = thirdparty/vggt
 	url = https://github.com/facebookresearch/vggt
 
-[submodule "thirdparty/vila"]
-	path = thirdparty/vila
-	url = https://github.com/NVlabs/VILA
-
 [submodule "thirdparty/x-flux"]
 	path = thirdparty/x-flux
 	url = https://github.com/XLabs-AI/x-flux
