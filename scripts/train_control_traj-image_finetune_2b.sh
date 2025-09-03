@@ -1,5 +1,5 @@
 # home path
-HOME="~"
+
 echo -e "HOME DIR: \e[31m$HOME\e[0m"
 
 # network
@@ -32,49 +32,49 @@ export PYTHONPATH='.'
 #                               Multi-GPU Training
 #--------------------------------------------------------------------------------------------------
 
-GPU_IDS="all"
-NUM_PROCESSES=8  # 4 or 8
-PORT=29500
+# GPU_IDS="all"
+# NUM_PROCESSES=8  # 4 or 8
+# PORT=29500
 
-ACCELERATE_CONFIG_FILE="config/accelerate/gpu8.yaml"  # ['gpu4', 'gpu8']
+# ACCELERATE_CONFIG_FILE="config/accelerate/gpu8.yaml"  # ['gpu4', 'gpu8']
 
-# Experiment configurations
-BASE_CONFIG_PATH="config/base_train.yaml"
-EXP_CONFIG_PATH="config/traj_image_2b_480_320_finetune.yaml"
+# # Experiment configurations
+# BASE_CONFIG_PATH="config/base_train.yaml"
+# EXP_CONFIG_PATH="config/traj_image_2b_finetune.yaml"
 
 
-accelerate launch \
-          --config_file $ACCELERATE_CONFIG_FILE \
-          --gpu_ids $GPU_IDS \
-          --num_processes $NUM_PROCESSES \
-          --main_process_port $PORT \
-          orv/train_cogvideox_control_to_video_sft.py.py \
-          --base_config $BASE_CONFIG_PATH \
-          --config $EXP_CONFIG_PATH ${@:1}
+# accelerate launch \
+#           --config_file $ACCELERATE_CONFIG_FILE \
+#           --gpu_ids $GPU_IDS \
+#           --num_processes $NUM_PROCESSES \
+#           --main_process_port $PORT \
+#           orv/pipeline/train_cogvideox_control_to_video_sft.py \
+#           --base_config $BASE_CONFIG_PATH \
+#           --config $EXP_CONFIG_PATH ${@:1}
 
 
 #--------------------------------------------------------------------------------------------------
 #                               Single-GPU Training (debugging)
 #--------------------------------------------------------------------------------------------------
 
-# GPU_IDS="0"
-# NUM_PROCESSES=1
-# PORT=29500
+GPU_IDS="0"
+NUM_PROCESSES=1
+PORT=29500
 
-# export DEBUG=1
+export DEBUG=1
 
-# ACCELERATE_CONFIG_FILE="config/accelerate/gpu2.yaml"
+ACCELERATE_CONFIG_FILE="config/accelerate/gpu2.yaml"
 
-# Experiment configurations
-# BASE_CONFIG_PATH="config/base_train.yaml"
-# EXP_CONFIG_PATH="config/traj_image_2b_480_320_finetune.yaml"
+Experiment configurations
+BASE_CONFIG_PATH="config/base_train.yaml"
+EXP_CONFIG_PATH="config/traj_image_2b_finetune.yaml"
 
 
-# accelerate launch \
-#           --config_file $ACCELERATE_CONFIG_FILE \
-#           --num_processes $NUM_PROCESSES \
-#           --main_process_port $PORT \
-#           orv/train_cogvideox_control_to_video_sft.py.py \
-#           --base_config $BASE_CONFIG_PATH \
-#           --config $EXP_CONFIG_PATH \
-#           --debug ${@:1}
+accelerate launch \
+          --config_file $ACCELERATE_CONFIG_FILE \
+          --num_processes $NUM_PROCESSES \
+          --main_process_port $PORT \
+          orv/pipeline/train_cogvideox_control_to_video_sft.py \
+          --base_config $BASE_CONFIG_PATH \
+          --config $EXP_CONFIG_PATH \
+          --debug ${@:1}

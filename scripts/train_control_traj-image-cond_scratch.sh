@@ -1,5 +1,5 @@
 # home path
-HOME="~"
+
 echo -e "HOME DIR: \e[31m$HOME\e[0m"
 
 # network
@@ -48,6 +48,6 @@ accelerate launch \
           --gpu_ids $GPU_IDS \
           --num_processes $NUM_PROCESSES \
           --main_process_port $PORT \
-          orv/train_cogvideox_control_to_video_sft.py \
+          orv/pipeline/train_cogvideox_control_to_video_sft.py \
           --base_config $BASE_CONFIG_PATH \
           --config $EXP_CONFIG_PATH ${@:1}

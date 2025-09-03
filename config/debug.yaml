@@ -1,0 +1,15 @@
+train:
+
+  max_train_steps: 100
+  num_train_epochs: 1
+  mixed_precision: bf16
+  gradient_checkpointing: True
+
+  train_batch_size: 2
+  gradient_accumulation_steps: 2
+  validation_steps: 20
+  num_validation_batch: 1
+  checkpointing_steps: 20
+  checkpoints_total_limit: 2
+
+  resume_from_checkpoint: latest

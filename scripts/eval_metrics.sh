@@ -1,5 +1,5 @@
 # home path
-HOME="~"
+
 echo -e "HOME DIR: \e[31m$HOME\e[0m"
 
 # network
@@ -33,6 +33,6 @@ GT_PATH="data/bridgev2/embeddings_320_480_sliced_full/val/videos/"
 PRED_PATH="outputs/eval_orv_bridge2_traj-image_480-320_multiview_20k/"
 
 
-python orv/compute_metrics.py \
+python orv/pipeline/compute_metrics.py \
             --gt_dir $GT_PATH \
             --pred_dir $PRED_PATH ${@:1}

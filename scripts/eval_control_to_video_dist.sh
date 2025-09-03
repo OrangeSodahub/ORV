@@ -1,5 +1,5 @@
 # home path
-HOME="~"
+
 echo -e "HOME DIR: \e[31m$HOME\e[0m"
 
 # network
@@ -37,6 +37,6 @@ GPUS=$1  # how many parallel processes?
 
 torchrun --nnodes=1 --nproc_per_node=$GPUS \
             --standalone \
-            orv/evaluation_control_to_video.py \
+            orv/pipeline/evaluation_control_to_video.py \
             --base_config  $BASE_CONFIG_PATH \
             --config  $CONFIG_PATH ${@:2}

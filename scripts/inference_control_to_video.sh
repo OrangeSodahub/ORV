@@ -1,5 +1,5 @@
 # home path
-HOME="~"
+
 echo -e "HOME DIR: \e[31m$HOME\e[0m"
 
 # network
@@ -30,4 +30,4 @@ export PYTHONPATH='.'
 
 
 
-python orv/inference_control_to_video.py ${@:1}
+python orv/pipeline/inference_control_to_video.py ${@:1}

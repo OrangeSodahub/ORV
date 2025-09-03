@@ -37,7 +37,7 @@ conda create orv
 pip install -r requirements.txt
 ```
 
-Note that we set to use `cuda11.8` by default, please modify the lines below to support your own versions:
+Note that we use `cuda11.8` by default, please modify the lines in `requirements.txt` shown below to support your own versions:
 
 ```text
 torch==2.5.1 --index-url https://download.pytorch.org/whl/cu118
@@ -86,7 +86,7 @@ To be finished.
 
 Training or evaluation with processed latents data instead of encoding videos or images online will dramaticallly save memory and time. We use the VAE loaded from huggingface `THUDM/CogVideoX-2b`. 
 
-Please refer to [scripts/encode_dataset.sh](https://github.com/OrangeSodahub/ORV/tree/main/orv/scripts/encode_dataset.sh) and [scripts/encode_dataset_dist.sh](https://github.com/OrangeSodahub/ORV/tree/main/orv/scripts/encode_dataset.sh) to encode images or videos to latents and save them to disk. Please first check the arguments in scripts first (`--dataset`, `--data_root` and `--output_dir`) and then run:
+Please refer to [scripts/encode_dataset.sh](https://github.com/OrangeSodahub/ORV/tree/main/scripts/encode_dataset.sh) and [scripts/encode_dataset_dist.sh](https://github.com/OrangeSodahub/ORV/tree/main/scripts/encode_dataset.sh) to encode images or videos to latents and save them to disk. Please first check the arguments in scripts first (`--dataset`, `--data_root` and `--output_dir`) and then run:
 
 ```bash
 # single process
@@ -96,25 +96,38 @@ bash scripts/encode_dataset.sh $SPLIT $BATCH
 bash scripts/encode_dataset_dist.sh $GPU $SPLIT $BATCH
 ```
 
+where `SPLIT` is one of 'train', 'val', 'test', `$GPU` is the number of devices, `$BATCH` is the batch size of dataloader (recommend just use 1).
+
 > For those data reused from IRASim, please ignore their processed latents data and only raw `.mp4` data will be used.
 
 ## Training
 
 #### Stage1 Singleview Action-to-video Generation
 
-We first get the basic singleview action-to-video generation model starting from the pretrained CogVideox-2b (Text-to-video) model through SFT. Please check out and run the following script:
+We first get the basic singleview action-to-video generation model starting from the pretrained [THUDM/CogVideoX-2b](https://huggingface.co/zai-org/CogVideoX-2b) (Text-to-video) model through SFT. Please check out and run the following script:
 
 ```bash
-bash scripts/train_control_traj-image_finetune_2b.sh
+bash scripts/train_control_traj-image_finetune_2b.sh --dataset_type $DATASET
 ```
 
-> #### To use the correct configurations:
+where `$DATASET` is chosen from ['bridgev2', 'rt1', 'droid'].
+
+> #### Use the correct configurations:
 > 1. CUDA devices: please set correct value for the key `ACCELERATE_CONFIG_FILE` in these `.sh` scripts which are used for accelerate launching. Predfined `.yaml` files are at [config/accelerate](https://github.com/OrangeSodahub/ORV/tree/main/config/accelerate/);
-> 2. Experimental settings: Each configuration in [config/traj_image_*.yaml](https://github.com/OrangeSodahub/ORV/tree/main/config/) files corresponds to one training experimental settings and one model. Please set the correct value for the key `EXP_CONFIG_PATH` in scripts.
+> 2. Experimental settings: Each configuration in [config/traj_image_*.yaml](https://github.com/OrangeSodahub/ORV/tree/main/config/) files corresponds to one training experimental setting and one model. Please set the correct value for the key `EXP_CONFIG_PATH` in scripts.
 
 #### Stage2 Occupancy-conditioned Generation
 
-We incorporate occupancy-derived conditions to have more accurate controls. Please run the following script:
+We incorporate occupancy-derived conditions to have more accurate controls. First set the correct path to pretrained model at stage1 in `config/traj_image_condfull_2b_finetune.yaml`:
+
+```yaml
+transformer:
+  <<: *runtime
+  pretrained_model_name_or_path: THUDM/CogVideoX-2b
+  transformer_model_name_or_path: outputs/orv_bridge_traj-image_480-320_finetune_2b_30k/checkpoint
+```
+
+Then run the following script (the yaml config file above is set in this script):
 
 ```bash
 bash scripts/train_control_traj-image-cond_finetune.sh
@@ -122,7 +135,7 @@ bash scripts/train_control_traj-image-cond_finetune.sh
 
 #### Stage3 Multiview Generation
 
-This step further extends the singleview generation model to multiview generation model. Please run the following script:
+This step further extends the singleview generation model to multiview generation model. First set the correct path to pretrained singleview model in `config/traj_image_2b_multiview.yaml` and then run the following script:
 
 ```bash
 bash scripts/train_control_traj-image-multiview.sh
@@ -146,9 +159,9 @@ bash scripts/eval_control_to_video_dist.sh $GPU
 
 Please choose the correct `*.yaml` configuration file in scripts:
 
-- `eval_traj_image_2b_finetune`: base action-to-video model
-- `eval_traj_image_cond_2b_finetune`: singleview occupancy-conditioned model
-- `eval_traj_image_condfull_2b_multiview`: multiview occupancy-conditioned model
+- `eval_traj_image_2b_finetune.yaml`: base action-to-video model
+- `eval_traj_image_cond_2b_finetune.yaml`: singleview occupancy-conditioned model
+- `eval_traj_image_condfull_2b_multiview.yaml`: multiview occupancy-conditioned model
 
 #### 2. Metrics Calculation
 
@@ -158,7 +171,7 @@ Set the keys `GT_PATH` and `PRED_PATH` in following script and run it to calcula
 bash scripts/eval_metrics.sh
 ```
 
-## Inference on Demo data
+## Inference on Demo Data
 
 To be finished.
 

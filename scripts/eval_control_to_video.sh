@@ -1,5 +1,5 @@
 # home path
-HOME="~"
+
 echo -e "HOME DIR: \e[31m$HOME\e[0m"
 
 # network
@@ -33,6 +33,6 @@ BASE_CONFIG_PATH="config/base_eval.yaml"
 CONFIG_PATH="config/eval_traj_image_2b_finetune.yaml"  # ['eval_traj_image_2b_finetune', 'eval_traj_image_cond_2b_finetune', 'eval_traj_image_condfull_2b_multiview']
 
 
-python orv/evaluation_control_to_video.py \
+python orv/pipeline/evaluation_control_to_video.py \
             --base_config $BASE_CONFIG_PATH \
             --config $CONFIG_PATH ${@:1}

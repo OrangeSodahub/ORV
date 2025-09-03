@@ -952,7 +952,19 @@ class CogVideoXTransformer3DModelTraj(CogVideoXTransformer3DModel, ModelMixin):
         model: CogVideoXTransformer3DModelTraj
 
         try:
-            model = super().from_pretrained(pretrained_model_name_or_path, **kwargs)
+            model, loading_info = super().from_pretrained(pretrained_model_name_or_path, output_loading_info=True, **kwargs)
+            missing_keys = loading_info['missing_keys']
+            unexpected_keys = loading_info['unexpected_keys']
+            mismatched_keys = loading_info['mismatched_keys']
+            error_messages = ""
+            if missing_keys:
+                error_messages += f"Some weights of {cls.__name__} are not found in pretrained weights: {missing_keys}. "
+            if unexpected_keys:
+                error_messages += f"Some weights may be lost in {cls.__name__}: {unexpected_keys}. "
+            if mismatched_keys:
+                error_messages += f"Some weights have mismatched shapes: {mismatched_keys}."
+            if error_messages:
+                raise RuntimeError(error_messages)
             CONSOLE.log(f"[bold blue]Loaded {cls.__name__} from {pretrained_model_name_or_path} checkpoint directly.")
 
         except Exception as e:

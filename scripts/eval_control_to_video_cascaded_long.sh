@@ -1,5 +1,5 @@
 # home path
-HOME="~"
+
 echo -e "HOME DIR: \e[31m$HOME\e[0m"
 
 # network
@@ -37,7 +37,7 @@ CONFIG_PATH=config/eval_traj_image_2b_finetune_cascaded.yaml  # Eval base model
 #                     Single-GPU Running
 #------------------------------------------------------------
 
-python orv/evaluation_control_to_video.py \
+python orv/pipeline/evaluation_control_to_video.py \
             --base_config $BASE_CONFIG_PATH \
             --config $CONFIG_PATH ${@:1}
 
@@ -49,6 +49,6 @@ python orv/evaluation_control_to_video.py \
 
 # torchrun --nnodes=1 --nproc_per_node=$GPUS \
 #             --standalone \
-#             orv/evaluation_control_to_video.py \
+#             orv/pipeline/evaluation_control_to_video.py \
 #             --base_config  $BASE_CONFIG_PATH \
 #             --config  $CONFIG_PATH ${@:2}

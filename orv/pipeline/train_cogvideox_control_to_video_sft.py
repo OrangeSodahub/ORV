@@ -546,6 +546,7 @@ def main(config):
         'sample_frames': dataset_config.sample_frames,
         'start_frame_interval': dataset_config.start_frame_interval,
         'video_size': dataset_config.video_size,
+        'ori_size': dataset_config.ori_size,
         'control_keys': dataset_config.control_keys,
         'caption_column': dataset_config.caption_column,
         'video_column': dataset_config.video_column,

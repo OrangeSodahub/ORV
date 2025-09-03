@@ -33,6 +33,6 @@ evaluation:
   <<: *runtime
   output_dir: null  # will use the name of checkpoint
 
-  mode: traj-image-depth-lable
+  mode: traj-image-depth-label
 
   batch_size: 4

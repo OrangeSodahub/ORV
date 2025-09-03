@@ -318,14 +318,10 @@ def save_metadata(metadata: Dict[str, Any], path: pathlib.Path) -> None:
 
 @torch.no_grad()
 def serialize_artifacts(
-    batch_size: int,
     fps: int,
     n_view: int,
     is_multiview: bool,
-    set_uuid: bool = False,
-    ids: Optional[List[int]] = None,
-    start_frame_idxs: Optional[List[int]] = None,
-    num_frames: Optional[List[int]] = None,
+    filenames: list[str],
     images_dir: Optional[pathlib.Path] = None,
     image_latents_dir: Optional[pathlib.Path] = None,
     videos_dir: Optional[pathlib.Path] = None,
@@ -366,12 +362,6 @@ def serialize_artifacts(
         (prompts, prompts_dir, save_prompt, 'txt'),
         (prompt_embeds, prompt_embeds_dir, torch.save, 'pt'),
     ]
-
-    if set_uuid:
-        filenames = [uuid.uuid4() for _ in range(batch_size)]
-    else:
-        filenames = [f'{id:05d}_{start_frame_idx:02d}_{num_frame:02d}'
-                     for id, start_frame_idx, num_frame in zip(ids, start_frame_idxs, num_frames)]
 
     for data, folder, save_fn, extension in data_folder_mapper_list:
         if data is None or not os.path.exists(folder):
@@ -549,8 +539,8 @@ def main():
                 load_condGT=args.load_condGT,
                 use_3dvae=True,
                 slice_frame=args.slice,
-                video_size = [480, 640],
-                ori_size = [480, 640],
+                video_size = [480, 640],  # NOTE
+                ori_size = [480, 640],  # NOTE
             )
         else:
             is_multiview = True
@@ -698,10 +688,11 @@ def main():
     dataloader = DataLoader(
         dataset,
         batch_size=args.batch_size,
-        # sampler=BucketSampler(dataset, batch_size=args.batch_size, shuffle=True, drop_last=False),
+        # sampler=BucketSampler(dataset, batch_size=args.batch_size, shuffle=False, drop_last=False),
         collate_fn=collate_fn,
         num_workers=args.dataloader_num_workers,
         pin_memory=args.pin_memory,
+        shuffle=False,
     )
 
     # 3. Prepare models
@@ -759,6 +750,46 @@ def main():
             labelGT_latents = None
             prompt_embeds = None
 
+            # get filenames and check
+            prompts = batch['prompts']
+            batch_size = len(prompts)
+
+            if set_uuid:
+                filenames = [uuid.uuid4() for _ in range(batch_size)]
+            else:
+                ids = batch['episode_ids']
+                start_frame_idxs = batch['start_frame_idxs']
+                num_frames = batch['num_frames']
+                filenames = [f'{id:05d}_{start_frame_idx:02d}_{num_frame:02d}'
+                            for id, start_frame_idx, num_frame in zip(ids, start_frame_idxs, num_frames)]
+
+                data_folder_mapper_list = [
+                    ('images', images_dir, 'png'),
+                    ('image_latents', image_latents_dir, 'pt'),
+                    ('videos', videos_dir, 'mp4'),
+                    ('video_latents', video_latents_dir, 'pt'),
+                    ('depths', depths_dir, 'png'),
+                    ('depth_latents', depth_latents_dir, 'pt'),
+                    ('depthGT_latents', depthGT_latents_dir, 'pt'),
+                    ('labels', labels_dir, 'png'),
+                    ('label_latents', label_latents_dir, 'pt'),
+                    ('labelGT_latents', labelGT_latents_dir, 'pt'),
+                    ('prompts', prompts_dir, 'txt'),
+                    ('prompt_embeds', prompt_embeds_dir, 'pt'),
+                ]
+
+                is_all_exist = True
+                for data_type, folder, extension in data_folder_mapper_list:
+                    for filename in filenames:
+                        if is_process(data_type):
+                            data_path = folder.joinpath(f'{filename}.{extension}')
+                            if not data_path.exists():
+                                is_all_exist = False
+
+                if is_all_exist:
+                    CONSOLE.log(f'filenames: {filenames} already exist and skip it!')
+                    continue
+
             if is_process('images') or is_process('image_latents'):
                 images = batch['images'].to(device, non_blocking=True)
                 images = images.permute(0, 2, 1, 3, 4)  # [B, C, F, H, W]
@@ -786,8 +817,6 @@ def main():
                 assert args.load_condGT, f'Should set `load_condGT`!'
                 labelsGT = batch['labels'].to(device, non_blocking=True)
                 labelsGT = labelsGT.permute(0, 2, 1, 3, 4)
-
-            prompts = batch['prompts']
 
             # ! Encode images
             if is_process('image_latents'):
@@ -927,17 +956,13 @@ def main():
 
             output_queue.put(
                 {
-                    'batch_size': len(prompts),
                     'fps': target_fps,
                     'n_view': n_view,
                     'is_multiview': is_multiview,
+                    'filenames': filenames,
                     'images_dir': images_dir,
                     'image_latents_dir': image_latents_dir,
                     'videos_dir': videos_dir,
-                    'set_uuid': set_uuid,
-                    'ids': batch['episode_ids'],
-                    'start_frame_idxs': batch['start_frame_idxs'],
-                    'num_frames': batch['num_frames'],
                     'video_latents_dir': video_latents_dir,
                     'depths_dir': depths_dir,
                     'depth_latents_dir': depth_latents_dir,

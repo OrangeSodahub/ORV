@@ -1,5 +1,5 @@
 # home path
-HOME="~"
+
 echo -e "HOME DIR: \e[31m$HOME\e[0m"
 
 # network
@@ -40,7 +40,7 @@ ACCELERATE_CONFIG_FILE="config/accelerate/gpu8.yaml"  # ['gpu4', 'gpu8']
 
 # Experiment configurations
 BASE_CONFIG_PATH="config/base_train.yaml"
-EXP_CONFIG_PATH="config/traj_image_5b_480_320_finetune.yaml"
+EXP_CONFIG_PATH="config/traj_image_5b_finetune.yaml"
 
 
 accelerate launch \
@@ -48,7 +48,7 @@ accelerate launch \
           --gpu_ids $GPU_IDS \
           --num_processes $NUM_PROCESSES \
           --main_process_port $PORT \
-          orv/train_cogvideox_control_to_video_sft.py.py \
+          orv/pipeline/train_cogvideox_control_to_video_sft.py \
           --base_config $BASE_CONFIG_PATH \
           --config $EXP_CONFIG_PATH ${@:1}
 
@@ -67,14 +67,14 @@ accelerate launch \
 
 # # Experiment configurations
 # BASE_CONFIG_PATH="onfig/base_train.yaml"
-# EXP_CONFIG_PATH="config/traj_image_5b_480_320_finetune.yaml"
+# EXP_CONFIG_PATH="config/traj_image_5b_finetune.yaml"
 
 
 # accelerate launch \
 #           --config_file $ACCELERATE_CONFIG_FILE \
 #           --num_processes $NUM_PROCESSES \
 #           --main_process_port $PORT \
-#           orv/train_cogvideox_control_to_video_sft.py \
+#           orv/pipeline/train_cogvideox_control_to_video_sft.py \
 #           --base_config $BASE_CONFIG_PATH \
 #           --config $EXP_CONFIG_PATH \
 #           --debug ${@:1}

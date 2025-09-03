@@ -1,11 +1,10 @@
 # home path
-
 echo -e "HOME DIR: \e[31m$HOME\e[0m"
 
 # network
-# bash $HOME/clash-for-linux-backup/start.sh
-# source $HOME/clash.sh
-# proxy_on
+bash $HOME/clash-for-linux-backup/start.sh
+source $HOME/clash.sh
+proxy_on
 
 # env
 # source $HOME/anaconda3/etc/profile.d/conda.sh
@@ -33,14 +32,14 @@ export PYTHONPATH='.'
 #--------------------------------------------------------------------------------------------------
 
 GPU_IDS="all"
-NUM_PROCESSES=8  # 4 or 8
+NUM_PROCESSES=4  # 4 or 8
 PORT=29500
 
-ACCELERATE_CONFIG_FILE="config/accelerate/gpu8.yaml"  # ['gpu4', 'gpu8']
+ACCELERATE_CONFIG_FILE="config/accelerate/gpu4.yaml"  # ['gpu4', 'gpu8']
 
 # Experiment configurations
 BASE_CONFIG_PATH="config/base_train.yaml"
-EXP_CONFIG_PATH="config/traj_image_1.4b_480_320_scratch.yaml"
+EXP_CONFIG_PATH="config/traj_image_bridge2_480-640_2b_finetune.yaml"
 
 
 accelerate launch \
@@ -49,6 +48,7 @@ accelerate launch \
           --num_processes $NUM_PROCESSES \
           --main_process_port $PORT \
           orv/pipeline/train_cogvideox_control_to_video_sft.py \
+          --dataset_type bridgev2 \
           --base_config $BASE_CONFIG_PATH \
           --config $EXP_CONFIG_PATH ${@:1}
 
@@ -67,7 +67,7 @@ accelerate launch \
 
 # # Experiment configurations
 # BASE_CONFIG_PATH="config/base_train.yaml"
-# EXP_CONFIG_PATH="config/traj_image_1.4b_480_320_scratch.yaml"
+# EXP_CONFIG_PATH="config/traj_image_bridge2_480-640_2b_finetune.yaml"
 
 
 # accelerate launch \
@@ -75,6 +75,7 @@ accelerate launch \
 #           --num_processes $NUM_PROCESSES \
 #           --main_process_port $PORT \
 #           orv/pipeline/train_cogvideox_control_to_video_sft.py \
+#           --dataset_type bridgev2 \
 #           --base_config $BASE_CONFIG_PATH \
 #           --config $EXP_CONFIG_PATH \
 #           --debug ${@:1}
