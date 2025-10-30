@@ -1,12 +1,12 @@
 # ORV: 4D Occupancy-centric Robot Video Generation
 
-TL;DR ORV generates robot videos with the geometry guidance of 4D occupancy, achieves higher control precision, shows strong generalizations, performs multi-view consistent videos generation and conducts simulation-to-real data transfer.
+TL;DR ORV generates robot videos with the geometry guidance of 4D occupancy, achieves higher control precision, shows strong generalizations, performs multiview consistent videos generation and conducts simulation-to-real visual transfer.
 
 <img src="assets/teaser.png" width="100%"/>
 
 > [**ORV: 4D Occupancy-centric Robot Video Generation**](https://orangesodahub.github.io/ORV/)                
-> Xiuyu Yang*, Bohan Li*, Shaocong Xu, Nan Wang, Chongjie Ye, Zhaoxi Chen, Minghan Qin, Yikang Ding, Xin Jin, Hang Zhao, Hao Zhao                                     
-> *Preprint ([arXiv 2506.03079](http://arxiv.org/abs/2506.03079))*
+> Xiuyu Yang*, Bohan Li*, Shaocong Xu, Nan Wang, Chongjie Ye, Zhaoxi Chen, Minghan Qin, Yikang Ding, Zheng Zhu, Xin Jin, Hang Zhao, Hao Zhao                                     
+> *Preprint ([arXiv 2506.03079](https://orangesodahub.github.io/ORV/assets/orv_preprint.pdf))*
 
 ## BibTeX
 If you find our work useful in your research, please consider citing our paper:
@@ -186,4 +186,4 @@ To be finished.
 
 ## Acknowledgement
 
-Thansk for these excellent opensource works and models: [CogVideoX](https://github.com/THUDM/CogVideo); [DiffusionAsShader](https://github.com/IGL-HKUST/DiffusionAsShader); [diffusers](https://github.com/huggingface/diffusers);.
+Thansk for these excellent opensource works and models: [CogVideoX](https://github.com/THUDM/CogVideo); [diffusers](https://github.com/huggingface/diffusers);.
