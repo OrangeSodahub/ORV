@@ -83,7 +83,7 @@
               <span class="author-block">
                 <a href="https://scholar.google.com/citations?user=gdP9StQAAAAJ" target="_blank">Yikang Ding</a><sup>8</sup>,</span>
               <span class="author-block">
-                <a href="https://scholar.google.com/citations?hl=zh-CN&user=byaSC-kAAAAJ" target="_blank">Zheng Zhu</a><sup>9</sup>,</span>
+                <a href="https://scholar.google.com/citations?hl=en&user=NmwjI0AAAAAJ" target="_blank">Zheng Zhu</a><sup>9</sup>,</span>
               <span class="author-block">
                 <a href="https://scholar.google.com/citations?hl=zh-CN&user=byaSC-kAAAAJ" target="_blank">Xin Jin</a><sup>4</sup>,</span>
               <span class="author-block">
@@ -118,7 +118,7 @@
                   </a>
                 </span>
 
-                <!-- <span class="link-block">
+                <span class="link-block">
                   <a href="https://arxiv.org/abs/2506.03079" target="_blank"
                     class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
@@ -126,7 +126,7 @@
                     </span>
                     <span>arXiv</span>
                   </a>
-                </span> -->
+                </span>
 
                 <span class="link-block">
                   <a href="https://github.com/OrangeSodahub/ORV" target="_blank"
@@ -152,8 +152,8 @@
         <li><a href="#video_comparison_1_title">Video Comparison</a></li>
         <li><a href="#video_gallery_1_title">Video Gallery 1</a></li>
         <li><a href="#video_gallery_2_title">Video Gallery 2</a></li>
+        <li><a href="#video_gallery_3_title">Video Gallery 3</a></li>
         <li><a href="#bibtex_title">BibTex</a></li>
-        <!-- <li><a href="#text_supp">Textual Full Paper</a></li> -->
       </ul>
     </div>
   </section>
@@ -163,9 +163,6 @@
     <div class="container is-max-widescreen">
       <div class="hero-body">
         <img src="assets/images/fig_teaser2.png" alt="Teaser Image" style="max-width: 100%; height: auto;">
-        <!-- <h2 class="subtitle has-text-centered">
-          We propose <strong>ORV</strong>, an <strong>O</strong>ccupancy-centric <strong>R</strong>obot <strong>V</strong>ideo generation Model, which generates robot manipulation videos precisely following the motion instructions, under the guidance of the 3D occupancy (top). ORV also generates multiview videos to build a 4D embodied world (middle) and transfer simulated data to real-world videos (bottom). The red border denotes the first frame input.
-        </h2> -->
         <h2 class="subtitle has-text-centered">
           TL;DR We propose ORV, a novel framework of robot video generation with the geometry guidance of 4D occupancy, which achieves higher control precision, performs multiview generation and conducts simulation-to-real visual transfer.
         </h2>
@@ -197,17 +194,7 @@
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              Acquiring real-world robotic simulation data through teleoperation is notoriously time-consuming and labor-intensive.
-              Recently, action-driven generative models have gained widespread adoption in robot learning and simulation, as they 
-              eliminate safety concerns and reduce maintenance efforts. However, the action sequences used in these methods often 
-              result in limited control precision and poor generalization due to their globally coarse alignment. To address these 
-              limitations, we propose <strong>ORV</strong>, an <strong>O</strong>ccupancy-centric <strong>R</strong>obot <strong>V</strong>ideo generation framework, 
-              which utilizes 4D semantic occupancy sequences as a fine-grained representation to provide more accurate semantic and geometric 
-              guidance for video generation. By leveraging occupancy-based representations, ORV enables seamless translation of simulation 
-              data into photorealistic robot videos, while ensuring high temporal consistency and precise controllability. Furthermore, our 
-              framework supports the simultaneous generation of multi-view videos of robot gripping operations—an important capability for 
-              downstream robotic learning tasks. Extensive experimental results demonstrate that ORV consistently outperforms existing 
-              baseline methods across various datasets and sub-tasks.
+            Recent embodied intelligence suffers from data scarcity, while conventional simulators lack visual realism. Controllable video generation is emerging as a promising data engine, yet current action-conditioned methods still fall short: generated videos are limited in fidelity and temporal consistency, poorly aligned with controls, and often constrained to singleview settings. We attribute these issues to the representational gap between sparse control inputs and dense pixel outputs. Thus, we introduce <strong>ORV</strong>, a 4D <strong>O</strong>ccupancy-centric framework for <strong>R</strong>obot <strong>V</strong>ideo generation that couples action priors with occupancy-derived visual priors. Concretely, we align chunked 7-DoF actions with video latents via an Action-Expert AdaLN modulation, and inject 2D renderings of 4D semantic occupancy into the generation process as soft guidance. Meanwhile, a central obstacle is the lack of occupancy data for embodied scenarios; we therefore curate ORV-Data, a large-scale, high-quality 4D semantic occupancy dataset of robot manipulation. Across BridgeV2, DROID, and RT-1, ORV improves video generation quality and controllability, achieving 18.8% lower FVD than state of the art, +3.5% success rate on visual planning, and +6.4% success rate on policy learning. Beyond singleview generation, ORV natively supports multiview consistent synthesis and enables simulation-to-real transfer despite significant domain gaps.
             </p>
           </div>
         </div>
@@ -2035,24 +2022,6 @@
           <div class="overlay"><br>RT-1<br></div>
       </div>
     </div>
-<!-- 
-    <div class="video_wrapper">
-      <div class="video_container">
-          <video autoplay="" muted="" playsinline="" loop="">
-              <source src="assets/videos/rt1_gallery/56498_32_17.mp4" type="video/mp4">
-          </video>
-          <div class="overlay"><br>RT-1<br></div>
-      </div>
-    </div>
-
-    <div class="video_wrapper">
-        <div class="video_container">
-            <video autoplay="" muted="" playsinline="" loop="">
-                <source src="assets/videos/rt1_gallery/76038_00_17.mp4" type="video/mp4">
-            </video>
-            <div class="overlay"><br>RT-1<br></div>
-        </div>
-    </div> -->
 
   </div>
 
@@ -2668,6 +2637,185 @@
             <source src="assets/videos/droid2/16144_216_29.mp4" type="video/mp4">
         </video>
         <div class="overlay"><br>Droid 2-view<br></div>
+      </div>
+    </div>
+
+  </div>
+
+  <section class="section hero" id="video_gallery_2_title">
+    <div class="container" style="width: 100vw;">
+      <br>
+      <h2 class="title is-3 has-text-centered">Video Generation Gallery 3</h2>
+      <p></p>
+      <h4 class="subtitle has-text-centered">Examples of (appearance) augmented manipulation videos</h4>
+      <p class="has-text-centered">All videos are displayed at the resolution of 320&times;480, regardless of their original resolutions which may result in varying visual quality.
+      </p>
+
+      <br>
+    </div>
+  </section>
+
+  <div class="video_gallery_3" id="video_grid_app" style="width: 100%">
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/00030_022.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 00030_022<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/00129_045.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 00129_045<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/00207_026.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 00207_026<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/01200_027.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 01200_027<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/01215_023.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 01215_023<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/01247_037.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 01247_037<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/01261_043.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 01261_043<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/01302_018.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 01302_018<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/01317_029.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 01317_029<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/01362_044.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 01362_044<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/01398_035.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 01398_035<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/01409_044.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 01409_044<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/01425_028.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 01425_028<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/01433_027.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 01433_027<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/01444_029.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 01444_029<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/01616_025.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 01616_025<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/01734_019.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 01734_019<br></div>
+      </div>
+    </div>
+
+    <div class="video_wrapper">
+      <div class="video_container">
+        <video autoplay="" muted="" playsinline="" loop="">
+            <source src="assets/videos/random_app/01951_017.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"><br>Bridge 01951_017<br></div>
       </div>
     </div>
 
