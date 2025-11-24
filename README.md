@@ -6,7 +6,7 @@ TL;DR ORV generates robot videos with the geometry guidance of 4D occupancy, ach
 
 > [**ORV: 4D Occupancy-centric Robot Video Generation**](https://orangesodahub.github.io/ORV/)                
 > Xiuyu Yang*, Bohan Li*, Shaocong Xu, Nan Wang, Chongjie Ye, Zhaoxi Chen, Minghan Qin, Yikang Ding, Zheng Zhu, Xin Jin, Hang Zhao, Hao Zhao                                     
-> *Preprint ([arXiv 2506.03079](https://orangesodahub.github.io/ORV/assets/orv_preprint.pdf))*
+> *Preprint ([arXiv 2506.03079](https://arxiv.org/abs/2506.03079))*
 
 ## BibTeX
 If you find our work useful in your research, please consider citing our paper:
@@ -44,6 +44,8 @@ torch==2.5.1 --index-url https://download.pytorch.org/whl/cu118
 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu118
 torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cu118
 ```
+
+Our checkpoints are host at [huggingface repo](https://huggingface.co/gzzyyxy/orv-gen-model/tree/main), feel free to download them.
 
 ## Data Preparation
 
@@ -179,7 +181,7 @@ To be finished.
 
 - [x] Release arXiv technique report
 - [x] Release full codes
-- [ ] Release checkpoints
+- [x] Release checkpoints
 - [ ] Finish the full instructions
 - [ ] Release processed data
 
